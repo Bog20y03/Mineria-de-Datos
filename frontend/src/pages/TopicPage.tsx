@@ -12,6 +12,7 @@ import {
   Loading,
   ErrorMessage,
   EmptyState,
+  AcademicMarkdownViewer,
 } from '../components/ui';
 import {
   ChevronRight,
@@ -266,21 +267,12 @@ export const TopicPage: React.FC = () => {
             {/* PESTAÑA 1: GENERAL (README) */}
             {activeTab === 'general' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <div
-                  style={{
-                    backgroundColor: 'var(--color-card-muted)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-sm)',
-                    padding: '1.5rem',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--color-ink)',
-                    lineHeight: 1.6,
-                    whiteSpace: 'pre-wrap',
-                  }}
-                >
-                  {data.descripcionMd || 'Sin documentación README.md registrada para este tema.'}
-                </div>
+                <AcademicMarkdownViewer
+                  content={data.descripcionMd}
+                  title={`Documentación Técnica — ${data.topicName}`}
+                  subtitle={`${data.unitName} · ${selectedTopic.topicId}`}
+                  emptyMessage="Sin documentación README.md registrada para este tema."
+                />
               </div>
             )}
 
