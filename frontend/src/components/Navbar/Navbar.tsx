@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useApp, type ActiveView } from '../../context/AppContext';
+import { useApp } from '../../context/AppContext';
 import {
   Compass,
-  LayoutDashboard,
-  Layers,
   Search,
-  FileCode2,
-  BookOpen,
   Cog,
-  Palette,
+  Layers,
+  Film,
+  FileCode2,
+  Award,
+  BookOpen,
   Sun,
   Moon,
-  Film,
-  Award,
-  HelpCircle,
-  ArrowRight,
 } from 'lucide-react';
 import { AcademicTicker } from '../ui/AcademicTicker';
-import { ModesGuideModal } from '../common/ModesGuideModal';
 import { UserAvatar, AvatarModal } from '../Avatar';
+
+interface NavButtonDef {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  isActive: boolean;
+  onClick: () => void;
+  isSpecial?: boolean;
+}
 
 export const Navbar: React.FC = () => {
   const { mode, setMode, activeView, setActiveView, closeTopic, selectedTopic } = useApp();
-  const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
 
   const [isDark, setIsDark] = useState<boolean>(() => {
@@ -46,38 +49,113 @@ export const Navbar: React.FC = () => {
 
   const toggleTheme = () => setIsDark((prev) => !prev);
 
-  const navItems: { view: ActiveView; label: string; icon: React.ReactNode }[] = [
-    { view: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={15} /> },
-    { view: 'rpg', label: 'Juego de Roles', icon: <Award size={15} /> },
-    { view: 'units', label: 'Unidades', icon: <Layers size={15} /> },
-    { view: 'atlas', label: 'Atlas Matemático', icon: <Film size={15} /> },
-    { view: 'search', label: 'Buscador', icon: <Search size={15} /> },
-    { view: 'latex', label: 'Lab LaTeX', icon: <FileCode2 size={15} /> },
-    { view: 'manual', label: 'Manual', icon: <BookOpen size={15} /> },
-    { view: 'uikit', label: 'UI Kit', icon: <Palette size={15} /> },
+  // Lista unificada y sin repeticiones de las 7 funciones esenciales
+  const navItems: NavButtonDef[] = [
+    {
+      id: 'search',
+      label: 'Buscador',
+      icon: <Search size={15} />,
+      isActive: mode === 'direct' && activeView === 'search' && !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('direct');
+        setActiveView('search');
+      },
+    },
+    {
+      id: 'machine',
+      label: 'La Máquina',
+      icon: <Cog size={15} />,
+      isSpecial: true,
+      isActive: mode === 'map' && !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('map');
+      },
+    },
+    {
+      id: 'units',
+      label: 'Temario & Unidades',
+      icon: <Layers size={15} />,
+      isActive:
+        mode === 'direct' &&
+        (activeView === 'units' || activeView === 'dashboard') &&
+        !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('direct');
+        setActiveView('units');
+      },
+    },
+    {
+      id: 'atlas',
+      label: 'Atlas Matemático',
+      icon: <Film size={15} />,
+      isActive: mode === 'direct' && activeView === 'atlas' && !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('direct');
+        setActiveView('atlas');
+      },
+    },
+    {
+      id: 'latex',
+      label: 'Lab LaTeX',
+      icon: <FileCode2 size={15} />,
+      isActive: mode === 'direct' && activeView === 'latex' && !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('direct');
+        setActiveView('latex');
+      },
+    },
+    {
+      id: 'rpg',
+      label: 'Misiones & Roles',
+      icon: <Award size={15} />,
+      isActive: mode === 'direct' && activeView === 'rpg' && !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('direct');
+        setActiveView('rpg');
+      },
+    },
+    {
+      id: 'manual',
+      label: 'Manual',
+      icon: <BookOpen size={15} />,
+      isActive: mode === 'direct' && activeView === 'manual' && !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('direct');
+        setActiveView('manual');
+      },
+    },
   ];
 
   return (
     <header className="app-header-nav">
       <div
         style={{
-          maxWidth: '1400px',
+          maxWidth: '1440px',
           margin: '0 auto',
           padding: '0.65rem 1.5rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '1rem',
+          gap: '1.25rem',
           flexWrap: 'nowrap',
           overflowX: 'auto',
         }}
       >
-        {/* Logotipo / Marca sobria tipo Atlas */}
+        {/* Logotipo Institucional */}
         <div
           onClick={() => {
             closeTopic();
-            setActiveView('dashboard');
+            setMode('direct');
+            setActiveView('search');
           }}
+          title="Ir al motor de búsqueda principal"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -89,8 +167,8 @@ export const Navbar: React.FC = () => {
         >
           <div
             style={{
-              width: '32px',
-              height: '32px',
+              width: '34px',
+              height: '34px',
               borderRadius: 'var(--radius-sm)',
               backgroundColor: 'var(--color-blue-soft)',
               border: '1px solid var(--color-blue-border)',
@@ -116,238 +194,74 @@ export const Navbar: React.FC = () => {
               La Máquina de Minería
             </div>
             <div style={{ fontSize: '0.72rem', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-              Ruta del Conocimiento
+              Motor de Búsqueda & Investigación
             </div>
           </div>
         </div>
 
-        {/* =========================================================================
-            BLOQUE CENTRAL: SELECTOR DE MODO CLARO & CONTEXTO
-            ========================================================================= */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
-          {/* Selector de Modo Principal (La Máquina vs Modo Directo) */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: 'rgba(15, 23, 42, 0.9)',
-              padding: '3px',
-              borderRadius: 'var(--radius-sm)',
-              border: '1px solid rgba(255, 255, 255, 0.14)',
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => {
-                closeTopic();
-                setMode('map');
-              }}
-              title="Entrar a La Máquina (Línea interactiva de 5 estaciones)"
-              style={{
-                padding: '0.35rem 0.85rem',
-                borderRadius: 'var(--radius-sm)',
-                border: 'none',
-                fontSize: '0.8125rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                backgroundColor: mode === 'map' ? 'var(--color-terracotta)' : 'transparent',
-                color: mode === 'map' ? '#FFFFFF' : '#94A3B8',
-                boxShadow: mode === 'map' ? '0 2px 10px rgba(234, 88, 12, 0.45)' : 'none',
-                transition: 'all var(--transition-fast)',
-              }}
-            >
-              <Cog size={14} />
-              <span>🏭 La Máquina</span>
-            </button>
+        {/* Barra Central Unificada: 7 Funciones Únicas sin Repetición */}
+        <nav
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+            flexShrink: 0,
+            backgroundColor: 'rgba(15, 23, 42, 0.65)',
+            padding: '4px',
+            borderRadius: '10px',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+          }}
+        >
+          {navItems.map((item) => {
+            const isSpecialActive = item.isSpecial && item.isActive;
+            const isNormalActive = !item.isSpecial && item.isActive;
 
-            <button
-              type="button"
-              onClick={() => {
-                closeTopic();
-                setMode('direct');
-              }}
-              title="Entrar a Modo Directo (Suite con Dashboard, Unidades, Atlas, Manual...)"
-              style={{
-                padding: '0.35rem 0.85rem',
-                borderRadius: 'var(--radius-sm)',
-                border: 'none',
-                fontSize: '0.8125rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                backgroundColor: mode === 'direct' ? 'var(--color-blue-ink)' : 'transparent',
-                color: mode === 'direct' ? '#FFFFFF' : '#94A3B8',
-                boxShadow: mode === 'direct' ? '0 2px 10px rgba(37, 99, 235, 0.45)' : 'none',
-                transition: 'all var(--transition-fast)',
-              }}
-            >
-              <LayoutDashboard size={14} />
-              <span>🧭 Modo Directo</span>
-            </button>
-          </div>
+            let bgColor = 'transparent';
+            let textColor = '#CBD5E1';
+            let borderColor = 'transparent';
+            let boxShadow = 'none';
 
-          {/* Divisor vertical */}
-          <div style={{ height: '22px', width: '1px', backgroundColor: 'rgba(255, 255, 255, 0.15)' }} />
+            if (isSpecialActive) {
+              bgColor = 'var(--color-terracotta, #EA580C)';
+              textColor = '#FFFFFF';
+              boxShadow = '0 2px 10px rgba(234, 88, 12, 0.45)';
+            } else if (isNormalActive) {
+              bgColor = 'rgba(37, 99, 235, 0.25)';
+              textColor = '#60A5FA';
+              borderColor = 'rgba(96, 165, 250, 0.5)';
+              boxShadow = '0 0 12px rgba(37, 99, 235, 0.3)';
+            }
 
-          {/* =======================================================================
-              SI ESTÁ EN MODO LA MÁQUINA: Barra contextual de herramientas de planta
-              ======================================================================= */}
-          {mode === 'map' ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  padding: '0.3rem 0.75rem',
-                  backgroundColor: 'rgba(181, 83, 47, 0.08)',
-                  border: '1px solid var(--color-terracotta-border)',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  color: 'var(--color-terracotta)',
-                }}
-              >
-                <span
-                  style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--color-terracotta)',
-                    display: 'inline-block',
-                    boxShadow: '0 0 6px var(--color-terracotta)',
-                  }}
-                />
-                <span>Línea de 5 Estaciones (Banda Activa)</span>
-              </div>
-
+            return (
               <button
+                key={item.id}
                 type="button"
-                onClick={() => setIsGuideOpen(true)}
-                title="Explicación detallada de qué funciones pertenecen a La Máquina y cuáles a Modo Directo"
+                onClick={item.onClick}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.35rem',
-                  padding: '0.32rem 0.65rem',
+                  gap: '0.4rem',
+                  padding: '0.38rem 0.75rem',
                   borderRadius: 'var(--radius-sm)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                  color: '#F1F5F9',
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
+                  border: `1px solid ${borderColor}`,
+                  fontSize: '0.8125rem',
+                  fontWeight: item.isActive ? 700 : 500,
                   cursor: 'pointer',
+                  backgroundColor: bgColor,
+                  color: textColor,
+                  boxShadow: boxShadow,
                   transition: 'all var(--transition-fast)',
                 }}
               >
-                <HelpCircle size={14} style={{ color: '#FDBA74' }} />
-                <span>¿Cómo se dividen?</span>
+                {item.icon}
+                <span>{item.label}</span>
               </button>
+            );
+          })}
+        </nav>
 
-              <button
-                type="button"
-                onClick={() => {
-                  closeTopic();
-                  setMode('direct');
-                  setActiveView('dashboard');
-                }}
-                title="Ir a Modo Directo para ver Dashboard, Atlas, Manual, etc."
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.35rem',
-                  padding: '0.32rem 0.75rem',
-                  borderRadius: 'var(--radius-sm)',
-                  border: '1px solid var(--color-blue-border)',
-                  backgroundColor: 'var(--color-blue-soft)',
-                  color: 'var(--color-blue-ink)',
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all var(--transition-fast)',
-                }}
-              >
-                <span>Ver Modo Directo</span>
-                <ArrowRight size={13} />
-              </button>
-            </div>
-          ) : (
-            /* =======================================================================
-               SI ESTÁ EN MODO DIRECTO: Muestra las 7 herramientas directas
-               ======================================================================= */
-            <nav
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.3rem',
-              }}
-            >
-              {navItems.map((item) => {
-                const active = !selectedTopic && activeView === item.view;
-                return (
-                  <button
-                    key={item.view}
-                    type="button"
-                    onClick={() => {
-                      closeTopic();
-                      setMode('direct');
-                      setActiveView(item.view);
-                    }}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.35rem',
-                      padding: '0.32rem 0.6rem',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid',
-                      borderColor: active ? 'rgba(96, 165, 250, 0.5)' : 'transparent',
-                      fontSize: '0.8rem',
-                      fontWeight: active ? 700 : 500,
-                      cursor: 'pointer',
-                      backgroundColor: active ? 'rgba(37, 99, 235, 0.25)' : 'transparent',
-                      color: active ? '#60A5FA' : '#CBD5E1',
-                      transition: 'all var(--transition-fast)',
-                      boxShadow: active ? '0 0 12px rgba(37, 99, 235, 0.3)' : 'none',
-                    }}
-                  >
-                    {item.icon}
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-
-              <button
-                type="button"
-                onClick={() => setIsGuideOpen(true)}
-                title="¿Cómo se dividen las funciones entre La Máquina y Modo Directo?"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.25rem',
-                  padding: '0.32rem 0.5rem',
-                  borderRadius: 'var(--radius-sm)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
-                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                  color: '#94A3B8',
-                  fontSize: '0.78rem',
-                  cursor: 'pointer',
-                }}
-              >
-                <HelpCircle size={14} />
-              </button>
-            </nav>
-          )}
-        </div>
-
-        {/* =========================================================================
-            LADO DERECHO: SELECTOR DE TEMA CLARO / OSCURO
-            ========================================================================= */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexShrink: 0 }}>
+        {/* Lado Derecho: Selector de Tema y Carnet / Avatar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
           {/* Botón de Identidad Académica / Avatar */}
           <button
             type="button"
@@ -356,8 +270,8 @@ export const Navbar: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.45rem',
-              padding: '0.2rem 0.65rem 0.2rem 0.25rem',
+              gap: '0.5rem',
+              padding: '0.22rem 0.75rem 0.22rem 0.3rem',
               borderRadius: '9999px',
               border: '1px solid rgba(255, 255, 255, 0.16)',
               backgroundColor: 'rgba(255, 255, 255, 0.08)',
@@ -377,15 +291,16 @@ export const Navbar: React.FC = () => {
             </div>
           </button>
 
+          {/* Selector de Tema */}
           <button
             type="button"
             onClick={toggleTheme}
-            title={isDark ? 'Cambiar a Modo Claro Moderno' : 'Cambiar a Modo Oscuro Telemetría'}
+            title={isDark ? 'Cambiar a Modo Claro Moderno' : 'Cambiar a Modo Oscuro'}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '0.35rem',
-              padding: '0.35rem 0.65rem',
+              padding: '0.38rem 0.65rem',
               borderRadius: 'var(--radius-sm)',
               border: '1px solid rgba(255, 255, 255, 0.15)',
               fontSize: '0.8125rem',
@@ -404,20 +319,6 @@ export const Navbar: React.FC = () => {
       </div>
 
       <AcademicTicker />
-
-      {/* Modal Interactivo Explicativo de Separación de Funciones */}
-      <ModesGuideModal
-        isOpen={isGuideOpen}
-        onClose={() => setIsGuideOpen(false)}
-        currentMode={mode}
-        onSelectMode={(selectedM, selectedV) => {
-          setMode(selectedM);
-          if (selectedV) {
-            setActiveView(selectedV);
-          }
-          closeTopic();
-        }}
-      />
 
       {/* Modal de Carnet Académico & Editor de Avatar */}
       <AvatarModal

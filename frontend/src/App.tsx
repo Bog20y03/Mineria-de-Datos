@@ -1,7 +1,6 @@
 import React from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Navbar } from './components/Navbar/Navbar';
-import { AcademicDashboard } from './components/Dashboard/AcademicDashboard';
 import { UnitsExplorer } from './components/Units/UnitsExplorer';
 import { SearchEngine } from './components/Search/SearchEngine';
 import { LatexLab } from './components/Latex/LatexLab';
@@ -110,14 +109,13 @@ const MainContent: React.FC = () => {
         </div>
       ) : (
         <div key={`view-${activeView}`} className="view-transition">
-          {activeView === 'dashboard' && <AcademicDashboard />}
+          {(activeView === 'dashboard' || activeView === 'units') && <UnitsExplorer />}
           {activeView === 'rpg' && <RPGAcademicView />}
-          {activeView === 'units' && <UnitsExplorer />}
           {activeView === 'atlas' && <AtlasView />}
           {activeView === 'search' && <SearchEngine />}
           {activeView === 'latex' && <LatexLab />}
           {activeView === 'manual' && <InteractiveManual />}
-          {activeView === 'profile' && <AcademicDashboard />}
+          {activeView === 'profile' && <RPGAcademicView />}
         </div>
       )}
     </main>

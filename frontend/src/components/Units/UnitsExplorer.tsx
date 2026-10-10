@@ -12,7 +12,7 @@ import {
   // Button,
   type RouteNode,
 } from '../ui';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Database, Code2, FileCode, Layers } from 'lucide-react';
 import type { UnitId } from '../../types/domain';
 
 export const UnitsExplorer: React.FC = () => {
@@ -75,14 +75,155 @@ export const UnitsExplorer: React.FC = () => {
         gap: '2rem',
       }}
     >
-      {/* 1. Selector Superior de Unidades */}
+      {/* 1. Indicadores Clave Consolidados de Minería de Datos */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '1rem',
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: 'var(--color-card)',
+            padding: '0.9rem 1.15rem',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-border)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.85rem',
+          }}
+        >
+          <div
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '10px',
+              backgroundColor: 'rgba(2, 132, 199, 0.12)',
+              color: 'var(--color-blue-ink)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Layers size={20} />
+          </div>
+          <div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-ink)', lineHeight: 1.1 }}>
+              {course.metricas?.totalTemas ?? 24} Temas
+            </div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--color-ink-muted)' }}>4 Zonas Curriculares</div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: 'var(--color-card)',
+            padding: '0.9rem 1.15rem',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-border)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.85rem',
+          }}
+        >
+          <div
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '10px',
+              backgroundColor: 'rgba(5, 150, 105, 0.12)',
+              color: '#059669',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Database size={20} />
+          </div>
+          <div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-ink)', lineHeight: 1.1 }}>
+              {course.metricas?.datasets ?? 26} Datasets
+            </div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--color-ink-muted)' }}>Curaduría CSV Verificada</div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: 'var(--color-card)',
+            padding: '0.9rem 1.15rem',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-border)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.85rem',
+          }}
+        >
+          <div
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '10px',
+              backgroundColor: 'rgba(124, 58, 237, 0.12)',
+              color: '#7C3AED',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Code2 size={20} />
+          </div>
+          <div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-ink)', lineHeight: 1.1 }}>
+              {course.metricas?.ejemplosR ?? 24} Scripts en R
+            </div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--color-ink-muted)' }}>Modelos Reproducibles</div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: 'var(--color-card)',
+            padding: '0.9rem 1.15rem',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-border)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.85rem',
+          }}
+        >
+          <div
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '10px',
+              backgroundColor: 'rgba(234, 88, 12, 0.12)',
+              color: 'var(--color-terracotta)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FileCode size={20} />
+          </div>
+          <div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-ink)', lineHeight: 1.1 }}>
+              {course.metricas?.documentosLatex ?? 26} Capítulos
+            </div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--color-ink-muted)' }}>Manuscritos LaTeX</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Selector Superior de Unidades */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--color-ink-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Exploración Curricular
           </span>
           <h2 className="atlas-title" style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: '0.2rem 0 0' }}>
-            Zonas de Minería de Datos
+            Temario & Zonas de Estudio
           </h2>
         </div>
 

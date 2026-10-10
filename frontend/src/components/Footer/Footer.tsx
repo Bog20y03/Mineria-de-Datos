@@ -6,7 +6,6 @@ import {
   Layers,
   Search,
   FileCode2,
-  BookOpen,
   ShieldCheck,
   Activity,
   Award,
@@ -136,7 +135,7 @@ export const Footer: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => handleNav(() => { setMode('direct'); setActiveView('dashboard'); })}
+              onClick={() => handleNav(() => { setMode('direct'); setActiveView('units'); })}
               style={{
                 background: 'none',
                 border: 'none',
@@ -152,7 +151,7 @@ export const Footer: React.FC = () => {
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-blue-ink)')}
               onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-ink-secondary)')}
             >
-              <Layers size={13} /> Dashboard
+              <Layers size={13} /> Temario & Unidades
             </button>
 
             <button
@@ -173,28 +172,7 @@ export const Footer: React.FC = () => {
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-terracotta)')}
               onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-ink-secondary)')}
             >
-              <Award size={13} /> Juego de Roles
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNav(() => { setMode('direct'); setActiveView('units'); })}
-              style={{
-                background: 'none',
-                border: 'none',
-                padding: '0.2rem 0',
-                color: 'var(--color-ink-secondary)',
-                fontSize: '11.5px',
-                textAlign: 'left',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-blue-ink)')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-ink-secondary)')}
-            >
-              <BookOpen size={13} /> Zonas de Estudio
+              <Award size={13} /> Misiones & Roles
             </button>
 
             <button
