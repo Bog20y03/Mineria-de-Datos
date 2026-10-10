@@ -15,7 +15,7 @@ if not exist "%PHP_EXE%" (
 )
 
 echo [1/3] Iniciando Servidor PHP Backend en http://localhost:8000...
-start "Backend PHP - Mineria de Datos" "%PHP_EXE%" -S localhost:8000
+start "Backend PHP - Mineria de Datos" "%PHP_EXE%" -S 0.0.0.0:8000
 
 echo [2/3] Iniciando Frontend React (Vite) en http://localhost:5173...
 cd /d "%~dp0frontend"

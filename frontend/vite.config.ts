@@ -15,32 +15,46 @@ async function resolveBackendConfig() {
     }
   }
 
-  // 1. Probar si el servidor interno PHP (localhost:8000) está respondiendo
-  const hasPhpCli = await new Promise<boolean>((resolve) => {
-    const req = http.get('http://127.0.0.1:8000/api/index.php?action=progress', { timeout: 300 }, (res) => {
-      resolve(res.statusCode === 200)
+  const checkUrl = (url: string) =>
+    new Promise<boolean>((resolve) => {
+      const req = http.get(url, { timeout: 1500 }, (res) => {
+        resolve(res.statusCode === 200)
+      })
+      req.on('error', () => resolve(false))
+      req.on('timeout', () => {
+        req.destroy()
+        resolve(false)
+      })
     })
-    req.on('error', () => resolve(false))
-    req.on('timeout', () => {
-      req.destroy()
-      resolve(false)
-    })
-  })
 
-  if (hasPhpCli) {
-    return {
-      target: 'http://localhost:8000',
-      prefix: '',
-    }
+  // 1. Probar servidor PHP CLI (127.0.0.1:8000, localhost:8000 o [::1]:8000)
+  const is127 = await checkUrl('http://127.0.0.1:8000/api/index.php?action=progress')
+  if (is127) {
+    return { target: 'http://127.0.0.1:8000', prefix: '' }
   }
 
-  // 2. Por defecto en XAMPP, el backend se sirve desde Apache (puerto 80) en htdocs/<carpeta>
+  const isLocalhost = await checkUrl('http://localhost:8000/api/index.php?action=progress')
+  if (isLocalhost) {
+    return { target: 'http://localhost:8000', prefix: '' }
+  }
+
+  const isIpv6 = await checkUrl('http://[::1]:8000/api/index.php?action=progress')
+  if (isIpv6) {
+    return { target: 'http://[::1]:8000', prefix: '' }
+  }
+
+  // 2. Probar si Apache (puerto 80) realmente responde 200 en la carpeta
   const folderName = path.basename(path.resolve(__dirname, '..'))
   const apachePrefix = `/${encodeURIComponent(folderName)}`
+  const isApache = await checkUrl(`http://localhost${apachePrefix}/api/index.php?action=progress`)
+  if (isApache) {
+    return { target: 'http://localhost', prefix: apachePrefix }
+  }
 
+  // 3. Fallback seguro por defecto: servidor PHP CLI en 127.0.0.1:8000
   return {
-    target: 'http://localhost',
-    prefix: apachePrefix,
+    target: 'http://127.0.0.1:8000',
+    prefix: '',
   }
 }
 
@@ -62,4 +76,3 @@ export default defineConfig(async () => {
     },
   }
 })
-
