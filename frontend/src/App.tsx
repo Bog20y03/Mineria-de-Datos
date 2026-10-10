@@ -11,6 +11,7 @@ import { RPGAcademicView } from './components/RPG/RPGAcademicView';
 import { TopicPage } from './pages/TopicPage';
 import { UiKitView } from './pages/UiKitView';
 import { AtlasView } from './pages/AtlasView';
+import { DossierView } from './components/Dossier';
 import { Footer } from './components/Footer/Footer';
 import { AlertCircle, Loader2 } from 'lucide-react';
 
@@ -116,6 +117,7 @@ const MainContent: React.FC = () => {
           {activeView === 'latex' && <LatexLab />}
           {activeView === 'manual' && <InteractiveManual />}
           {activeView === 'profile' && <RPGAcademicView />}
+          {activeView === 'dossier' && <DossierView />}
         </div>
       )}
     </main>

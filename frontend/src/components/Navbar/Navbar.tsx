@@ -9,6 +9,7 @@ import {
   FileCode2,
   Award,
   BookOpen,
+  ScrollText,
   Sun,
   Moon,
 } from 'lucide-react';
@@ -118,6 +119,17 @@ export const Navbar: React.FC = () => {
         closeTopic();
         setMode('direct');
         setActiveView('rpg');
+      },
+    },
+    {
+      id: 'dossier',
+      label: 'Dossier Sustentación',
+      icon: <ScrollText size={15} />,
+      isActive: mode === 'direct' && activeView === 'dossier' && !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('direct');
+        setActiveView('dossier');
       },
     },
     {

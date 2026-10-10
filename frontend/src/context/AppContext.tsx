@@ -13,7 +13,7 @@ import { MAP_MIN_WIDTH } from '../config';
 
 export type AppMode = 'map' | 'direct';
 
-export type ActiveView = 'dashboard' | 'units' | 'atlas' | 'search' | 'latex' | 'manual' | 'profile' | 'uikit' | 'rpg';
+export type ActiveView = 'dashboard' | 'units' | 'atlas' | 'search' | 'latex' | 'manual' | 'profile' | 'uikit' | 'rpg' | 'dossier';
 
 interface AppContextType {
   mode: AppMode;
@@ -36,6 +36,10 @@ interface AppContextType {
   selectedTopic: { unitId: UnitId; topicId: string } | null;
   openTopic: (unitId: UnitId, topicId: string) => void;
   closeTopic: () => void;
+
+  // Dossier de Sustentación
+  dossierTarget: { unitId: UnitId; topicId: string } | null;
+  openDossier: (unitId?: UnitId, topicId?: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -131,6 +135,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setSelectedTopic(null);
   };
 
+  const [dossierTarget, setDossierTarget] = useState<{ unitId: UnitId; topicId: string } | null>(null);
+
+  const openDossier = (unitId?: UnitId, topicId?: string) => {
+    if (unitId && topicId) {
+      setDossierTarget({ unitId, topicId });
+    }
+    setSelectedTopic(null);
+    setModeState('direct');
+    setActiveView('dossier');
+  };
+
   // Gamificación calculada puramente sobre datos verificados
   const { xp, level, achievements } = useMemo(() => {
     if (!course) {
@@ -162,6 +177,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         selectedTopic,
         openTopic,
         closeTopic,
+        dossierTarget,
+        openDossier,
       }}
     >
       {children}

@@ -27,12 +27,13 @@ import {
   ExternalLink,
   Library,
   ArrowRight,
+  ScrollText,
 } from 'lucide-react';
 import { TopicBibliography } from '../components/Topics/TopicBibliography';
 import { TopicRLaboratory } from '../components/Topics/TopicRLaboratory';
 
 export const TopicPage: React.FC = () => {
-  const { selectedTopic, closeTopic, setActiveView } = useApp();
+  const { selectedTopic, closeTopic, setActiveView, openDossier } = useApp();
   const [data, setData] = useState<TopicDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -186,16 +187,27 @@ export const TopicPage: React.FC = () => {
               </h1>
             </div>
 
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                closeTopic();
-                setActiveView('units');
-              }}
-            >
-              Volver a la Unidad
-            </Button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => openDossier(selectedTopic.unitId, selectedTopic.topicId)}
+                title="Generar Artículo y Dossier de Sustentación Formal"
+              >
+                <ScrollText size={14} style={{ marginRight: '0.4rem' }} />
+                Dossier de Sustentación
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  closeTopic();
+                  setActiveView('units');
+                }}
+              >
+                Volver a la Unidad
+              </Button>
+            </div>
           </div>
         }
       >

@@ -748,5 +748,58 @@ html, body {
   animation: shimmerGleam 6s infinite;
 }
 
+/* ==========================================================================
+   ESTILOS DE IMPRESIÓN Y EXPORTACIÓN A PDF (DOSSIER ACADÉMICO)
+   ========================================================================== */
+@media print {
+  /* Ocultar elementos de navegación y controles de la aplicación */
+  header,
+  footer,
+  .app-header-nav,
+  .no-print,
+  .academic-ticker,
+  button,
+  .btn,
+  nav[aria-label="Migas de pan"] {
+    display: none !important;
+  }
 
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 10pt !important;
+  }
 
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .dossier-print-container {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Evitar saltos de página incómodos dentro de tablas, figuras o bloques de código */
+  table,
+  figure,
+  pre,
+  .matrix-grid,
+  section {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  @page {
+    size: letter;
+    margin: 1.8cm 1.5cm;
+  }
+}

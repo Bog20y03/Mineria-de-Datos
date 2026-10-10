@@ -19,6 +19,7 @@ import {
   Download,
   Loader2,
   Library,
+  ScrollText,
 } from 'lucide-react';
 import { TopicBibliography } from '../Topics/TopicBibliography';
 import { TopicRLaboratory } from '../Topics/TopicRLaboratory';
@@ -26,7 +27,7 @@ import { TopicRLaboratory } from '../Topics/TopicRLaboratory';
 type TabKey = 'resumen' | 'fuentes' | 'busquedas' | 'documentos' | 'dataset' | 'r' | 'resultados' | 'latex';
 
 export const TopicDetailModal: React.FC = () => {
-  const { selectedTopic, closeTopic } = useApp();
+  const { selectedTopic, closeTopic, openDossier } = useApp();
   const [data, setData] = useState<TopicDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -190,6 +191,29 @@ export const TopicDetailModal: React.FC = () => {
                 </button>
               );
             })}
+
+            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', paddingLeft: '0.5rem' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  closeTopic();
+                  openDossier(selectedTopic.unitId, selectedTopic.topicId);
+                }}
+                className="btn btn-primary"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  fontSize: '0.78rem',
+                  padding: '0.35rem 0.75rem',
+                  whiteSpace: 'nowrap',
+                }}
+                title="Generar Artículo y Dossier Académico Formal"
+              >
+                <ScrollText size={13} />
+                Dossier de Sustentación
+              </button>
+            </div>
           </div>
 
           {/* TAB 1: RESUMEN / README */}
