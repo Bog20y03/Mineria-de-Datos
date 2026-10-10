@@ -112,6 +112,8 @@ export interface DatasetInfo {
 export interface CodeFile {
   archivo: string;
   codigo: string;
+  titulo?: string;
+  categoria?: 'modelo' | 'eda' | 'metricas' | 'general';
 }
 
 export interface ResultImage {
@@ -134,6 +136,7 @@ export interface TopicDetail {
   documents: AcademicDocument[];
   dataset: DatasetInfo;
   rExample: CodeFile | null;
+  rScripts?: CodeFile[];
   results: TopicResults;
   latex: CodeFile | null;
 }

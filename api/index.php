@@ -236,13 +236,43 @@ if ($action === 'topic_data') {
         }
     }
 
-    // 5. Ejemplo en R (Código del script)
+    // 5. Ejemplos en R (Múltiples scripts por tema: Modelo, EDA, Diagnóstico)
     $codigoR = '';
     $scriptRName = '';
+    $scriptsR = [];
     $rFiles = glob("$tDir/ejemplos_R/*.R");
-    if (!empty($rFiles) && file_exists($rFiles[0])) {
-        $codigoR = file_get_contents($rFiles[0]);
-        $scriptRName = basename($rFiles[0]);
+    if (!empty($rFiles)) {
+        foreach ($rFiles as $rf) {
+            if (file_exists($rf)) {
+                $baseName = basename($rf);
+                $content = file_get_contents($rf);
+                
+                $titulo = $baseName;
+                $categoria = 'modelo';
+                if (stripos($baseName, 'eda') !== false || stripos($baseName, 'exploratorio') !== false) {
+                    $titulo = 'Análisis Exploratorio (EDA)';
+                    $categoria = 'eda';
+                } elseif (stripos($baseName, 'metrica') !== false || stripos($baseName, 'diagnostico') !== false || stripos($baseName, 'validacion') !== false) {
+                    $titulo = 'Diagnóstico y Métricas';
+                    $categoria = 'metricas';
+                } else {
+                    $titulo = 'Modelo Principal';
+                    $categoria = 'modelo';
+                }
+
+                $scriptsR[] = [
+                    'archivo' => $baseName,
+                    'titulo' => $titulo,
+                    'categoria' => $categoria,
+                    'codigo' => $content,
+                    'tamano' => filesize($rf)
+                ];
+            }
+        }
+        if (!empty($scriptsR)) {
+            $codigoR = $scriptsR[0]['codigo'];
+            $scriptRName = $scriptsR[0]['archivo'];
+        }
     }
 
     // 6. Resultados (Imágenes PNG y métricas TXT)
@@ -285,7 +315,8 @@ if ($action === 'topic_data') {
         ],
         'ejemplo_r' => [
             'archivo' => $scriptRName,
-            'codigo' => $codigoR
+            'codigo' => $codigoR,
+            'scripts' => $scriptsR
         ],
         'resultados' => [
             'imagenes' => $imagenes,
@@ -304,6 +335,7 @@ if ($action === 'topic_data') {
 if ($action === 'run_r') {
     $u = $_POST['u'] ?? $_GET['u'] ?? '';
     $t = $_POST['t'] ?? $_GET['t'] ?? '';
+    $requestedScript = $_POST['script'] ?? $_GET['script'] ?? '';
 
     $rFiles = glob("$baseDir/$u/$t/ejemplos_R/*.R");
     if (empty($rFiles) || !file_exists($rFiles[0])) {
@@ -311,6 +343,14 @@ if ($action === 'run_r') {
     }
 
     $scriptPath = $rFiles[0];
+    if (!empty($requestedScript)) {
+        foreach ($rFiles as $rf) {
+            if (basename($rf) === $requestedScript) {
+                $scriptPath = $rf;
+                break;
+            }
+        }
+    }
     
     // Detección dinámica del binario Rscript
     $rscriptExecutable = $rscriptBin;

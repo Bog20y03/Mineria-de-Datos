@@ -9,10 +9,18 @@ export type { ApiRunRResponse };
  * Servicio de ejecución de R (runService / rService)
  * Invoca el endpoint api/index.php?action=run_r con los parámetros de unidad y tema.
  */
-export async function runTopicRScript(unitId: UnitId, topicId: string): Promise<RRunResult> {
+export async function runTopicRScript(
+  unitId: UnitId,
+  topicId: string,
+  scriptName?: string
+): Promise<RRunResult> {
+  const body: Record<string, string> = { u: unitId, t: topicId };
+  if (scriptName) {
+    body.script = scriptName;
+  }
   const raw = await apiPost<ApiRunRResponse>(
     { action: 'run_r' },
-    { u: unitId, t: topicId }
+    body
   );
 
   const isOk = raw.status === 'success' && raw.exit_code === 0;

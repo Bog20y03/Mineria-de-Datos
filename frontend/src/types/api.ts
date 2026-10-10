@@ -55,6 +55,14 @@ export interface ApiImage {
   url: string;
 }
 
+export interface ApiRScript {
+  archivo: string;
+  titulo?: string;
+  categoria?: 'modelo' | 'eda' | 'metricas' | 'general';
+  codigo: string;
+  tamano?: number;
+}
+
 /** GET ?action=topic_data&u=&t= */
 export interface ApiTopicDataResponse {
   unidad_id: string;
@@ -70,7 +78,12 @@ export interface ApiTopicDataResponse {
     headers: string[];
     preview: string[][];
   };
-  ejemplo_r: { archivo: string; codigo: string };
+  ejemplo_r: {
+    archivo: string;
+    codigo: string;
+    scripts?: ApiRScript[];
+  };
+  scripts?: ApiRScript[];
   resultados: { imagenes: ApiImage[]; metricas: string };
   latex: { archivo: string; codigo: string };
 }

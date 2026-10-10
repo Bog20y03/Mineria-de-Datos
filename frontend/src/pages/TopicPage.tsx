@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { getTopicDetail } from '../services/topicService';
-import { executeRScript } from '../services/runService';
 import type { TopicDetail, AcademicDocument, SearchEquation } from '../types/domain';
 import {
   Card,
@@ -23,17 +22,14 @@ import {
   Code2,
   BarChart2,
   FileCode,
-  Play,
-  // RotateCcw,
   Copy,
   Download,
   ExternalLink,
-  CheckCircle2,
-  AlertCircle,
   Library,
   ArrowRight,
 } from 'lucide-react';
 import { TopicBibliography } from '../components/Topics/TopicBibliography';
+import { TopicRLaboratory } from '../components/Topics/TopicRLaboratory';
 
 export const TopicPage: React.FC = () => {
   const { selectedTopic, closeTopic, setActiveView } = useApp();
@@ -43,11 +39,6 @@ export const TopicPage: React.FC = () => {
 
   type TabKey = 'general' | 'fuentes' | 'busquedas' | 'documentos' | 'dataset' | 'r' | 'resultados' | 'latex';
   const [activeTab, setActiveTab] = useState<TabKey>('general');
-
-  // Ejecución R
-  const [runningR, setRunningR] = useState<boolean>(false);
-  const [rExecutionLog, setRExecutionLog] = useState<string | null>(null);
-  const [rExecutionSuccess, setRExecutionSuccess] = useState<boolean | null>(null);
   const [copiedLatex, setCopiedLatex] = useState<boolean>(false);
 
   useEffect(() => {
@@ -57,8 +48,6 @@ export const TopicPage: React.FC = () => {
     setLoading(true);
     setError(null);
     setActiveTab('general');
-    setRExecutionLog(null);
-    setRExecutionSuccess(null);
 
     getTopicDetail(selectedTopic.unitId, selectedTopic.topicId)
       .then((detail) => {
@@ -80,29 +69,6 @@ export const TopicPage: React.FC = () => {
   }, [selectedTopic]);
 
   if (!selectedTopic) return null;
-
-  const handleRunR = async () => {
-    if (!selectedTopic) return;
-    setRunningR(true);
-    setRExecutionLog(null);
-    setRExecutionSuccess(null);
-    try {
-      const res = await executeRScript(selectedTopic.unitId, selectedTopic.topicId);
-      setRExecutionSuccess(res.ok);
-      setRExecutionLog(res.salida || (res.ok ? 'Script ejecutado con éxito sin advertencias.' : 'Error durante la ejecución.'));
-      if (res.results.imagenes.length > 0 && data) {
-        setData({
-          ...data,
-          results: res.results,
-        });
-      }
-    } catch (err: unknown) {
-      setRExecutionSuccess(false);
-      setRExecutionLog(err instanceof Error ? err.message : 'Fallo en la llamada a R');
-    } finally {
-      setRunningR(false);
-    }
-  };
 
   const handleCopyLatex = () => {
     if (!data?.latex?.codigo) return;
@@ -129,7 +95,12 @@ export const TopicPage: React.FC = () => {
     { id: 'busquedas', label: 'Búsquedas', icon: <Search size={15} />, badge: data?.searches.length },
     { id: 'documentos', label: 'Documentos', icon: <FileText size={15} />, badge: data?.documents.length },
     { id: 'dataset', label: 'Dataset', icon: <Database size={15} /> },
-    { id: 'r', label: 'Ejemplo R', icon: <Code2 size={15} /> },
+    {
+      id: 'r',
+      label: 'Laboratorio R',
+      icon: <Code2 size={15} />,
+      badge: data?.rScripts && data.rScripts.length > 0 ? data.rScripts.length : data?.rExample ? 1 : undefined,
+    },
     { id: 'resultados', label: 'Resultados', icon: <BarChart2 size={15} />, badge: data?.results.imagenes.length },
     { id: 'latex', label: 'LaTeX', icon: <FileCode size={15} /> },
   ];
@@ -554,90 +525,22 @@ export const TopicPage: React.FC = () => {
               </div>
             )}
 
-            {/* PESTAÑA 5: EJEMPLO R (CON BOTÓN DE EJECUCIÓN REAL Y CONSOLA) */}
+            {/* PESTAÑA 5: LABORATORIO ESPECIALIZADO DE R */}
             {activeTab === 'r' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                  <div>
-                    <h4 style={{ fontSize: 'var(--text-base)', fontWeight: 700, margin: 0 }}>
-                      Script Reproducible: {data.rExample?.archivo || 'script.R'}
-                    </h4>
-                    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-ink-secondary)' }}>
-                      Ejecución nativa en el servidor local invocando <code>Rscript.exe</code> mediante <code>runService</code>.
-                    </span>
-                  </div>
-
-                  <Button
-                    variant="primary"
-                    size="md"
-                    loading={runningR}
-                    icon={<Play size={16} />}
-                    onClick={handleRunR}
-                  >
-                    {runningR ? 'Ejecutando en R...' : 'Ejecutar en R'}
-                  </Button>
-                </div>
-
-                {/* Consola de salida de R */}
-                {rExecutionLog !== null && (
-                  <div
-                    style={{
-                      padding: '1rem',
-                      backgroundColor: rExecutionSuccess ? 'var(--color-card-muted)' : 'var(--color-danger-bg)',
-                      border: `1px solid ${rExecutionSuccess ? 'var(--color-border)' : 'var(--color-danger-border)'}`,
-                      borderRadius: 'var(--radius-sm)',
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-                      {rExecutionSuccess ? (
-                        <CheckCircle2 size={16} color="var(--color-blue-ink)" />
-                      ) : (
-                        <AlertCircle size={16} color="var(--color-danger-ink)" />
-                      )}
-                      <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase' }}>
-                        {rExecutionSuccess ? 'Ejecución exitosa en R' : 'Error en la ejecución'}
-                      </span>
-                    </div>
-                    <pre
-                      style={{
-                        margin: 0,
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: 'var(--text-xs)',
-                        color: 'var(--color-ink)',
-                        whiteSpace: 'pre-wrap',
-                        maxHeight: '200px',
-                        overflowY: 'auto',
-                      }}
-                    >
-                      {rExecutionLog}
-                    </pre>
-                  </div>
-                )}
-
-                {/* Código fuente de R */}
-                <div>
-                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--color-ink-muted)', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
-                    Código Fuente en R:
-                  </div>
-                  <pre
-                    style={{
-                      margin: 0,
-                      padding: '1rem',
-                      backgroundColor: 'var(--color-card-muted)',
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-sm)',
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 'var(--text-xs)',
-                      color: 'var(--color-ink)',
-                      overflowX: 'auto',
-                      maxHeight: '400px',
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {data.rExample?.codigo || '# No hay código R registrado para este tema.'}
-                  </pre>
-                </div>
-              </div>
+              <TopicRLaboratory
+                unitId={selectedTopic.unitId}
+                topicId={selectedTopic.topicId}
+                topicName={data.topicName}
+                scripts={data.rScripts && data.rScripts.length > 0 ? data.rScripts : data.rExample ? [data.rExample] : []}
+                onExecutionSuccess={(newResults) => {
+                  if (data) {
+                    setData({
+                      ...data,
+                      results: newResults,
+                    });
+                  }
+                }}
+              />
             )}
 
             {/* PESTAÑA 6: RESULTADOS (GRÁFICAS Y MÉTRICAS) */}

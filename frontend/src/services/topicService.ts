@@ -34,6 +34,13 @@ export async function getTopicDetail(
         }
       : null;
 
+  const rScripts = (raw.ejemplo_r?.scripts || []).map((s) => ({
+    archivo: s.archivo,
+    titulo: s.titulo || s.archivo,
+    categoria: s.categoria || 'modelo',
+    codigo: s.codigo || '',
+  }));
+
   const results = {
     imagenes: mapImages(raw.resultados?.imagenes || []),
     metricas: emptyToNull(raw.resultados?.metricas),
@@ -57,6 +64,7 @@ export async function getTopicDetail(
     documents,
     dataset,
     rExample,
+    rScripts: rScripts.length > 0 ? rScripts : rExample ? [rExample] : [],
     results,
     latex,
   };

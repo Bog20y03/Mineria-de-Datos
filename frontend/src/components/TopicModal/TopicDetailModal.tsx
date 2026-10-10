@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { getTopicDetail } from '../../services/topicService';
-import { executeRScript } from '../../services/rService';
 import { Modal } from '../common/Modal';
 import { AcademicMarkdownViewer } from '../ui';
 import type { TopicDetail } from '../../types/domain';
@@ -14,7 +13,6 @@ import {
   BarChart2,
   FileCode,
   ExternalLink,
-  Play,
   CheckCircle2,
   AlertCircle,
   Copy,
@@ -23,6 +21,7 @@ import {
   Library,
 } from 'lucide-react';
 import { TopicBibliography } from '../Topics/TopicBibliography';
+import { TopicRLaboratory } from '../Topics/TopicRLaboratory';
 
 type TabKey = 'resumen' | 'fuentes' | 'busquedas' | 'documentos' | 'dataset' | 'r' | 'resultados' | 'latex';
 
@@ -33,10 +32,6 @@ export const TopicDetailModal: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabKey>('resumen');
 
-  // Ejecución R
-  const [runningR, setRunningR] = useState<boolean>(false);
-  const [rExecutionLog, setRExecutionLog] = useState<string | null>(null);
-  const [rExecutionSuccess, setRExecutionSuccess] = useState<boolean | null>(null);
   const [copiedLatex, setCopiedLatex] = useState<boolean>(false);
 
   useEffect(() => {
@@ -49,8 +44,6 @@ export const TopicDetailModal: React.FC = () => {
     setLoading(true);
     setError(null);
     setActiveTab('resumen');
-    setRExecutionLog(null);
-    setRExecutionSuccess(null);
 
     getTopicDetail(selectedTopic.unitId, selectedTopic.topicId)
       .then((detail) => {
@@ -72,29 +65,6 @@ export const TopicDetailModal: React.FC = () => {
   }, [selectedTopic]);
 
   if (!selectedTopic) return null;
-
-  const handleRunR = async () => {
-    if (!selectedTopic) return;
-    setRunningR(true);
-    setRExecutionLog(null);
-    setRExecutionSuccess(null);
-    try {
-      const res = await executeRScript(selectedTopic.unitId, selectedTopic.topicId);
-      setRExecutionSuccess(res.ok);
-      setRExecutionLog(res.salida || (res.ok ? 'Script ejecutado con éxito sin advertencias.' : 'Error durante la ejecución.'));
-      if (res.results.imagenes.length > 0 && data) {
-        setData({
-          ...data,
-          results: res.results,
-        });
-      }
-    } catch (err: unknown) {
-      setRExecutionSuccess(false);
-      setRExecutionLog(err instanceof Error ? err.message : 'Fallo en la llamada a R');
-    } finally {
-      setRunningR(false);
-    }
-  };
 
   const handleCopyLatex = () => {
     if (!data?.latex?.codigo) return;
@@ -120,7 +90,12 @@ export const TopicDetailModal: React.FC = () => {
     { key: 'busquedas', label: 'Búsquedas', icon: <Search size={16} />, count: data?.searches.length },
     { key: 'documentos', label: 'Documentos', icon: <FileText size={16} />, count: data?.documents.length },
     { key: 'dataset', label: 'Dataset', icon: <Database size={16} /> },
-    { key: 'r', label: 'Laboratorio R', icon: <Code2 size={16} /> },
+    {
+      key: 'r',
+      label: 'Laboratorio R',
+      icon: <Code2 size={16} />,
+      count: data?.rScripts && data.rScripts.length > 0 ? data.rScripts.length : (data?.rExample ? 1 : undefined),
+    },
     { key: 'resultados', label: 'Resultados', icon: <BarChart2 size={16} />, count: data?.results.imagenes.length },
     { key: 'latex', label: 'LaTeX', icon: <FileCode size={16} /> },
   ];
@@ -489,96 +464,22 @@ export const TopicDetailModal: React.FC = () => {
             </div>
           )}
 
-          {/* TAB 5: EJEMPLO EN R & EJECUCIÓN */}
+          {/* TAB 5: EJEMPLOS EN R & LABORATORIO INTERACTIVO */}
           {activeTab === 'r' && (
-            <div>
-              {data.rExample ? (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span className="badge badge-purple">{data.rExample.archivo}</span>
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>R v4.4.1 Reproducible</span>
-                    </div>
-
-                    {/* Botón de Ejecución Real */}
-                    <button
-                      type="button"
-                      onClick={handleRunR}
-                      disabled={runningR}
-                      className="btn btn-primary"
-                      style={{ fontSize: '0.85rem' }}
-                    >
-                      {runningR ? (
-                        <>
-                          <Loader2 size={16} className="spin" />
-                          Ejecutando en R...
-                        </>
-                      ) : (
-                        <>
-                          <Play size={16} />
-                          Ejecutar Script en Tiempo Real
-                        </>
-                      )}
-                    </button>
-                  </div>
-
-                  {/* Consola de Ejecución */}
-                  {rExecutionLog && (
-                    <div
-                      className="card"
-                      style={{
-                        padding: '1rem',
-                        backgroundColor: '#030712',
-                        border: `1px solid ${rExecutionSuccess ? 'var(--c-completed)' : 'var(--c-danger)'}`,
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                        {rExecutionSuccess ? (
-                          <CheckCircle2 size={16} style={{ color: 'var(--c-completed)' }} />
-                        ) : (
-                          <AlertCircle size={16} style={{ color: 'var(--c-danger)' }} />
-                        )}
-                        <span style={{ fontSize: '0.8rem', fontWeight: 600, color: rExecutionSuccess ? 'var(--c-completed)' : 'var(--c-danger)' }}>
-                          {rExecutionSuccess ? 'Ejecución exitosa (Rscript v4.4.1)' : 'Fallo de ejecución en R'}
-                        </span>
-                      </div>
-                      <pre
-                        style={{
-                          fontFamily: 'var(--font-mono)',
-                          fontSize: '0.75rem',
-                          color: '#e2e8f0',
-                          whiteSpace: 'pre-wrap',
-                          maxHeight: '200px',
-                          overflowY: 'auto',
-                        }}
-                      >
-                        {rExecutionLog}
-                      </pre>
-                    </div>
-                  )}
-
-                  {/* Editor / Código R */}
-                  <div className="card" style={{ padding: '1rem', backgroundColor: '#020617' }}>
-                    <pre
-                      style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: '0.8rem',
-                        color: '#93c5fd',
-                        lineHeight: 1.45,
-                        overflowX: 'auto',
-                        maxHeight: '400px',
-                      }}
-                    >
-                      {data.rExample.codigo}
-                    </pre>
-                  </div>
-                </div>
-              ) : (
-                <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                  Sin datos registrados en R para este tema.
-                </div>
-              )}
-            </div>
+            <TopicRLaboratory
+              unitId={selectedTopic.unitId}
+              topicId={selectedTopic.topicId}
+              topicName={data.topicName}
+              scripts={data.rScripts || (data.rExample ? [data.rExample] : [])}
+              onExecutionSuccess={(updatedResults) => {
+                if (updatedResults && updatedResults.imagenes.length > 0 && data) {
+                  setData({
+                    ...data,
+                    results: updatedResults,
+                  });
+                }
+              }}
+            />
           )}
 
           {/* TAB 6: RESULTADOS */}
