@@ -12,6 +12,7 @@ import {
   Sun,
   Moon,
   Film,
+  Award,
   HelpCircle,
   ArrowRight,
 } from 'lucide-react';
@@ -45,6 +46,7 @@ export const Navbar: React.FC = () => {
 
   const navItems: { view: ActiveView; label: string; icon: React.ReactNode }[] = [
     { view: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={15} /> },
+    { view: 'rpg', label: 'Juego de Roles', icon: <Award size={15} /> },
     { view: 'units', label: 'Unidades', icon: <Layers size={15} /> },
     { view: 'atlas', label: 'Atlas Matemático', icon: <Film size={15} /> },
     { view: 'search', label: 'Buscador', icon: <Search size={15} /> },

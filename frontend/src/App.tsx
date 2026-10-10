@@ -8,6 +8,7 @@ import { LatexLab } from './components/Latex/LatexLab';
 import { InteractiveManual } from './components/Manual/InteractiveManual';
 // import { MachinePlaceholder } from './components/Machine/MachinePlaceholder';
 import { MachineView } from './components/Machine/MachineView';
+import { RPGAcademicView } from './components/RPG/RPGAcademicView';
 import { TopicPage } from './pages/TopicPage';
 import { UiKitView } from './pages/UiKitView';
 import { AtlasView } from './pages/AtlasView';
@@ -109,6 +110,7 @@ const MainContent: React.FC = () => {
       ) : (
         <div key={`view-${activeView}`} className="view-transition">
           {activeView === 'dashboard' && <AcademicDashboard />}
+          {activeView === 'rpg' && <RPGAcademicView />}
           {activeView === 'units' && <UnitsExplorer />}
           {activeView === 'atlas' && <AtlasView />}
           {activeView === 'search' && <SearchEngine />}

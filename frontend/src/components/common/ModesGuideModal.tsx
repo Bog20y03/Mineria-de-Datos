@@ -18,6 +18,7 @@ import {
   FileText,
   Presentation,
   Play,
+  Award,
 } from 'lucide-react';
 import { type ActiveView } from '../../context/AppContext';
 
@@ -235,6 +236,12 @@ export const ModesGuideModal: React.FC<ModesGuideModalProps> = ({
                 icon: <LayoutDashboard size={14} />,
                 name: 'Dashboard',
                 desc: 'Métricas globales del curso, radar de integridad y progreso.',
+              },
+              {
+                view: 'rpg' as ActiveView,
+                icon: <Award size={14} />,
+                name: 'Juego de Roles',
+                desc: 'Especializaciones de investigación, campus de 4 zonas, misiones e hitos.',
               },
               {
                 view: 'units' as ActiveView,
