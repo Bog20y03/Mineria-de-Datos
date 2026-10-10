@@ -20,6 +20,7 @@ import {
   Shield,
   Layers,
 } from 'lucide-react';
+import { UserAvatar, AvatarModal } from '../Avatar';
 
 // ============================================================================
 // DEFINICIÓN DE ROLES ACADÉMICOS ESPECIALIZADOS
@@ -178,6 +179,8 @@ export const RPGAcademicView: React.FC = () => {
     }
     return 'cientifico_r';
   });
+
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
 
   // Zona académica activa para explorar
   const [activeZoneUnitId, setActiveZoneUnitId] = useState<UnitId>('UNIDAD_1');
@@ -557,47 +560,87 @@ export const RPGAcademicView: React.FC = () => {
         >
           {/* Bloque Izquierdo: Datos de Acreditación */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
-              <span
-                style={{
-                  backgroundColor: activeRole.color,
-                  color: '#FFFFFF',
-                  padding: '3px 10px',
-                  borderRadius: '9999px',
-                  fontSize: '0.72rem',
-                  fontWeight: 800,
-                  letterSpacing: '0.05em',
-                  textTransform: 'uppercase',
-                }}
-              >
-                Acreditación Oficial
-              </span>
-              <span
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.65rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <span
+                  style={{
+                    backgroundColor: activeRole.color,
+                    color: '#FFFFFF',
+                    padding: '3px 10px',
+                    borderRadius: '9999px',
+                    fontSize: '0.72rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.05em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Acreditación Oficial
+                </span>
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    fontSize: '0.78rem',
+                    color: 'var(--color-ink-muted)',
+                    fontWeight: 600,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      backgroundColor: '#10B981',
+                      boxShadow: '0 0 6px #10B981',
+                    }}
+                  />
+                  <strong>{unidadesOperadasCount} de 4</strong> Unidades Dominadas
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsAvatarModalOpen(true)}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.35rem',
-                  fontSize: '0.78rem',
-                  color: 'var(--color-ink-muted)',
-                  fontWeight: 600,
+                  gap: '0.4rem',
+                  padding: '0.3rem 0.75rem',
+                  borderRadius: 'var(--radius-sm)',
+                  border: `1px solid ${activeRole.color}`,
+                  backgroundColor: `${activeRole.color}15`,
+                  color: activeRole.color,
+                  fontSize: '0.76rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
                 }}
               >
-                <span
-                  style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    backgroundColor: '#10B981',
-                    boxShadow: '0 0 6px #10B981',
-                  }}
-                />
-                Operador en Línea: <strong>Bogota</strong> · <strong>{unidadesOperadasCount} de 4</strong> Unidades Dominadas
-              </span>
+                <Sparkles size={13} />
+                <span>Personalizar Carnet & Avatar</span>
+              </button>
             </div>
 
-            <h3 style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--color-ink)', margin: 0, letterSpacing: '-0.01em' }}>
-              {activeRole.titulo}
-            </h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.15rem' }}>
+              <UserAvatar
+                size="lg"
+                interactive
+                onClick={() => setIsAvatarModalOpen(true)}
+                showStatusDot
+                showBorder
+                borderWidth={2.5}
+                title="Haz clic para personalizar tu carnet y avatar"
+              />
+              <div>
+                <h3 style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--color-ink)', margin: 0, letterSpacing: '-0.01em' }}>
+                  {activeRole.titulo}
+                </h3>
+                <div style={{ fontSize: '0.8rem', color: 'var(--color-ink-muted)', marginTop: '2px' }}>
+                  Especialidad: <strong>{activeRole.categoria}</strong> • Credencial Verificada UDEC
+                </div>
+              </div>
+            </div>
 
             <p style={{ fontSize: '0.88rem', color: 'var(--color-ink-secondary)', margin: 0, lineHeight: 1.6 }}>
               {activeRole.descripcion}
@@ -1330,6 +1373,12 @@ export const RPGAcademicView: React.FC = () => {
           })}
         </div>
       </section>
+
+      {/* Modal de Carnet Académico & Editor de Avatar */}
+      <AvatarModal
+        isOpen={isAvatarModalOpen}
+        onClose={() => setIsAvatarModalOpen(false)}
+      />
     </div>
   );
 };

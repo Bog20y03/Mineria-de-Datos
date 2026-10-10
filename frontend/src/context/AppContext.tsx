@@ -100,6 +100,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   useEffect(() => {
     loadData();
+    const handleProfileUpdated = (e: Event) => {
+      const customEvent = e as CustomEvent<{ name: string; role: Role }>;
+      if (customEvent.detail) {
+        setUser((prev) => ({
+          ...prev,
+          nombre: customEvent.detail.name || prev.nombre,
+          rol: customEvent.detail.role || prev.rol,
+        }));
+      }
+    };
+    window.addEventListener('md_profile_updated', handleProfileUpdated);
+    return () => window.removeEventListener('md_profile_updated', handleProfileUpdated);
   }, []);
 
   const changeRole = (role: Role) => {

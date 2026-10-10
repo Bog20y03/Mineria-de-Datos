@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import { UserAvatar, AvatarModal } from '../Avatar';
 import {
   Cpu,
   Layers,
@@ -9,11 +10,11 @@ import {
   ShieldCheck,
   Activity,
   Award,
-  Sparkles,
 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { setMode, setActiveView, closeTopic, course, user } = useApp();
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
 
   const handleNav = (action: () => void) => {
     closeTopic();
@@ -337,12 +338,34 @@ export const Footer: React.FC = () => {
             © {new Date().getFullYear()} Universidad de Cundinamarca • Sistema de Investigación en Minería de Datos.
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '11px', color: 'var(--color-ink-secondary)' }}>
-            <Sparkles size={12} style={{ color: 'var(--color-terracotta)' }} />
-            <span>Carnet Académico: <strong>{user?.nombre || 'Investigador'}</strong> ({user?.rol || 'Estudiante'})</span>
+          <div
+            onClick={() => setIsAvatarModalOpen(true)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.55rem',
+              fontSize: '11px',
+              color: 'var(--color-ink-secondary)',
+              cursor: 'pointer',
+              padding: '2px 8px 2px 3px',
+              borderRadius: '9999px',
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid var(--color-border-light)',
+              transition: 'all 0.15s ease',
+            }}
+            title="Haz clic para abrir el Carnet Académico y Editor de Avatar"
+          >
+            <UserAvatar size="xs" showStatusDot />
+            <span>Carnet Académico: <strong>{user?.nombre || 'Alex Mendoza'}</strong> ({user?.rol || 'Estudiante'})</span>
           </div>
         </div>
       </div>
+
+      {/* Modal de Carnet Académico & Editor de Avatar */}
+      <AvatarModal
+        isOpen={isAvatarModalOpen}
+        onClose={() => setIsAvatarModalOpen(false)}
+      />
     </footer>
   );
 };

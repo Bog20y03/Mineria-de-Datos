@@ -18,10 +18,12 @@ import {
 } from 'lucide-react';
 import { AcademicTicker } from '../ui/AcademicTicker';
 import { ModesGuideModal } from '../common/ModesGuideModal';
+import { UserAvatar, AvatarModal } from '../Avatar';
 
 export const Navbar: React.FC = () => {
   const { mode, setMode, activeView, setActiveView, closeTopic, selectedTopic } = useApp();
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
 
   const [isDark, setIsDark] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -345,7 +347,36 @@ export const Navbar: React.FC = () => {
         {/* =========================================================================
             LADO DERECHO: SELECTOR DE TEMA CLARO / OSCURO
             ========================================================================= */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexShrink: 0 }}>
+          {/* Botón de Identidad Académica / Avatar */}
+          <button
+            type="button"
+            onClick={() => setIsAvatarModalOpen(true)}
+            title="Abrir Carnet Académico y Editor de Avatar"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '0.2rem 0.65rem 0.2rem 0.25rem',
+              borderRadius: '9999px',
+              border: '1px solid rgba(255, 255, 255, 0.16)',
+              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+              cursor: 'pointer',
+              transition: 'all var(--transition-fast)',
+              color: '#F1F5F9',
+            }}
+          >
+            <UserAvatar size="xs" showStatusDot />
+            <div style={{ textAlign: 'left', lineHeight: 1.15, display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#FFFFFF' }}>
+                Carnet
+              </span>
+              <span style={{ fontSize: '0.62rem', color: '#94A3B8' }}>
+                Avatar
+              </span>
+            </div>
+          </button>
+
           <button
             type="button"
             onClick={toggleTheme}
@@ -386,6 +417,12 @@ export const Navbar: React.FC = () => {
           }
           closeTopic();
         }}
+      />
+
+      {/* Modal de Carnet Académico & Editor de Avatar */}
+      <AvatarModal
+        isOpen={isAvatarModalOpen}
+        onClose={() => setIsAvatarModalOpen(false)}
       />
     </header>
   );

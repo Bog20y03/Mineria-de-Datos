@@ -11,11 +11,21 @@ const STORAGE_KEY_ROLE = 'md_active_role';
  */
 export async function checkSession(): Promise<AuthState> {
   const storedRole = (localStorage.getItem(STORAGE_KEY_ROLE) as Role) || 'estudiante';
+  let userName = 'Alex Mendoza';
+  try {
+    const rawProfile = localStorage.getItem('md_user_profile_config');
+    if (rawProfile) {
+      const parsed = JSON.parse(rawProfile);
+      if (parsed.name) userName = parsed.name;
+    }
+  } catch {
+    // fallback
+  }
   return {
     status: 'authenticated',
     user: {
       id: 'investigador_principal',
-      nombre: 'Investigador Académico',
+      nombre: userName,
       rol: storedRole,
     },
   };
