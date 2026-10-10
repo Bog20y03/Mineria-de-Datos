@@ -6,6 +6,7 @@ import {
   Button,
   StatusBadge,
   EmptyState,
+  AcademicMarkdownViewer,
 } from '../ui';
 import {
   Terminal,
@@ -699,21 +700,12 @@ export const StationDrawer: React.FC<StationDrawerProps> = ({
             </div>
 
             {/* Fundamentación */}
-            <div
-              style={{
-                border: '1px solid var(--color-border-light)',
-                borderRadius: 'var(--radius-sm)',
-                padding: '0.75rem',
-                backgroundColor: 'var(--color-card)',
-              }}
-            >
-              <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--color-ink-muted)', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
-                1. Fundamentación (README.md):
-              </div>
-              <div style={{ fontSize: '11.5px', color: 'var(--color-ink)', maxHeight: '160px', overflowY: 'auto', whiteSpace: 'pre-wrap', lineHeight: 1.5 }}>
-                {topicDetail?.descripcionMd || 'Sin documentación Markdown registrada.'}
-              </div>
-            </div>
+            <AcademicMarkdownViewer
+              content={topicDetail?.descripcionMd}
+              title="1. Fundamentación (README.md)"
+              maxHeight="220px"
+              emptyMessage="Sin documentación Markdown registrada."
+            />
 
             {/* Gráficas */}
             <div

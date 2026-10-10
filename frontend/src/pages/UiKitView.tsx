@@ -16,6 +16,7 @@ import {
   ErrorMessage,
   RoutePath,
   type RouteNode,
+  AcademicMarkdownViewer,
 } from '../components/ui';
 import { ESTACIONES_MAQUINA, ENCARGOS_UNIDADES } from '../data/narrativa';
 import {
@@ -693,6 +694,37 @@ export const UiKitView: React.FC = () => {
               </div>
             </Card>
           </div>
+        </section>
+      )}
+
+      {/* 5. Visor Académico de Markdown (README.md) */}
+      {(activeTab === 'todos' || activeTab === 'datos') && (
+        <section style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <h2 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--color-ink)', margin: 0 }}>
+            Visor Editorial de Markdown (README.md)
+          </h2>
+          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-ink-secondary)', margin: 0 }}>
+            Renderizador tipográfico con estilo Atlas Académico, soporte de fórmulas KaTeX, bloques de código interactivos, cálculo de tiempo de lectura y alternador a código fuente <code>.md</code>.
+          </p>
+
+          <AcademicMarkdownViewer
+            content={`# Minería de Datos: Conceptos y Algoritmo K-Means
+## 1. Fundamentación Teórica
+Extracción no trivial de información implícita, previamente desconocida y potencialmente útil a partir de grandes volúmenes de datos mediante algoritmos computacionales y estadísticos.
+
+$$\\text{WCSS} = \\sum_{k=1}^{K} \\sum_{x_i \\in S_k} \\|x_i - \\mu_k\\|^2$$
+
+## 2. Objetivos del Módulo
+- Analizar el comportamiento del agrupamiento no supervisado mediante el algoritmo particional K-Means.
+- Validar la inercia interna frente a la separación inter-cluster.
+
+## 3. Trazabilidad y Entregables
+- **Búsquedas:** 15 ecuaciones booleanas bilingües con enlaces a Google Scholar.
+- **Dataset:** Datos públicos reales con documentación formal en \`datos/metadata.json\`.
+- **Laboratorio en R:** Script autónomo, reproducible y parametrizado.`}
+            title="Demostración • Documentación Técnica"
+            subtitle="Unidad 1 · ID: 01_MINERIA_DE_DATOS"
+          />
         </section>
       )}
     </div>

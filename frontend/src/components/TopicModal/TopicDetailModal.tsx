@@ -3,6 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { getTopicDetail } from '../../services/topicService';
 import { executeRScript } from '../../services/rService';
 import { Modal } from '../common/Modal';
+import { AcademicMarkdownViewer } from '../ui';
 import type { TopicDetail } from '../../types/domain';
 import {
   BookOpen,
@@ -216,28 +217,13 @@ export const TopicDetailModal: React.FC = () => {
           {/* TAB 1: RESUMEN / README */}
           {activeTab === 'resumen' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div
-                className="card"
-                style={{
-                  padding: '1.25rem',
-                  backgroundColor: 'var(--bg-surface)',
-                  borderLeft: '4px solid var(--c-interactive)',
-                }}
-              >
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--c-interactive-hover)', marginBottom: '0.5rem' }}>
-                  Fundamentación y Objetivos de Aprendizaje
-                </h4>
-                <div
-                  style={{
-                    fontSize: '0.9rem',
-                    color: 'var(--text-dim)',
-                    lineHeight: 1.6,
-                    whiteSpace: 'pre-wrap',
-                  }}
-                >
-                  {data.descripcionMd || 'Sin datos registrados en la documentación técnica.'}
-                </div>
-              </div>
+              <AcademicMarkdownViewer
+                content={data.descripcionMd}
+                title="Fundamentación y Objetivos de Aprendizaje"
+                subtitle={`Tema: ${data.topicName} · Unidad: ${data.unitName}`}
+                maxHeight="420px"
+                emptyMessage="Sin datos registrados en la documentación técnica."
+              />
 
               {/* Matriz de las 8 actividades */}
               <div className="card" style={{ padding: '1.25rem' }}>
