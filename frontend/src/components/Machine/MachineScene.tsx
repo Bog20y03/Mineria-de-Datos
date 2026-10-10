@@ -13,6 +13,7 @@ import {
   Loader2,
   Sparkles,
   Layers,
+  Cog,
 } from 'lucide-react';
 import { Button } from '../ui';
 
@@ -156,8 +157,70 @@ export const MachineScene: React.FC<MachineSceneProps> = ({
           </h2>
         </div>
 
-        {/* Acciones principales de la escena */}
+        {/* Acciones principales de la escena y Semáforo Industrial */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+          {/* Semáforo / Baliza de Estado Industrial */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.55rem',
+              padding: '0.4rem 0.8rem',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'var(--color-card)',
+              border: '1px solid var(--color-border)',
+              boxShadow: 'var(--shadow-atlas-xs)',
+            }}
+          >
+            {/* Luz Roja */}
+            <div
+              title="Parada de emergencia / Error"
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: isRejected ? '#EF4444' : 'rgba(239, 68, 68, 0.2)',
+                boxShadow: isRejected ? '0 0 10px #EF4444' : 'none',
+                transition: 'all 0.3s ease',
+              }}
+            />
+            {/* Luz Ámbar */}
+            <div
+              title="Cómputo en R o producción en curso"
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: isProcessingR || isProducing ? '#F59E0B' : 'rgba(245, 158, 11, 0.2)',
+                boxShadow: isProcessingR || isProducing ? '0 0 10px #F59E0B' : 'none',
+                transition: 'all 0.3s ease',
+              }}
+            />
+            {/* Luz Verde */}
+            <div
+              title="Línea lista u operativa"
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: !isRejected && !isProcessingR ? '#10B981' : 'rgba(16, 185, 129, 0.2)',
+                boxShadow: !isRejected && !isProcessingR ? '0 0 10px #10B981' : 'none',
+                transition: 'all 0.3s ease',
+              }}
+            />
+            <span
+              style={{
+                fontSize: '11px',
+                fontWeight: 800,
+                color: isRejected ? '#EF4444' : isProcessingR ? '#F59E0B' : '#10B981',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
+              }}
+            >
+              {isRejected ? 'Parada de Seguridad' : isProcessingR ? 'Cómputo R Activo' : 'Planta Lista'}
+            </span>
+          </div>
+
           {/* BOTÓN PRODUCIR TEMA (PROTAGONISTA) */}
           <Button
             variant="primary"
@@ -165,11 +228,11 @@ export const MachineScene: React.FC<MachineSceneProps> = ({
             onClick={onProduceTopic}
             disabled={isProducing || !topicDetail}
             title="Ejecuta la línea completa en secuencia (10-15s) con datos reales y R nativo"
+            className={!isProducing ? 'pulse-glow-terracotta' : ''}
             style={{
               backgroundColor: 'var(--color-terracotta)',
               color: '#FFFFFF',
               fontWeight: 800,
-              boxShadow: '0 4px 12px rgba(181, 83, 47, 0.3)',
               gap: '0.5rem',
             }}
           >
@@ -313,29 +376,45 @@ export const MachineScene: React.FC<MachineSceneProps> = ({
             }}
           />
 
-          {/* Rodillos en extremos */}
+          {/* Rodillos mecánicos giratorios con engranajes en extremos */}
           <div
+            className="gear-active"
+            title="Rodillo motriz izquierdo"
             style={{
               position: 'absolute',
-              top: '9px',
-              left: '1%',
-              width: '10px',
-              height: '30px',
-              backgroundColor: 'var(--color-ink-secondary)',
-              borderRadius: '2px',
+              top: '11px',
+              left: '0.8%',
+              width: '26px',
+              height: '26px',
+              color: isProducing ? 'var(--color-terracotta)' : 'var(--color-ink-muted)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 3,
+              transition: 'color 0.3s ease',
             }}
-          />
+          >
+            <Cog size={24} />
+          </div>
           <div
+            className="gear-active"
+            title="Rodillo motriz derecho"
             style={{
               position: 'absolute',
-              top: '9px',
-              right: '1%',
-              width: '10px',
-              height: '30px',
-              backgroundColor: 'var(--color-ink-secondary)',
-              borderRadius: '2px',
+              top: '11px',
+              right: '0.8%',
+              width: '26px',
+              height: '26px',
+              color: isProducing ? 'var(--color-terracotta)' : 'var(--color-ink-muted)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 3,
+              transition: 'color 0.3s ease',
             }}
-          />
+          >
+            <Cog size={24} />
+          </div>
 
           {/* PIEZA FÍSICA VIAJERA SOBRE LA BANDA */}
           {currentPiece && (

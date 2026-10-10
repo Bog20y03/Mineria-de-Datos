@@ -58,6 +58,47 @@ const ZONE_METADATA = [
   },
 ];
 
+// Medidor circular radial moderno
+const RadialRing: React.FC<{
+  percent: number;
+  size?: number;
+  stroke?: number;
+  color?: string;
+  icon?: React.ReactNode;
+}> = ({ percent, size = 46, stroke = 3.5, color = 'var(--color-blue-ink)', icon }) => {
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (Math.min(100, Math.max(0, percent)) / 100) * circumference;
+
+  return (
+    <div style={{ position: 'relative', width: size, height: size, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)', position: 'absolute', top: 0, left: 0 }}>
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="var(--color-border)"
+          strokeWidth={stroke}
+          fill="transparent"
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke={color}
+          strokeWidth={stroke}
+          fill="transparent"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1)' }}
+        />
+      </svg>
+      {icon && <div style={{ color }}>{icon}</div>}
+    </div>
+  );
+};
+
 export const AcademicDashboard: React.FC = () => {
   const { course, setActiveView, openTopic } = useApp();
 
@@ -158,21 +199,8 @@ export const AcademicDashboard: React.FC = () => {
         <div className="metrics-grid-balanced">
           {/* Temas */}
           <Card padding="md" style={{ animationDelay: '0ms' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--color-blue-soft)',
-                  color: 'var(--color-blue-ink)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Layers size={18} />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <RadialRing percent={100} size={46} color="var(--color-blue-ink)" icon={<Layers size={18} />} />
               <div>
                 <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--color-ink)', lineHeight: 1 }}>
                   {temasCount}
@@ -189,21 +217,8 @@ export const AcademicDashboard: React.FC = () => {
 
           {/* Ecuaciones de Búsqueda */}
           <Card padding="md" style={{ animationDelay: '60ms' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--color-blue-soft)',
-                  color: 'var(--color-blue-ink)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Binary size={18} />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <RadialRing percent={100} size={46} color="var(--color-terracotta)" icon={<Binary size={18} />} />
               <div>
                 <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--color-terracotta)', lineHeight: 1 }}>
                   {busquedasCount}
@@ -220,21 +235,8 @@ export const AcademicDashboard: React.FC = () => {
 
           {/* Documentos Seleccionados */}
           <Card padding="md" style={{ animationDelay: '120ms' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--color-blue-soft)',
-                  color: 'var(--color-blue-ink)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <BookOpen size={18} />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <RadialRing percent={100} size={46} color="#0284c7" icon={<BookOpen size={18} />} />
               <div>
                 <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--color-ink)', lineHeight: 1 }}>
                   {docsCount}
@@ -251,21 +253,8 @@ export const AcademicDashboard: React.FC = () => {
 
           {/* Scripts R */}
           <Card padding="md" style={{ animationDelay: '180ms' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--color-blue-soft)',
-                  color: 'var(--color-blue-ink)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Code2 size={18} />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <RadialRing percent={100} size={46} color="#7c3aed" icon={<Code2 size={18} />} />
               <div>
                 <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--color-ink)', lineHeight: 1 }}>
                   {scriptsCount}
@@ -282,21 +271,8 @@ export const AcademicDashboard: React.FC = () => {
 
           {/* Datasets */}
           <Card padding="md" style={{ animationDelay: '240ms' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--color-blue-soft)',
-                  color: 'var(--color-blue-ink)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Database size={18} />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <RadialRing percent={100} size={46} color="#059669" icon={<Database size={18} />} />
               <div>
                 <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--color-ink)', lineHeight: 1 }}>
                   {datasetsCount}
@@ -313,21 +289,8 @@ export const AcademicDashboard: React.FC = () => {
 
           {/* Documentos LaTeX */}
           <Card padding="md" style={{ animationDelay: '300ms' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--color-blue-soft)',
-                  color: 'var(--color-blue-ink)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <FileCode size={18} />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <RadialRing percent={100} size={46} color="#d97706" icon={<FileCode size={18} />} />
               <div>
                 <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--color-ink)', lineHeight: 1 }}>
                   {latexCount}
