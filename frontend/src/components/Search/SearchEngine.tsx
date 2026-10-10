@@ -14,8 +14,9 @@ import {
 import {
   Binary,
   ExternalLink,
-  // BookOpen,
   Filter,
+  Copy,
+  Check,
 } from 'lucide-react';
 
 /**
@@ -42,6 +43,108 @@ export interface EnrichedSearchRow extends Record<string, unknown> {
   urlScholar: string | null;
   objetivo: string | null;
 }
+
+/**
+ * Resaltador visual de sintaxis booleana (AND en terracota, OR en azul, comillas en chip).
+ */
+const BooleanQueryHighlight: React.FC<{ query: string }> = ({ query }) => {
+  const regex = /(".*?"|\bAND\b|\bOR\b|\bNOT\b|\(|\))/g;
+  const parts = query.split(regex);
+
+  return (
+    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11.5px', lineHeight: 1.45, wordBreak: 'break-word' }}>
+      {parts.map((part, i) => {
+        if (!part) return null;
+        if (part === 'AND') {
+          return (
+            <span key={i} style={{ color: 'var(--color-terracotta)', fontWeight: 800, padding: '0 2px' }}>
+              AND
+            </span>
+          );
+        }
+        if (part === 'OR') {
+          return (
+            <span key={i} style={{ color: 'var(--color-blue-ink)', fontWeight: 800, padding: '0 2px' }}>
+              OR
+            </span>
+          );
+        }
+        if (part === 'NOT') {
+          return (
+            <span key={i} style={{ color: '#dc2626', fontWeight: 800, padding: '0 2px' }}>
+              NOT
+            </span>
+          );
+        }
+        if (part.startsWith('"') && part.endsWith('"')) {
+          return (
+            <span
+              key={i}
+              style={{
+                backgroundColor: 'var(--color-blue-soft)',
+                color: 'var(--color-ink)',
+                padding: '1px 5px',
+                borderRadius: '3px',
+                border: '1px solid var(--color-blue-border)',
+                fontWeight: 600,
+              }}
+            >
+              {part}
+            </span>
+          );
+        }
+        if (part === '(' || part === ')') {
+          return (
+            <span key={i} style={{ color: 'var(--color-ink-muted)', fontWeight: 700 }}>
+              {part}
+            </span>
+          );
+        }
+        return <span key={i} style={{ color: 'var(--color-ink)' }}>{part}</span>;
+      })}
+    </span>
+  );
+};
+
+/**
+ * Botón interactivo de 1 clic para copiar ecuaciones booleanas con animación y confirmación.
+ */
+const CopyEquationButton: React.FC<{ query: string }> = ({ query }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(query);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      title="Copiar ecuación booleana al portapapeles"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '0.25rem',
+        padding: '0.2rem 0.45rem',
+        fontSize: '10px',
+        fontWeight: 600,
+        backgroundColor: copied ? 'var(--color-blue-soft)' : 'var(--color-card-muted)',
+        border: `1px solid ${copied ? 'var(--color-blue-border)' : 'var(--color-border-light)'}`,
+        borderRadius: 'var(--radius-sm)',
+        color: copied ? 'var(--color-blue-ink)' : 'var(--color-ink-secondary)',
+        cursor: 'pointer',
+        transition: 'all var(--motion-duration-fast)',
+        flexShrink: 0,
+      }}
+    >
+      {copied ? <Check size={11} /> : <Copy size={11} />}
+      <span>{copied ? 'Copiada' : 'Copiar'}</span>
+    </button>
+  );
+};
 
 export const SearchEngine: React.FC = () => {
   const { course } = useApp();
@@ -170,12 +273,13 @@ export const SearchEngine: React.FC = () => {
       key: 'consulta',
       header: 'Ecuación Booleana / Consulta',
       render: (row) => (
-        <div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--color-blue-ink)', lineHeight: 1.35 }}>
-            {row.consulta}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.75rem' }}>
+            <BooleanQueryHighlight query={row.consulta} />
+            <CopyEquationButton query={row.consulta} />
           </div>
           {row.objetivo && (
-            <div style={{ fontSize: '11px', color: 'var(--color-ink-secondary)', marginTop: '0.2rem', fontStyle: 'italic' }}>
+            <div style={{ fontSize: '11px', color: 'var(--color-ink-secondary)', fontStyle: 'italic', borderTop: '1px dotted var(--color-border-light)', paddingTop: '0.2rem' }}>
               {row.objetivo}
             </div>
           )}
