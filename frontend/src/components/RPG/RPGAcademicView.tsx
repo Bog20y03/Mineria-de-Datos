@@ -422,14 +422,14 @@ export const RPGAcademicView: React.FC = () => {
       </div>
 
       {/* =========================================================================
-          SECCIÓN 1: CARNÉ DEL INVESTIGADOR Y ESPECIALIZACIÓN DE ROL
+          SECCIÓN 1: CARNET DEL INVESTIGADOR Y ESPECIALIZACIÓN DE ROL
           ========================================================================= */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
             <Shield size={18} style={{ color: 'var(--color-terracotta)' }} />
             <h2 style={{ fontSize: '1.35rem', fontWeight: 800, margin: 0, color: 'var(--color-ink)' }}>
-              1. Carné del Investigador y Selección de Especialidad
+              1. Carnet del Investigador y Selección de Especialidad
             </h2>
           </div>
           <p style={{ fontSize: '0.875rem', color: 'var(--color-ink-secondary)', margin: 0 }}>
@@ -540,7 +540,7 @@ export const RPGAcademicView: React.FC = () => {
           })}
         </div>
 
-        {/* Credencial Oficial del Investigador (Carné de Alta Gama) */}
+        {/* Credencial Oficial del Investigador (Carnet de Alta Gama) */}
         <div
           className="glass-panel credential-gleam"
           style={{
