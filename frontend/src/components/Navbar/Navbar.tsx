@@ -10,6 +10,7 @@ import {
   Award,
   BookOpen,
   ScrollText,
+  Scale,
   Sun,
   Moon,
 } from 'lucide-react';
@@ -130,6 +131,17 @@ export const Navbar: React.FC = () => {
         closeTopic();
         setMode('direct');
         setActiveView('dossier');
+      },
+    },
+    {
+      id: 'benchmark',
+      label: 'Arena Benchmark',
+      icon: <Scale size={15} />,
+      isActive: mode === 'direct' && activeView === 'benchmark' && !selectedTopic,
+      onClick: () => {
+        closeTopic();
+        setMode('direct');
+        setActiveView('benchmark');
       },
     },
     {

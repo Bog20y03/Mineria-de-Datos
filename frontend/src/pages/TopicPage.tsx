@@ -29,6 +29,7 @@ import {
   ArrowRight,
   ScrollText,
   Award,
+  Scale,
 } from 'lucide-react';
 import { TopicBibliography } from '../components/Topics/TopicBibliography';
 import { TopicRLaboratory } from '../components/Topics/TopicRLaboratory';
@@ -206,7 +207,19 @@ export const TopicPage: React.FC = () => {
                 title="Generar Artículo y Dossier de Sustentación Formal"
               >
                 <ScrollText size={14} style={{ marginRight: '0.4rem' }} />
-                Dossier de Sustentación
+                Dossier
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  closeTopic();
+                  setActiveView('benchmark');
+                }}
+                title="Comparar este algoritmo frente a otros en la Arena de Benchmark"
+              >
+                <Scale size={14} style={{ marginRight: '0.4rem' }} />
+                Benchmark
               </Button>
               <Button
                 variant="outline"

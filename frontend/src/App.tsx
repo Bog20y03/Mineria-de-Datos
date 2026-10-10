@@ -12,6 +12,7 @@ import { TopicPage } from './pages/TopicPage';
 import { UiKitView } from './pages/UiKitView';
 import { AtlasView } from './pages/AtlasView';
 import { DossierView } from './components/Dossier';
+import { BenchmarkArena } from './components/Benchmark';
 import { TribunalDefenseModal } from './components/Defense';
 import { Footer } from './components/Footer/Footer';
 import { AlertCircle, Loader2 } from 'lucide-react';
@@ -133,6 +134,7 @@ const MainContent: React.FC = () => {
           {activeView === 'manual' && <InteractiveManual />}
           {activeView === 'profile' && <RPGAcademicView />}
           {activeView === 'dossier' && <DossierView />}
+          {activeView === 'benchmark' && <BenchmarkArena />}
         </div>
       )}
     </main>

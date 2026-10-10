@@ -13,7 +13,7 @@ import { MAP_MIN_WIDTH } from '../config';
 
 export type AppMode = 'map' | 'direct';
 
-export type ActiveView = 'dashboard' | 'units' | 'atlas' | 'search' | 'latex' | 'manual' | 'profile' | 'uikit' | 'rpg' | 'dossier';
+export type ActiveView = 'dashboard' | 'units' | 'atlas' | 'search' | 'latex' | 'manual' | 'profile' | 'uikit' | 'rpg' | 'dossier' | 'benchmark';
 
 interface AppContextType {
   mode: AppMode;
