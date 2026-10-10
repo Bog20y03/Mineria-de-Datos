@@ -20,9 +20,11 @@ import {
   Copy,
   Download,
   Loader2,
+  Library,
 } from 'lucide-react';
+import { TopicBibliography } from '../Topics/TopicBibliography';
 
-type TabKey = 'resumen' | 'busquedas' | 'documentos' | 'dataset' | 'r' | 'resultados' | 'latex';
+type TabKey = 'resumen' | 'fuentes' | 'busquedas' | 'documentos' | 'dataset' | 'r' | 'resultados' | 'latex';
 
 export const TopicDetailModal: React.FC = () => {
   const { selectedTopic, closeTopic } = useApp();
@@ -114,6 +116,7 @@ export const TopicDetailModal: React.FC = () => {
 
   const tabs: { key: TabKey; label: string; icon: React.ReactNode; count?: number }[] = [
     { key: 'resumen', label: 'Fundamentación', icon: <BookOpen size={16} /> },
+    { key: 'fuentes', label: 'Fuentes y Libros', icon: <Library size={16} /> },
     { key: 'busquedas', label: 'Búsquedas', icon: <Search size={16} />, count: data?.searches.length },
     { key: 'documentos', label: 'Documentos', icon: <FileText size={16} />, count: data?.documents.length },
     { key: 'dataset', label: 'Dataset', icon: <Database size={16} /> },
@@ -265,6 +268,16 @@ export const TopicDetailModal: React.FC = () => {
                 </div>
               </div>
             </div>
+          )}
+
+          {/* TAB: FUENTES Y LIBROS */}
+          {activeTab === 'fuentes' && (
+            <TopicBibliography
+              topicName={data.topicName}
+              topicId={selectedTopic.topicId}
+              unitName={data.unitName}
+              unitId={selectedTopic.unitId}
+            />
           )}
 
           {/* TAB 2: BÚSQUEDAS */}

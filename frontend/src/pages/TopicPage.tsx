@@ -30,8 +30,10 @@ import {
   ExternalLink,
   CheckCircle2,
   AlertCircle,
-  // Table,
+  Library,
+  ArrowRight,
 } from 'lucide-react';
+import { TopicBibliography } from '../components/Topics/TopicBibliography';
 
 export const TopicPage: React.FC = () => {
   const { selectedTopic, closeTopic, setActiveView } = useApp();
@@ -39,7 +41,7 @@ export const TopicPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  type TabKey = 'general' | 'busquedas' | 'documentos' | 'dataset' | 'r' | 'resultados' | 'latex';
+  type TabKey = 'general' | 'fuentes' | 'busquedas' | 'documentos' | 'dataset' | 'r' | 'resultados' | 'latex';
   const [activeTab, setActiveTab] = useState<TabKey>('general');
 
   // Ejecución R
@@ -123,6 +125,7 @@ export const TopicPage: React.FC = () => {
   // Pestañas
   const tabsList = [
     { id: 'general', label: 'General (README)', icon: <BookOpen size={15} /> },
+    { id: 'fuentes', label: 'Fuentes y Libros', icon: <Library size={15} /> },
     { id: 'busquedas', label: 'Búsquedas', icon: <Search size={15} />, badge: data?.searches.length },
     { id: 'documentos', label: 'Documentos', icon: <FileText size={15} />, badge: data?.documents.length },
     { id: 'dataset', label: 'Dataset', icon: <Database size={15} /> },
@@ -273,7 +276,47 @@ export const TopicPage: React.FC = () => {
                   subtitle={`${data.unitName} · ${selectedTopic.topicId}`}
                   emptyMessage="Sin documentación README.md registrada para este tema."
                 />
+
+                {/* Acceso Directo a Fuentes y Libros Canónicos */}
+                <div
+                  style={{
+                    backgroundColor: 'var(--color-card-muted)',
+                    border: '1px solid var(--color-border-light)',
+                    borderRadius: 'var(--radius-sm)',
+                    padding: '1rem 1.25rem',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <Library size={18} style={{ color: 'var(--color-blue-ink)' }} />
+                    <div>
+                      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--color-ink)' }}>
+                        Tratados Canónicos y Fuentes Científicas de Consulta
+                      </div>
+                      <div style={{ fontSize: '11px', color: 'var(--color-ink-secondary)' }}>
+                        Libros de referencia (Han & Kamber, Tan, Hastie) y repositorios arbitrados (IEEE, ACM, ScienceDirect).
+                      </div>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm" onClick={() => setActiveTab('fuentes')}>
+                    Ver Fuentes y Libros <ArrowRight size={13} />
+                  </Button>
+                </div>
               </div>
+            )}
+
+            {/* PESTAÑA 2: FUENTES Y LIBROS */}
+            {activeTab === 'fuentes' && (
+              <TopicBibliography
+                topicName={data.topicName}
+                topicId={selectedTopic.topicId}
+                unitName={data.unitName}
+                unitId={selectedTopic.unitId}
+              />
             )}
 
             {/* PESTAÑA 2: BÚSQUEDAS */}
