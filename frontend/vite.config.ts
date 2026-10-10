@@ -56,7 +56,7 @@ export default defineConfig(async () => {
         '/md': {
           target: backend.target,
           changeOrigin: true,
-          rewrite: (p) => p.replace(/^\/md/, backend.prefix),
+          rewrite: (p: string) => p.replace(/^\/md/, backend.prefix),
         },
       },
     },
