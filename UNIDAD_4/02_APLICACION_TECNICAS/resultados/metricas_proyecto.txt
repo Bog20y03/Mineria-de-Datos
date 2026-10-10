@@ -1,0 +1,20 @@
+BENCHMARK MULTIMODELO - PROYECTO INTEGRADOR:
+
+               Modelo Exactitud_Test Sensibilidad Baseline_Mayoritaria
+1 Regresión Logística             98            0                   98
+2          Árbol CART             98            0                   98
+3  Red Neuronal (MLP)             98            0                   98
+  Supera_Baseline
+1           FALSE
+2           FALSE
+3           FALSE
+
+ANÁLISIS POR MODELO (TEST N = 150 , POSITIVOS = 3 ):
+- Regresión Logística: Exactitud 98.00%, Sensibilidad 0%. Diagnóstico: Predice únicamente la clase mayoritaria (0).
+- Árbol CART: Exactitud 98.00%, Sensibilidad 0%. Diagnóstico: Predice únicamente la clase mayoritaria (0).
+- Red Neuronal (MLP): Exactitud 98.00%, Sensibilidad 0%. Diagnóstico: Predice únicamente la clase mayoritaria (0).
+
+DIAGNÓSTICO GLOBAL:
+- Distribución de prueba: 147 casos negativos (98.0%) y 3 casos positivos (2.0%).
+- Baseline de clase mayoritaria: 98.00%.
+- Ningún modelo supera el baseline trivial de la clase mayoritaria.

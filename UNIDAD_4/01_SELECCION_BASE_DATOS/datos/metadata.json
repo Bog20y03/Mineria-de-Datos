@@ -1,0 +1,21 @@
+{
+    "nombre": "Predict Students Dropout and Academic Success Benchmark",
+    "fuente": "UCI Machine Learning Repository / Instituto Politécnico de Portalegre",
+    "url": "https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success",
+    "descripcion": "Dataset creado para reducir el fracaso académico y la deserción universitaria mediante modelado predictivo multitécnica.",
+    "variables": [
+        "ID_Estudiante",
+        "Edad_Matricula",
+        "Cuotas_Al_Dia",
+        "Nota_Media_Sem1",
+        "Creditos_Aprobados_Sem1",
+        "Es_Becado",
+        "Abandono_Estudiantil"
+    ],
+    "numero_registros": 500,
+    "tipo_datos": "Tabular educativo institucional",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY 4.0",
+    "categoria_origen": "tipo_UCI_no_verificado",
+    "nota_integridad": "Clasificación: tipo_UCI_no_verificado. Dataset local higher_education_dropout_dataset.csv con 500 filas y 7 columnas; muestra didáctica inspirada en UCI #697, no verificada como submuestra directa del dataset oficial (4,424 filas y 37 variables)."
+}

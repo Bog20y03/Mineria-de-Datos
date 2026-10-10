@@ -1,0 +1,7 @@
+"Sector","Tecnica_Dominante","Impacto_Negocio"
+"CRM & Retail","Reglas de Asociación","Optimización de canasta y cross-selling"
+"Banca & Finanzas","Detección de Anomalías / Random Forest","Reducción de pérdidas por fraude >40%"
+"Salud & Medicina","Redes Neuronales / Árboles","Diagnóstico temprano de patologías"
+"Telecomunicaciones","Predicción de Churn / GLM","Reducción de fuga de clientes"
+"E-commerce","Filtrado Colaborativo","Incremento en tasa de conversión"
+"Manufactura 4.0","Series Temporales / Mantenimiento Predictivo","Prevención de paradas de planta"

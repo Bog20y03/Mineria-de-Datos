@@ -1,0 +1,7 @@
+Red Neuronal MLP (5 neuronas ocultas, regularización L2 decay = 0.05)
+Exactitud en Validación Externa: 89.17 %
+Matriz de Confusión:
+    Predicho
+Real   0   1
+   0   1  13
+   1   0 106

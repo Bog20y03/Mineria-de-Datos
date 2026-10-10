@@ -1,0 +1,12 @@
+FICHA DE CARACTERIZACIÓN ESTADÍSTICA DEL DATASET SELECCIONADO:
+
+Total Estudiantes Registrados: 500 
+Tasa Histórica de Abandono: 1 %
+Resumen de Variables Numéricas:
+ Edad_Matricula  Nota_Media_Sem1 Creditos_Aprobados_Sem1
+ Min.   :18.00   Min.   : 3.40   Min.   :1.000          
+ 1st Qu.:20.00   1st Qu.:10.50   1st Qu.:5.000          
+ Median :22.00   Median :12.30   Median :5.000          
+ Mean   :22.16   Mean   :12.34   Mean   :5.074          
+ 3rd Qu.:24.00   3rd Qu.:14.30   3rd Qu.:6.000          
+ Max.   :31.00   Max.   :20.00   Max.   :6.000          

@@ -1,0 +1,18 @@
+{
+    "nombre": "Taxonomía de Métodos de Minería de Datos",
+    "fuente": "ACM Computing Surveys / Hastie et al. (2009)",
+    "url": "https://dl.acm.org/doi/10.1145/331499.331504",
+    "descripcion": "Resumen comparativo de métodos analíticos categorizados por paradigma de supervisión y objetivo de minería.",
+    "variables": [
+        "Metodo",
+        "Paradigma",
+        "Objetivo_Analitico",
+        "Escalabilidad"
+    ],
+    "numero_registros": 6,
+    "tipo_datos": "Tabular metodológico",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY 4.0",
+    "categoria_origen": "conceptual",
+    "nota_integridad": "Clasificación: conceptual. Dataset local metodos_taxonomia_data.csv con 6 filas y 4 columnas; tabla conceptual de métodos y familias algorítmicas de minería de datos."
+}

@@ -1,0 +1,20 @@
+{
+    "nombre": "Benchmark Taxonómico de Modelos de Minería de Datos",
+    "fuente": "Compilación experimental de Hand (2001) y Witten et al. (2011)",
+    "url": "https://archive.ics.uci.edu/ml/index.php",
+    "descripcion": "Comparativa de atributos estructurales, complejidad computacional e interpretabilidad entre familias de modelos predictivos y descriptivos.",
+    "variables": [
+        "Modelo",
+        "Familia",
+        "Complejidad",
+        "Interpretabilidad",
+        "Exactitud_Media",
+        "Tiempo_Entrenamiento_Seg"
+    ],
+    "numero_registros": 8,
+    "tipo_datos": "Tabular de metadatos analíticos y benchmarking",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "Open Academic License",
+    "categoria_origen": "conceptual",
+    "nota_integridad": "Clasificación: conceptual. Dataset local benchmark_modelos_taxonomia.csv con 8 filas y 6 columnas; tabla conceptual de taxonomía y comparación bibliográfica de modelos."
+}

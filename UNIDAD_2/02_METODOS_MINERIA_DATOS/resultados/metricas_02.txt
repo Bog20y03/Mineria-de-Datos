@@ -1,0 +1,9 @@
+TAXONOMÍA DE MÉTODOS DE MINERÍA DE DATOS:
+
+               Metodo      Paradigma           Objetivo_Analitico Escalabilidad
+1             K-Means No Supervisado       Clustering Particional          Alta
+2              DBSCAN No Supervisado      Clustering por Densidad         Media
+3        Árboles CART    Supervisado       Clasificación Discreta          Alta
+4 Regresión Logística    Supervisado Clasificación Probabilística          Alta
+5             Apriori No Supervisado     Extracción de Asociación         Media
+6    Isolation Forest No Supervisado       Detección de Anomalías          Alta

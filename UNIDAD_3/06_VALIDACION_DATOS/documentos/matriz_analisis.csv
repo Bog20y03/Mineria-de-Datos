@@ -1,0 +1,2 @@
+"ID","Titulo","Autores","Anio","Objetivo_Estudio","Metodologia_Utilizada","Principales_Resultados","Nivel_Pertinencia"
+"DOC_U3_VAL_001","Statistical Data Cleaning with Applications in R","Mark van der Loo, Edwin de Jonge",2018,"Sistematizar el tratamiento formal de errores, inconsistencias y outliers en R.","Marcos algebraicos de reglas de edición, imputación robusta y detección de anomalías multivariadas.","Directrices metodológicas reproducibles para certificar la integridad de bases de datos antes de modelar.","Alta"

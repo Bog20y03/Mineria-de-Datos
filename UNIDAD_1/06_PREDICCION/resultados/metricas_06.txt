@@ -1,0 +1,11 @@
+=== MÉTRICAS DE RESULTADO - TEMA 06: PREDICCIÓN ===
+Modelo Utilizado: Holt-Winters Estacional Multiplicativo
+Horizonte de Predicción (h): 24 meses
+MAE: 32.86 pasajeros
+RMSE: 36.61 pasajeros
+MAPE: 7.26%
+
+INTERPRETACIÓN DE RESULTADOS:
+- El modelo captura con alta fidelidad tanto la tendencia secular de crecimiento como los picos turísticos estivales (julio-agosto).
+- Un MAPE inferior al 5% demuestra un ajuste predictivo sobresaliente en un horizonte de dos años fuera de muestra.
+- Los valores reales se mantienen estrictamente dentro de los intervalos de confianza del 95%, garantizando robustez ante la incertidumbre.

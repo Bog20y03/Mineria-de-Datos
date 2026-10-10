@@ -1,0 +1,2 @@
+"ID","Titulo","Autores","Anio","Objetivo_Estudio","Metodologia_Utilizada","Principales_Resultados","Nivel_Pertinencia"
+"DOC_U3_ASO_001","Fast Algorithms for Mining Association Rules in Large Databases","Rakesh Agrawal, Ramakrishnan Srikant",1994,"Proponer el algoritmo Apriori para extracción rápida de patrones frecuentes en compras.","Poda por propiedad monótona descendente de soporte en conjuntos de ítems frecuentes.","Establecimiento del algoritmo fundacional sobre el cual se sustenta la analítica de canasta.","Alta"

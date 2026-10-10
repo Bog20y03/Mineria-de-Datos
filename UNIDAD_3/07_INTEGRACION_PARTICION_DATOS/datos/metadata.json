@@ -1,0 +1,21 @@
+{
+    "nombre": "Multi-Source Customer Integration & Partitioning Benchmark",
+    "fuente": "Simulación relacional de tres sistemas corporativos (CRM, ERP y Helpdesk)",
+    "url": "https://archive.ics.uci.edu/ml/datasets.php",
+    "descripcion": "Tres fuentes tabulares independientes integradas mediante clave foránea (ID_Cliente) y particionadas para modelado predictivo.",
+    "variables": [
+        "ID_Cliente",
+        "Edad",
+        "Ciudad",
+        "Gasto_Total",
+        "Frecuencia_Compras",
+        "Reclamaciones",
+        "Churn_Real"
+    ],
+    "numero_registros": 350,
+    "tipo_datos": "Esquema relacional multivariable integrado",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY-SA 4.0",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Datasets locales de 3 fuentes relacionales con 350 filas y 3 columnas cada uno; datos sintéticos para integración, partición y validación cruzada."
+}

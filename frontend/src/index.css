@@ -1,0 +1,663 @@
+@import 'katex/dist/katex.min.css';
+
+/* ==========================================================================
+   SISTEMA DE DISEÑO: ATLAS CLARO (AGENTS.md §9)
+   "Ruta del Conocimiento: La Máquina de Minería"
+   Paleta sobria y académica: papel claro, tinta azul, contornos de mapa,
+   acento terracota único. Sin neón ni fondos oscuros.
+   ========================================================================== */
+
+:root {
+  /* 1. Colores de Superficie y Fondo (Modo Claro Moderno y Limpio) */
+  --color-paper: #F8FAFC;            /* Fondo base Slate-50 limpio y fresco */
+  --color-card: #FFFFFF;             /* Tarjetas en blanco puro luminoso */
+  --color-card-muted: #F1F5F9;       /* Contenedores alternados Slate-100 */
+  --color-border: #E2E8F0;           /* Borde nítido Slate-200 */
+  --color-border-light: #F1F5F9;     /* Divisores sutiles */
+  --color-border-dashed: #CBD5E1;    /* Contorno de estados pendientes */
+
+  /* 2. Tintas y Tipografía (Contraste AA/AAA estricto) */
+  --color-ink: #0F172A;              /* Texto principal Deep Slate-900 */
+  --color-ink-secondary: #475569;    /* Texto secundario Slate-600 */
+  --color-ink-muted: #64748B;        /* Metadatos terciarios Slate-500 */
+  --color-ink-disabled: #94A3B8;     /* Elementos desactivados */
+  --color-border-disabled: #CBD5E1;  /* Borde desactivado */
+
+  /* 3. Colores Semánticos Vibrantes y Agradables */
+  /* Azul Real / Zafiro = completado, verificado, biblioteca */
+  --color-blue-ink: #2563EB;
+  --color-blue-ink-hover: #1D4ED8;
+  --color-blue-soft: #EFF6FF;        /* Fondo suave zafiro */
+  --color-blue-border: #BFDBFE;
+
+  /* Terracota Energético = acción principal, selector activo, foco */
+  --color-terracotta: #EA580C;       /* Naranja quemado / terracota vibrante */
+  --color-terracotta-hover: #C2410C;
+  --color-terracotta-dark: #9A3412;
+  --color-terracotta-soft: #FFF7ED;  /* Fondo suave terracota */
+  --color-terracotta-border: #FDBA74;
+
+  /* Estados y Acentos */
+  --color-success-ink: #059669;      /* Esmeralda vibrante */
+  --color-success-bg: #ECFDF5;
+  --color-success-border: #A7F3D0;
+  --color-pending-ink: #D97706;      /* Ámbar cálido */
+  --color-pending-bg: #FEF3C7;
+  --color-blocked-ink: #64748B;
+  --color-blocked-bg: #F1F5F9;
+  --color-danger-ink: #DC2626;       /* Carmesí moderno */
+  --color-danger-bg: #FEF2F2;
+  --color-danger-border: #FECACA;
+
+  /* 4. Tipografía Moderna (Google Fonts) */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+
+  /* Escala tipográfica */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+
+  /* 5. Espaciado y Radios Modernos */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* 6. Sombras y Relieves Cristalinos */
+  --shadow-atlas-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-atlas-sm: 0 2px 6px -1px rgba(15, 23, 42, 0.07), 0 1px 3px -1px rgba(15, 23, 42, 0.04);
+  --shadow-atlas-md: 0 10px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -2px rgba(15, 23, 42, 0.03);
+  --shadow-atlas-lg: 0 20px 35px -6px rgba(15, 23, 42, 0.12), 0 10px 16px -4px rgba(15, 23, 42, 0.05);
+  --shadow-glow-terracotta: 0 0 20px rgba(234, 88, 12, 0.22);
+  --shadow-glow-blue: 0 0 20px rgba(37, 99, 235, 0.22);
+
+  /* 7. Tokens de Movimiento */
+  --motion-duration-fast: 150ms;
+  --motion-duration-normal: 250ms;
+  --motion-duration-slow: 450ms;
+  --motion-duration-path: 1.2s;
+  --motion-duration-compass: 60s;
+  --motion-duration-drift: 180s;
+
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-path: cubic-bezier(0.25, 1, 0.5, 1);
+
+  --transition-fast: var(--motion-duration-fast) var(--motion-ease-in-out);
+  --transition-normal: var(--motion-duration-normal) var(--motion-ease-in-out);
+  --transition-slow: var(--motion-duration-slow) var(--motion-ease-in-out);
+
+  /* 8. Patrón de Fondo Reticular Moderno */
+  --bg-topographic-pattern: radial-gradient(rgba(148, 163, 184, 0.22) 1.2px, transparent 1.2px);
+
+  /* Aliases para compatibilidad */
+  --bg-deep: var(--color-paper);
+  --bg-main: var(--color-paper);
+  --bg-surface: var(--color-card);
+  --bg-elevated: var(--color-card-muted);
+  --bg-highlight: var(--color-blue-soft);
+  --border-subtle: var(--color-border-light);
+  --border-strong: var(--color-border);
+  --text-main: var(--color-ink);
+  --text-dim: var(--color-ink-secondary);
+  --text-muted: var(--color-ink-muted);
+  --text-dark: var(--color-ink-disabled);
+  --c-interactive: var(--color-terracotta);
+  --c-interactive-hover: var(--color-terracotta-hover);
+  --c-interactive-bg: var(--color-terracotta-soft);
+  --c-completed: var(--color-blue-ink);
+  --c-completed-bg: var(--color-blue-soft);
+  --c-gold: var(--color-terracotta);
+  --c-gold-bg: var(--color-terracotta-soft);
+  --c-secondary: var(--color-blue-ink);
+  --c-secondary-bg: var(--color-blue-soft);
+  --c-danger: var(--color-danger-ink);
+  --c-danger-bg: var(--color-danger-bg);
+  --shadow-sm: var(--shadow-atlas-sm);
+  --shadow-md: var(--shadow-atlas-md);
+  --shadow-lg: var(--shadow-atlas-lg);
+}
+
+/* ==========================================================================
+   TEMA OSCURO TELEMETRÍA (HIGH-TECH LAB & INDUSTRIAL)
+   ========================================================================== */
+[data-theme="dark"] {
+  --color-paper: #0B0F17;            /* Espacio profundo Obsidian */
+  --color-card: #131A26;             /* Tarjetas de laboratorio glassmorphic */
+  --color-card-muted: #1A2332;       /* Superficies elevadas */
+  --color-border: #232F42;           /* Bordes sutiles iluminados */
+  --color-border-light: #1A2434;
+  --color-border-dashed: #334155;
+
+  --color-ink: #F8FAFC;              /* Blanco puro ultra nítido */
+  --color-ink-secondary: #94A3B8;    /* Gris metálico claro */
+  --color-ink-muted: #64748B;
+  --color-ink-disabled: #475569;
+  --color-border-disabled: #334155;
+
+  --color-blue-ink: #38BDF8;         /* Cyan fósforo / Sky */
+  --color-blue-ink-hover: #7DD3FC;
+  --color-blue-soft: rgba(56, 189, 248, 0.12);
+  --color-blue-border: rgba(56, 189, 248, 0.32);
+
+  --color-terracotta: #FF6B35;       /* Terracota neón de alta energía */
+  --color-terracotta-hover: #FF8554;
+  --color-terracotta-dark: #EA580C;
+  --color-terracotta-soft: rgba(255, 107, 53, 0.14);
+  --color-terracotta-border: rgba(255, 107, 53, 0.35);
+
+  --color-success-ink: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.12);
+  --color-success-border: rgba(16, 185, 129, 0.32);
+  --color-pending-ink: #FBBF24;
+  --color-pending-bg: rgba(251, 191, 36, 0.12);
+  --color-blocked-ink: #64748B;
+  --color-blocked-bg: #1E293B;
+  --color-danger-ink: #F87171;
+  --color-danger-bg: rgba(248, 113, 113, 0.12);
+  --color-danger-border: rgba(248, 113, 113, 0.32);
+
+  --shadow-atlas-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-atlas-sm: 0 3px 8px rgba(0, 0, 0, 0.5);
+  --shadow-atlas-md: 0 12px 28px -4px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-atlas-lg: 0 24px 44px -6px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.12);
+
+  --bg-topographic-pattern: radial-gradient(rgba(255, 255, 255, 0.08) 1.2px, transparent 1.2px);
+}
+
+/* ==========================================================================
+   RESET Y REGLAS BASE
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--color-paper);
+  background-image: var(--bg-topographic-pattern);
+  background-repeat: repeat;
+  background-size: 24px 24px;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Foco visible y accesible (Contraste AA) */
+:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 2px;
+}
+
+/* Animaciones canónicas del Atlas (Fase 4B: Vida Visual) */
+@keyframes topographicDrift {
+  from { background-position: 0 0; }
+  to { background-position: 320px 320px; }
+}
+
+@keyframes pinPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(181, 83, 47, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(181, 83, 47, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(181, 83, 47, 0);
+  }
+}
+
+@keyframes rotateCompass {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dashTravel {
+  from { stroke-dashoffset: 40; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes drawRoutePath {
+  from { stroke-dashoffset: 600; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.view-transition {
+  animation: viewFadeIn var(--motion-duration-normal) var(--motion-ease-out) both;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   CABECERA PRINCIPAL Y BANNER DE TELEMETRÍA (ALTO CONTRASTE & DISTINCIÓN)
+   ========================================================================== */
+.app-header-nav {
+  background: linear-gradient(180deg, #070B13 0%, #0F172A 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Banner ticker continuo bajo la cabecera */
+.atlas-ticker-container {
+  width: 100%;
+  background-color: #060911;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  position: relative;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.atlas-ticker-track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: tickerScroll 36s linear infinite;
+  will-change: transform;
+}
+
+.atlas-ticker-container:hover .atlas-ticker-track {
+  animation-play-state: paused;
+}
+
+.atlas-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0 1.25rem;
+  font-size: var(--text-xs);
+  color: #94A3B8;
+}
+
+.atlas-ticker-icon {
+  color: #38BDF8;
+  display: inline-flex;
+  align-items: center;
+}
+
+.atlas-ticker-text {
+  font-weight: 600;
+  color: #E2E8F0;
+}
+
+.atlas-ticker-dot {
+  color: #334155;
+  margin-left: 0.85rem;
+  font-size: 14px;
+}
+
+/* Punto viajero que recorre la ruta (RoutePath) */
+.route-traveler-track {
+  position: absolute;
+  top: 22px;
+  height: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.route-traveler-dot {
+  position: absolute;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-terracotta);
+  box-shadow: 0 0 6px rgba(181, 83, 47, 0.65);
+  animation: travelerSlide 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes travelerSlide {
+  0% { left: 0%; opacity: 0; transform: scale(0.6); }
+  8% { opacity: 1; transform: scale(1); }
+  92% { opacity: 1; transform: scale(1); }
+  100% { left: 100%; opacity: 0; transform: scale(0.6); }
+}
+
+/* Rejilla de métricas balanceada: sin tarjetas huérfanas (6x1, 3x2, 2x3 o 1x6) */
+.metrics-grid-balanced {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 1240px) {
+  .metrics-grid-balanced {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .metrics-grid-balanced {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 440px) {
+  .metrics-grid-balanced {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Entrada escalonada y elevación sutil al hover de tarjetas */
+.atlas-card {
+  animation: cardEntrance var(--motion-duration-normal) var(--motion-ease-out) both;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.atlas-card:hover {
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-atlas-md);
+  transform: translateY(-2px);
+}
+
+/* Retroalimentación en botones */
+.atlas-btn {
+  transition: transform var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.atlas-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-atlas-sm);
+}
+
+.atlas-btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Respeto estricto a prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  html, body {
+    animation: none !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .atlas-card:hover, .atlas-btn:hover, .atlas-btn:active {
+    transform: none !important;
+  }
+  .atlas-ticker-track {
+    animation: none !important;
+    overflow-x: auto;
+  }
+  .route-traveler-dot {
+    display: none !important;
+  }
+}
+
+/* Títulos con toque de atlas */
+.atlas-title {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.atlas-mono {
+  font-family: var(--font-mono);
+}
+
+/* Scrollbar sobrio estilo papel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-sm);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-muted);
+}
+
+/* Utilidades básicas */
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.code-block {
+  font-family: var(--font-mono);
+  background: var(--color-card-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  overflow-x: auto;
+}
+
+/* Animaciones de La Máquina de Minería (Fase 6B y 6C) */
+@keyframes stationLightUp {
+  0% {
+    box-shadow: 0 0 0 0 rgba(31, 58, 95, 0.6);
+    transform: scale(0.96);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(31, 58, 95, 0.15);
+    transform: scale(1.04);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(31, 58, 95, 0);
+    transform: scale(1);
+  }
+}
+
+.station-light-up {
+  animation: stationLightUp 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes dockSnap {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.dock-snap {
+  animation: dockSnap 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.dock-zone-hover {
+  border-color: var(--color-terracotta) !important;
+  background-color: var(--color-terracotta-soft) !important;
+  box-shadow: 0 0 10px rgba(181, 83, 47, 0.25) !important;
+}
+
+/* Hover y relieve interactivo de tarjetas de estación */
+.machine-station-card {
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s ease !important;
+}
+
+.machine-station-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--color-terracotta) !important;
+  box-shadow: 0 10px 24px -4px rgba(234, 88, 12, 0.2), 0 0 0 1px var(--color-terracotta-border) !important;
+}
+
+/* Entrega 6C: Banda Transportadora, Lámparas, Piezas y Drawer */
+@keyframes conveyorFlow {
+  from { background-position: 0 0; }
+  to { background-position: 36px 0; }
+}
+
+.conveyor-belt-track {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(148, 163, 184, 0.25) 0,
+    rgba(148, 163, 184, 0.25) 8px,
+    transparent 8px,
+    transparent 18px
+  );
+  background-size: 36px 36px;
+  animation: conveyorFlow 1.8s linear infinite;
+}
+
+@keyframes stationLampPulse {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(181, 83, 47, 0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+    box-shadow: 0 0 14px rgba(181, 83, 47, 0.85);
+  }
+}
+
+.station-lamp-active {
+  animation: stationLampPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes stationLampProcessing {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(0.95);
+    box-shadow: 0 0 8px rgba(181, 83, 47, 0.6);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+    box-shadow: 0 0 20px rgba(181, 83, 47, 1);
+  }
+}
+
+.station-lamp-processing {
+  animation: stationLampProcessing 0.6s ease-in-out infinite;
+}
+
+@keyframes pieceRejectBounce {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-12px); }
+  40%, 80% { transform: translateX(12px); }
+}
+
+.piece-reject {
+  animation: pieceRejectBounce 0.48s ease-in-out both;
+  border-color: var(--color-danger-ink) !important;
+  box-shadow: 0 0 12px rgba(153, 35, 35, 0.4) !important;
+}
+
+@keyframes drawerSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.drawer-slide-in {
+  animation: drawerSlideIn 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes gearRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.gear-active {
+  animation: gearRotate 4s linear infinite;
+  transform-origin: center;
+}
+
+/* Modo Presentación Tipografía Grande */
+.presentation-container {
+  font-size: 1.125rem;
+}
+
+.presentation-container h1,
+.presentation-container h2,
+.presentation-container h3 {
+  letter-spacing: -0.01em;
+}
+
+/* Respeta prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .conveyor-belt-track {
+    animation: none !important;
+  }
+  .station-lamp-active,
+  .station-lamp-processing,
+  .gear-active,
+  .piece-reject {
+    animation: none !important;
+  }
+  .drawer-slide-in {
+    animation: none !important;
+  }
+}
+
+

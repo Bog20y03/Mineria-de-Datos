@@ -1,0 +1,19 @@
+{
+    "nombre": "Iris Flower Dataset",
+    "fuente": "UCI Machine Learning Repository / R datasets",
+    "url": "https://archive.ics.uci.edu/dataset/53/iris",
+    "descripcion": "Conjunto de datos multivariado introducido por Ronald Fisher (1936) para cuantificar la variación morfométrica de flores de iris.",
+    "variables": [
+        "Sepal.Length",
+        "Sepal.Width",
+        "Petal.Length",
+        "Petal.Width",
+        "Species"
+    ],
+    "numero_registros": 150,
+    "tipo_datos": "Tabular continuo y categórico",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "Dominio Público / CC BY 4.0",
+    "categoria_origen": "real_completo",
+    "nota_integridad": "Clasificación: real_completo. Dataset local iris_dataset.csv con 150 filas y 5 columnas, coincidente en dimensiones con el conjunto canónico de Fisher."
+}

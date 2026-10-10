@@ -1,0 +1,8 @@
+=== MÉTRICAS DE RESULTADO - TEMA 05: MODELOS HÍBRIDOS ===
+Exactitud Modelo Convencional Global: 88.44%
+Exactitud Modelo Híbrido Bi-Etapa: 90.67%
+Mejora Absoluta de Rendimiento: 2.22%
+
+JUSTIFICACIÓN Y VENTAJA DEL ENFOQUE HÍBRIDO:
+1. ¿Por qué es híbrido?: Combina dos paradigmas ontológicos distintos: aprendizaje no supervisado (K-Means) para descomponer la complejidad de la distribución, y aprendizaje supervisado paramétrico (Regresión Logística) para la toma de decisiones local.
+2. Ventaja teórica: Rompe la maldición de la heterogeneidad de datos. Un modelo global único se ve obligado a promediar dinámicas divergentes, mientras que el modelo híbrido entrena estimadores locales óptimos para cada sub-régimen.

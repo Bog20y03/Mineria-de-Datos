@@ -1,0 +1,6 @@
+Modelo Predictivo: Suavizamiento Exponencial Holt-Winters (Estacionalidad Aditiva)
+Alpha (Nivel): 0.0549 
+Beta (Tendencia): 0.0043 
+Gamma (Estacional): 0.2757 
+MAE en Conjunto de Prueba (2022-2023): 36.95 GWh
+MAPE (Error Porcentual Absoluto Medio): 1.68 %

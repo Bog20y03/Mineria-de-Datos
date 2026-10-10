@@ -1,0 +1,20 @@
+{
+    "nombre": "Multi-Regime Non-Linear Classification Benchmark",
+    "fuente": "Generador sintético de regímenes heterogéneos para modelado híbrido bi-etapa",
+    "url": "https://archive.ics.uci.edu/ml/datasets.php",
+    "descripcion": "Población con estructuras de subpoblación latentes donde los modelos globales lineales fallan y la combinación de Clustering + Clasificación sobresale.",
+    "variables": [
+        "Var_X1",
+        "Var_X2",
+        "Regimen_Oculto",
+        "Clase_Objetivo"
+    ],
+    "numero_registros": 900,
+    "tipo_datos": "Tabular experimental continuo y categórico",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "MIT Open License",
+    "usado_por_script": false,
+    "nota": "El script R genera su propia población simulada en memoria para fines didácticos; este archivo no es leído por el script.",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Dataset local multiregime_hybrid_dataset.csv con 900 filas y 4 columnas; población multirégimen simulada con fines didácticos (el script R genera 900 casos en memoria)."
+}

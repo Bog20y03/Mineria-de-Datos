@@ -1,0 +1,24 @@
+{
+    "id": "estudiante_01",
+    "nombre": "Alex Mendoza (Estudiante)",
+    "rol": "ESTUDIANTE",
+    "nivel": 4,
+    "rango": "Científico de Datos",
+    "xp": 3850,
+    "xp_siguiente_nivel": 5000,
+    "permisos": {
+        "explorar_mapa": true,
+        "investigar_temas": true,
+        "realizar_busquedas": true,
+        "consultar_documentos": true,
+        "laboratorio_latex": true,
+        "consultar_ejemplos_r": true,
+        "ejecutar_r": true,
+        "ver_resultados": true,
+        "ver_progreso": true,
+        "completar_misiones": true,
+        "gestionar_usuarios": false,
+        "revisar_investigaciones": false
+    },
+    "descripcion": "Rol enfocado en el aprendizaje, exploración de zonas, resolución de misiones y experimentación analítica."
+}

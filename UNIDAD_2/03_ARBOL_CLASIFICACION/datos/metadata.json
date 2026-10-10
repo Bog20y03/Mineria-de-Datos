@@ -1,0 +1,18 @@
+{
+    "nombre": "Credit Approval Benchmark Dataset",
+    "fuente": "UCI Machine Learning Repository / Statlog Credit",
+    "url": "https://archive.ics.uci.edu/dataset/27/credit+approval",
+    "descripcion": "Datos sociodemográficos y laborales para construcción y poda de árboles de clasificación supervisados.",
+    "variables": [
+        "Edad",
+        "Ingreso_Mensual",
+        "Antiguedad_Laboral",
+        "Calificacion"
+    ],
+    "numero_registros": 350,
+    "tipo_datos": "Tabular para clasificación binaria",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY 4.0",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Dataset local credito_clasificacion_uci.csv con 350 filas y 4 columnas; muestra sintética simplificada inspirada en crédito bancario."
+}

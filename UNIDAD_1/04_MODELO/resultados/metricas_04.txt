@@ -1,0 +1,8 @@
+=== MÉTRICAS DE RESULTADO - TEMA 04: MODELOS ===
+Mejor Modelo por Accuracy: Regresion Logistica (68%)
+Mejor Modelo por F1-Score: Regresion Logistica (0.6444)
+
+SÍNTESIS E INTERPRETACIÓN TÉCNICA:
+- Regresión Logística y LDA obtienen métricas similares debido a la linealidad subyacente en el espacio logit.
+- El Árbol CART provee alta explicabilidad clínica mediante reglas explícitas de corte en Glucosa y Edad.
+- k-NN ofrece flexibilidad local pero es sensible a la escala dimensional y la elección de k.

@@ -1,0 +1,8 @@
+Arquitectura: Capa Entrada (3) -> Oculta (4) -> Salida (1)
+Convergencia: Entropía final 25.3144 
+Exactitud en Prueba: 90 %
+Matriz de Confusión:
+    Predicho
+Real  0  1
+   0 67  4
+   1  5 14

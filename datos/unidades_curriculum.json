@@ -1,0 +1,26 @@
+[
+  {
+    "id": "UNIDAD_1",
+    "numero": 1,
+    "nombre": "Conceptos sobre minería de datos",
+    "pregunta_problema": "¿Qué aplicaciones empresariales encuentra para la minería de datos y cómo las puede aprovechar en su vida profesional?"
+  },
+  {
+    "id": "UNIDAD_2",
+    "numero": 2,
+    "nombre": "Modelos y técnicas de la minería de datos",
+    "pregunta_problema": "¿Cómo las matemáticas son aprovechadas para desarrollar técnicas y modelos de minería que posteriormente son sintetizados en algoritmos para desarrollar estrategias de negocio como ecommerce, marketing, entre otros?"
+  },
+  {
+    "id": "UNIDAD_3",
+    "numero": 3,
+    "nombre": "Aplicaciones con diferentes técnicas de minería",
+    "pregunta_problema": "¿Cómo aplicar diferentes técnicas de minería de datos a bases de datos existentes en empresas o bases de datos gubernamentales?"
+  },
+  {
+    "id": "UNIDAD_4",
+    "numero": 4,
+    "nombre": "Proyecto",
+    "pregunta_problema": "¿Cómo aplicar las técnicas de minería de datos en proyectos propios?"
+  }
+]

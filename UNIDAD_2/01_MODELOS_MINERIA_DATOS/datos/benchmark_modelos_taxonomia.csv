@@ -1,0 +1,9 @@
+"Modelo","Familia","Complejidad","Interpretabilidad","Exactitud_Media","Tiempo_Entrenamiento_Seg"
+"Regresión Logística","Predictivo","Baja","Alta",78.5,0.04
+"Árbol CART","Predictivo","Media","Alta",76.2,0.08
+"Random Forest","Predictivo","Alta","Baja",84.8,1.45
+"SVM Lineal","Predictivo","Media","Media",81.3,0.82
+"Red Neuronal (MLP)","Predictivo","Alta","Baja",83.9,2.1
+"k-NN","Predictivo","Baja","Media",74.5,0.01
+"Naive Bayes","Predictivo","Baja","Alta",72.1,0.02
+"K-Means (Clustering)","Descriptivo","Media","Alta",NA,0.15

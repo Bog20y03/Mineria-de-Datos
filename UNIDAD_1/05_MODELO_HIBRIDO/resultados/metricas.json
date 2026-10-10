@@ -1,0 +1,32 @@
+{
+  "estado": "ok",
+  "tema_id": "U1-05",
+  "tipo_tarea": "clasificacion",
+  "dataset": "Población sintética de 900 casos con dos regímenes ocultos generada en memoria (675 train / 225 test)",
+  "dataset_origen": "sintetico",
+  "origen_metricas": "calculadas_script",
+  "fecha_ejecucion": "2026-10-08 22:34:56.808635",
+  "archivos_graficos": "grafico_05_modelos_hibridos.png",
+  "baseline_mayoritaria": 90.67,
+  "supera_baseline": false,
+  "metricas": {
+    "exactitud_global": 88.44,
+    "exactitud_hibrido": 90.67,
+    "mejora_absoluta": 2.22
+  },
+  "modelos": [
+    {
+      "modelo": "Árbol CART Global Único",
+      "tecnica": "rpart global",
+      "exactitud": 88.44,
+      "supera_baseline": false
+    },
+    {
+      "modelo": "Modelo Híbrido Bi-Etapa",
+      "tecnica": "K-Means (k=2) + GLM locales",
+      "exactitud": 90.67,
+      "supera_baseline": false
+    }
+  ],
+  "interpretacion": "1. ¿Por qué es híbrido?: Combina dos paradigmas ontológicos distintos: aprendizaje no supervisado (K-Means) para descomponer la complejidad de la distribución, y aprendizaje supervisado paramétrico (Regresión Logística) para la toma de decisiones local.\n2. Ventaja teórica: Rompe la maldición de la heterogeneidad de datos. Un modelo global único se ve obligado a promediar dinámicas divergentes, mientras que el modelo híbrido entrena estimadores locales óptimos para cada sub-régimen."
+}

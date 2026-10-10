@@ -1,0 +1,20 @@
+{
+    "nombre": "New York Air Quality Measurements",
+    "fuente": "New York State Department of Conservation / EPA / R datasets",
+    "url": "https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/airquality.html",
+    "descripcion": "Mediciones diarias de calidad del aire en Nueva York de mayo a septiembre de 1973, incluyendo concentraciones de ozono, radiación solar, velocidad del viento y temperatura.",
+    "variables": [
+        "Ozone",
+        "Solar.R",
+        "Wind",
+        "Temp",
+        "Month",
+        "Day"
+    ],
+    "numero_registros": 153,
+    "tipo_datos": "Tabular continuo con valores perdidos (NAs)",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "Open Data / Dominio Público",
+    "categoria_origen": "real_completo",
+    "nota_integridad": "Clasificación: real_completo. Dataset local airquality_dataset.csv con 153 filas y 6 columnas, coincidente en dimensiones con el conjunto de calidad del aire de Nueva York en R."
+}

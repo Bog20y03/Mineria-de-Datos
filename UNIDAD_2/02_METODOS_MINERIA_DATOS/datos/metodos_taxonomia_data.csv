@@ -1,0 +1,7 @@
+"Metodo","Paradigma","Objetivo_Analitico","Escalabilidad"
+"K-Means","No Supervisado","Clustering Particional","Alta"
+"DBSCAN","No Supervisado","Clustering por Densidad","Media"
+"Árboles CART","Supervisado","Clasificación Discreta","Alta"
+"Regresión Logística","Supervisado","Clasificación Probabilística","Alta"
+"Apriori","No Supervisado","Extracción de Asociación","Media"
+"Isolation Forest","No Supervisado","Detección de Anomalías","Alta"

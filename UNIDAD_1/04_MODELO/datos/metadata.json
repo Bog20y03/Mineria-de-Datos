@@ -1,0 +1,21 @@
+{
+    "nombre": "Pima Indians Diabetes Diagnostic Reference",
+    "fuente": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK) / UCI",
+    "url": "https://archive.ics.uci.edu/dataset/34/diabetes",
+    "descripcion": "Variables clínicas diagnósticas para comparación y benchmarking de múltiples modelos predictivos y clasificadores supervisados.",
+    "variables": [
+        "Glucosa",
+        "IMC",
+        "Presion_Arterial",
+        "Edad",
+        "Diagnostico_Diabetes"
+    ],
+    "numero_registros": 400,
+    "tipo_datos": "Tabular médico continuo y binario",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "Dominio Público / Open Access",
+    "usado_por_script": false,
+    "nota": "El script R genera su propia población simulada en memoria para fines didácticos; este archivo no es leído por el script.",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Dataset local diabetes_diagnostic_dataset.csv con 400 filas y 5 columnas; población clínica simulada con fines didácticos (el script R genera 800 casos en memoria)."
+}

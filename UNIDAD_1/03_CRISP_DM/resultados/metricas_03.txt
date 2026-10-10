@@ -1,0 +1,13 @@
+=== MÉTRICAS DE RESULTADO - TEMA 03: CRISP-DM ===
+AUC (Área bajo la Curva ROC): 0.8308
+Exactitud Global (Accuracy): 73.2%
+Umbral de Decisión Óptimo por Coste: 0.22
+Coste Económico Mínimo: 6100 USD
+
+TRAZABILIDAD CON LAS 6 FASES DE CRISP-DM (Chapman et al., 2000):
+- 1. Business Understanding: Cuantificación del coste de retención ($50) vs pérdida ($300).
+- 2. Data Understanding: Inspección de variables predictoras de cartera de clientes.
+- 3. Data Preparation: Partición estratificada 75/25 para entrenamiento y prueba.
+- 4. Modeling: Ajuste de regresión logística e inferencia de Odds Ratios.
+- 5. Evaluation: Generación de Curva ROC (AUC) y calibración económica del umbral.
+- 6. Deployment: Función exportable servicio_scoring_crisp() para inferencia en producción.

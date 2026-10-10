@@ -1,0 +1,2 @@
+"ID","Titulo","Autores","Anio","Objetivo_Estudio","Metodologia_Utilizada","Principales_Resultados","Nivel_Pertinencia"
+"DOC_U3_TS_001","Short-Term Electricity Demand Forecasting Using Double Seasonal Exponential Smoothing","James W. Taylor",2003,"Pronosticar perfiles estacionales de consumo eléctrico de alta frecuencia.","Extensión del suavizamiento exponencial Holt-Winters adaptado a ciclos intra-diarios y anuales.","Reducción significativa del error porcentual absoluto medio (MAPE) frente a modelos ARIMA estándar.","Alta"

@@ -1,0 +1,17 @@
+{
+    "nombre": "Matriz de Aplicaciones Sectoriales de Minería de Datos",
+    "fuente": "Compilación de Ngai et al. (2009) y Phua et al. (2010)",
+    "url": "https://www.sciencedirect.com/science/article/pii/S095741740800084X",
+    "descripcion": "Casos de éxito y técnicas dominantes de minería de datos aplicadas a sectores industriales estratégicos.",
+    "variables": [
+        "Sector",
+        "Tecnica_Dominante",
+        "Impacto_Negocio"
+    ],
+    "numero_registros": 6,
+    "tipo_datos": "Tabular de casos de negocio",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "Open Access",
+    "categoria_origen": "conceptual",
+    "nota_integridad": "Clasificación: conceptual. Dataset local crm_retail_applications.csv con 6 filas y 3 columnas; matriz conceptual de aplicaciones sectoriales de minería de datos."
+}

@@ -1,0 +1,10 @@
+Segmentación de Clientes Mayoristas (K-Means k = 3)
+Varianza Explicada (BSS/TSS): 32.65 %
+Ancho de Silueta Promedio: 0.2716 
+Tamaño de los Clústeres:
+[1]  79  81 280
+Centroides Estandarizados:
+  Productos_Frescos Lacteos Abarrotes Congelados
+1             0.031   0.052    -0.364      1.699
+2            -0.177   0.033     1.702     -0.175
+3             0.043  -0.024    -0.390     -0.429

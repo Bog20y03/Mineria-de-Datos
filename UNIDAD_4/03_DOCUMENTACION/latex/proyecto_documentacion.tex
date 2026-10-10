@@ -1,0 +1,35 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amsfonts,amssymb,graphicx,booktabs,hyperref}
+\title{\textbf{Proyecto Integrador: Modelado Predictivo para la Detección Temprana de la Deserción Universitaria}}
+\author{Máquina Virtual de Minería de Datos}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{abstract}
+Este proyecto presenta la implementación de una solución analítica para evaluar el riesgo de deserción en estudiantes de educación superior mediante minería de datos. Se utiliza una muestra didáctica de 500 registros con estructura inspirada en UCI \#697; no verificada como submuestra.
+\end{abstract}
+\section{Introducción}
+El abandono en la educación superior representa un reto multidimensional que impacta la retención estudiantil y la planificación académica institucional.
+\section{Definición del Problema}
+Evaluar si algoritmos de clasificación supervisada logran identificar oportunamente casos de deserción a partir de indicadores académicos y demográficos del primer ciclo.
+\section{Base de Datos Seleccionada}
+Se utilizó una muestra didáctica de 500 registros con estructura inspirada en UCI \#697; no verificada como submuestra. La base registra 5 variables predictoras y una prevalencia de 5 casos de abandono (1.0\%).
+\section{Preparación y Calidad de los Datos}
+Partición reproducible en 70\% entrenamiento (350 registros) y 30\% prueba independiente (150 registros con 3 casos positivos de abandono, 2.0\%).
+\section{Técnicas y Algoritmos Seleccionados}
+Se contrastaron tres familias metodológicas: Árboles CART, Redes Neuronales MLP y Regresión Logística.
+\section{Implementación en R}
+El flujo se programó de forma reproducible en R con las librerías \texttt{rpart} y \texttt{nnet}, fijando semilla pseudoaleatoria para trazabilidad del benchmark.
+\section{Resultados Experimentales}
+En el conjunto de prueba independiente de 150 registros, los tres modelos evaluados obtuvieron una exactitud de 98.00\%, igualando la exactitud del baseline de la clase mayoritaria (98.00\%).
+\section{Evaluación de Modelos}
+La sensibilidad alcanzada por los tres modelos en la partición de prueba fue de 0\%, debido a que los algoritmos convergieron a asignar la clase mayoritaria a todas las observaciones.
+\section{Interpretación de Patrones}
+El fuerte desbalance de la muestra didáctica (99.0\% negativos frente a 1.0\% positivos) condiciona el aprendizaje de los estimadores, limitando la detección de la clase minoritaria.
+\section{Conclusiones y Recomendaciones}
+Los modelos evaluados igualan el baseline trivial de la clase mayoritaria (98.00\%) y alcanzan 0\% de sensibilidad en prueba. Se recomienda aplicar técnicas de balanceo (SMOTE o ponderación de clases) y evaluar sobre el dataset completo de la fuente oficial.
+\section{Referencias Bibliográficas}
+Romero, C., \& Ventura, S. (2010). Educational data mining: a review of the state of the art. IEEE Transactions on Systems, Man, and Cybernetics, Part C, 40(6), 601-618.
+\end{document}

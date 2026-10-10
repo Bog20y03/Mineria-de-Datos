@@ -1,0 +1,23 @@
+{
+    "nombre": "Market Basket Retail Groceries Dataset",
+    "fuente": "Basado en transacciones del benchmark Groceries / Kaggle Market Basket",
+    "url": "https://www.kaggle.com/datasets/heeraldedhia/groceries-dataset",
+    "descripcion": "Registro transaccional de compras en retail para extracción de patrones de asociación mediante métricas de soporte, confianza y lift.",
+    "variables": [
+        "ID_Transaccion",
+        "Leche",
+        "Pan",
+        "Huevos",
+        "Mantequilla",
+        "Cerveza",
+        "Cafe",
+        "Azucar",
+        "Manzanas"
+    ],
+    "numero_registros": 500,
+    "tipo_datos": "Matriz transaccional binaria",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY-SA 4.0",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Dataset local groceries_transactions_market.csv con 500 filas y 9 columnas; transacciones sintéticas de canasta de mercado para minería de reglas de asociación."
+}

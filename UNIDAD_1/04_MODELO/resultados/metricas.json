@@ -1,0 +1,61 @@
+{
+  "estado": "ok",
+  "tema_id": "U1-04",
+  "tipo_tarea": "clasificacion",
+  "dataset": "Población clínica simulada de 800 casos generada por el script (600 train / 200 test)",
+  "dataset_origen": "sintetico",
+  "origen_metricas": "calculadas_script",
+  "fecha_ejecucion": "2026-10-08 22:34:48.427908",
+  "archivos_graficos": "grafico_04_modelos.png",
+  "baseline_mayoritaria": 57,
+  "supera_baseline": true,
+  "metricas": {
+    "mejor_modelo_accuracy": {
+      "modelo": "Regresion Logistica",
+      "accuracy": 0.68
+    },
+    "mejor_modelo_f1": {
+      "modelo": "Regresion Logistica",
+      "f1_score": 0.6444
+    }
+  },
+  "modelos": [
+    {
+      "modelo": "Regresion Logistica",
+      "accuracy": 0.68,
+      "precision": 0.617,
+      "recall_sensibilidad": 0.6744,
+      "especificidad": 0.6842,
+      "f1_score": 0.6444,
+      "supera_baseline": true
+    },
+    {
+      "modelo": "Arbol Decision CART",
+      "accuracy": 0.62,
+      "precision": 0.551,
+      "recall_sensibilidad": 0.6279,
+      "especificidad": 0.614,
+      "f1_score": 0.587,
+      "supera_baseline": true
+    },
+    {
+      "modelo": "K-Nearest Neighbors (k=7)",
+      "accuracy": 0.655,
+      "precision": 0.6,
+      "recall_sensibilidad": 0.593,
+      "especificidad": 0.7018,
+      "f1_score": 0.5965,
+      "supera_baseline": true
+    },
+    {
+      "modelo": "Analisis Discriminante (LDA)",
+      "accuracy": 0.675,
+      "precision": 0.6105,
+      "recall_sensibilidad": 0.6744,
+      "especificidad": 0.6754,
+      "f1_score": 0.6409,
+      "supera_baseline": true
+    }
+  ],
+  "interpretacion": "- Regresión Logística y LDA obtienen métricas similares debido a la linealidad subyacente en el espacio logit.\n- El Árbol CART provee alta explicabilidad clínica mediante reglas explícitas de corte en Glucosa y Edad.\n- k-NN ofrece flexibilidad local pero es sensible a la escala dimensional y la elección de k."
+}

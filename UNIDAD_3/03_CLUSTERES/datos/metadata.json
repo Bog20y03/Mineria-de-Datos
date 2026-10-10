@@ -1,0 +1,19 @@
+{
+    "nombre": "Wholesale Customers Dataset",
+    "fuente": "UCI Machine Learning Repository / Margarida G. M. S. Cardoso",
+    "url": "https://archive.ics.uci.edu/dataset/292/wholesale+customers",
+    "descripcion": "Gastos anuales de clientes de un distribuidor mayorista en Lisboa/Porto a través de diversas categorías de producto.",
+    "variables": [
+        "Canal",
+        "Productos_Frescos",
+        "Lacteos",
+        "Abarrotes",
+        "Congelados"
+    ],
+    "numero_registros": 440,
+    "tipo_datos": "Tabular de gastos continuos para segmentación no supervisada",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY 4.0",
+    "categoria_origen": "parcial_no_verificado",
+    "nota_integridad": "Clasificación: parcial_no_verificado. Dataset local wholesale_customers_uci.csv con 440 filas y 5 columnas; coincide en número de registros con UCI Wholesale Customers (440), pero con 5 columnas y distribución de canales divergente no verificada."
+}

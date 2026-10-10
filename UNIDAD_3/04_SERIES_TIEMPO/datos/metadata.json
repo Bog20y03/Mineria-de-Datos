@@ -1,0 +1,17 @@
+{
+    "nombre": "Monthly Electrical Power Consumption Benchmark",
+    "fuente": "Operador del Sistema Eléctrico / Red Eléctrica / IEA Open Data",
+    "url": "https://www.ree.es/es/datos/demanda",
+    "descripcion": "Serie temporal mensual de consumo de energía eléctrica de 2014 a 2023 con componente de estacionalidad climática y tendencia macroeconómica.",
+    "variables": [
+        "Anio",
+        "Mes",
+        "Demanda_GWh"
+    ],
+    "numero_registros": 120,
+    "tipo_datos": "Serie temporal continua mensual",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "Open Data / Dominio Público",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Dataset local demanda_electrica_serie.csv con 120 filas y 3 columnas; serie temporal sintética con estacionalidad mensual y tendencia simulada."
+}

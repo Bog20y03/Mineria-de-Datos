@@ -1,0 +1,12 @@
+=== MÉTRICAS DE RESULTADO - TEMA 07: DATA WAREHOUSE ===
+Total Hechos Registrados (Fact_Ventas): 600
+Total Facturación Neta Consolidada: $872,419.3
+Dimensión Clientes Conformada: 25 registros
+Dimensión Productos Conformada: 15 SKUs
+Dimensión Tiempo Conformada: 290 días evaluados
+
+SÍNTESIS DEL MODELO DIMENSIONAL Y PIPELINE ETL (Kimball & Ross, 2013):
+- Extracción: 3 fuentes desacopladas (ERP transacciones, CRM clientes, Catálogo WMS).
+- Transformación: Reconciliación semántica, saneamiento, cálculo de métricas aditivas y generación de claves subrogadas (SK).
+- Carga: Estructuración del Star Schema relacional libre de dependencias operacionales.
+- Capacidades OLAP: Agregación en tiempo real (Roll-Up por trimestre, Drill-Down por categoría, Slice-and-Dice por región).

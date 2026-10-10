@@ -1,0 +1,19 @@
+{
+    "nombre": "Educational Learning Analytics Interaction Benchmark",
+    "fuente": "Inspirado en Romero & Ventura (2010) / Datos de interacción LMS",
+    "url": "https://educationaldatamining.org/",
+    "descripcion": "Indicadores conductuales de interacción en plataformas formativas virtuales para detección temprana de estudiantes en riesgo de deserción.",
+    "variables": [
+        "Estudiante_ID",
+        "Horas_Plataforma_Semana",
+        "Tareas_Entregadas_Pct",
+        "Participacion_Foro",
+        "Riesgo_Desercion"
+    ],
+    "numero_registros": 8,
+    "tipo_datos": "Tabular educativo",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY-SA 4.0",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Dataset local edm_learning_analytics.csv con 8 filas y 5 columnas; micro-dataset sintético didáctico para analítica del aprendizaje (EDM)."
+}

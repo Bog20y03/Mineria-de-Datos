@@ -1,0 +1,11 @@
+EVALUACIÓN COMPARATIVA DE MODELOS:
+
+                Modelo     Familia Interpretabilidad Exactitud_Media
+1  Regresión Logística  Predictivo              Alta            78.5
+2           Árbol CART  Predictivo              Alta            76.2
+3        Random Forest  Predictivo              Baja            84.8
+4           SVM Lineal  Predictivo             Media            81.3
+5   Red Neuronal (MLP)  Predictivo              Baja            83.9
+6                 k-NN  Predictivo             Media            74.5
+7          Naive Bayes  Predictivo              Alta            72.1
+8 K-Means (Clustering) Descriptivo              Alta              NA

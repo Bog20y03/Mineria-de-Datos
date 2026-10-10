@@ -1,0 +1,6 @@
+Resultados de Integración Relacional y Partición:
+  - Total Filas Integradas: 350 observaciones.
+  - Columnas Consolidadas: 7 atributos.
+  - Conjunto de Entrenamiento (Train): 244 filas ( 21.31 % positivos Churn)
+  - Conjunto de Prueba (Test): 106 filas ( 21.7 % positivos Churn)
+Balance de Estratificación: Proporciones de clase preservadas idénticamente.

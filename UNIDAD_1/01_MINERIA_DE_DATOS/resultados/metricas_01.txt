@@ -1,0 +1,10 @@
+=== MÉTRICAS DE RESULTADO - TEMA 01: MINERÍA DE DATOS ===
+Algoritmo: K-Means Particional
+Número de Clústeres (k): 3
+Varianza Explicada (BSS/TSS): 76.7%
+Coeficiente de Silueta Promedio: 0.4599
+Distribución por Clúster: 53, 50, 47
+
+INTERPRETACIÓN:
+- El clúster 1 agrupa individuos con pétalos y sépalos reducidos (típicamente Setosa), perfectamente separable.
+- Los clústeres 2 y 3 representan individuos con morfologías intermedias y grandes, reflejando patrones naturales de diferenciación biológica sin supervisión humana.

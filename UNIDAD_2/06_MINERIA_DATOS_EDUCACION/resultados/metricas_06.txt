@@ -1,0 +1,20 @@
+INDICADORES DE ANALÍTICA DEL APRENDIZAJE (EDM):
+
+  Estudiante_ID Horas_Plataforma_Semana Tareas_Entregadas_Pct
+1           101                    12.5                    95
+2           102                     4.2                    40
+3           103                    18.0                   100
+4           104                     3.1                    30
+5           105                    15.4                    90
+6           106                     7.8                    70
+7           107                     2.0                    20
+8           108                    14.1                    85
+  Participacion_Foro Riesgo_Desercion
+1                  8             Bajo
+2                  1             Alto
+3                 14             Bajo
+4                  0             Alto
+5                 11             Bajo
+6                  4            Medio
+7                  0             Alto
+8                  9             Bajo

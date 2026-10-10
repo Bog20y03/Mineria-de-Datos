@@ -1,0 +1,18 @@
+{
+    "nombre": "Banknote Authentication Dataset",
+    "fuente": "UCI Machine Learning Repository",
+    "url": "https://archive.ics.uci.edu/dataset/267/banknote+authentication",
+    "descripcion": "Atributos extraídos de imágenes continuas para autenticación de billetes mediante redes neuronales artificiales.",
+    "variables": [
+        "Varianza_Ondicula",
+        "Asimetria_Ondicula",
+        "Curtosis_Ondicula",
+        "Autenticidad"
+    ],
+    "numero_registros": 300,
+    "tipo_datos": "Tabular continuo para clasificación conexionista",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "Dominio Público / CC BY 4.0",
+    "categoria_origen": "tipo_UCI_no_verificado",
+    "nota_integridad": "Clasificación: tipo_UCI_no_verificado. Dataset local banknote_authentication_uci.csv con 300 filas y 4 columnas; estructura inspirada en Banknote Authentication pero con 300 registros (UCI oficial contiene 1,372 filas y 5 atributos)."
+}

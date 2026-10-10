@@ -1,0 +1,19 @@
+{
+    "nombre": "Bank Marketing Campaign Dataset",
+    "fuente": "UCI Machine Learning Repository / Banco Portugués",
+    "url": "https://archive.ics.uci.edu/dataset/222/bank+marketing",
+    "descripcion": "Datos directos de campañas de telemarketing para predecir la suscripción de un depósito a plazo fijo.",
+    "variables": [
+        "Edad",
+        "Balance",
+        "Duracion_Llamada",
+        "Campanias",
+        "Deposito_Contratado"
+    ],
+    "numero_registros": 450,
+    "tipo_datos": "Tabular bancario supervisado",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY 4.0",
+    "categoria_origen": "tipo_UCI_no_verificado",
+    "nota_integridad": "Clasificación: tipo_UCI_no_verificado. Dataset local bank_marketing_uci.csv con 450 filas y 5 columnas; subconjunto simplificado con estructura inspirada en Bank Marketing de UCI (UCI oficial contiene 45,211 o 4,521 registros con 17 atributos)."
+}

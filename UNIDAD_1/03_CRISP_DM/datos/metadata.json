@@ -1,0 +1,22 @@
+{
+    "nombre": "Credit Risk & Scoring Dataset",
+    "fuente": "Basado en principios de German Credit Data / LendingClub Open Benchmark",
+    "url": "https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data",
+    "descripcion": "Registro de clientes bancarios para modelado predictivo del riesgo de impago conforme a las 6 fases de la metodología CRISP-DM.",
+    "variables": [
+        "ID_Cliente",
+        "Edad",
+        "Ingresos_Anuales",
+        "Historial_Moras",
+        "Ratio_Deuda_Ingreso",
+        "Incumplimiento_Pago"
+    ],
+    "numero_registros": 500,
+    "tipo_datos": "Tabular financiero supervisado",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "CC BY-SA 4.0",
+    "usado_por_script": false,
+    "nota": "El script R genera su propia población simulada en memoria para fines didácticos; este archivo no es leído por el script.",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Dataset local credit_scoring_dataset.csv con 500 filas y 6 columnas; población simulada con fines didácticos (el script R genera datos en memoria)."
+}

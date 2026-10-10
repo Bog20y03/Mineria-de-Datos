@@ -1,0 +1,18 @@
+{
+    "nombre": "Proyecto Integrador - Seguimiento de Hitos",
+    "fuente": "Máquina Virtual de Minería de Datos",
+    "url": "https://archive.ics.uci.edu/dataset/697/",
+    "descripcion": "Registro de evidencias de las cuatro fases del proyecto integrador.",
+    "variables": [
+        "Fase",
+        "Hito",
+        "Estado",
+        "Evidencia"
+    ],
+    "numero_registros": 4,
+    "tipo_datos": "Tabular de gestión de proyecto",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "MIT Open License",
+    "categoria_origen": "conceptual",
+    "nota_integridad": "Clasificación: conceptual. Dataset local 04_sustentacion_resultados_data.csv con 4 filas y 4 columnas; registro conceptual de soporte para diapositivas y guion de sustentación."
+}

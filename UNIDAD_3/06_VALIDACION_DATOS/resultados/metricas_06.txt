@@ -1,0 +1,8 @@
+Diagnóstico de Calidad y Validación de Datos:
+  - Valores Perdidos Iniciales (NAs) en Edad: 12 
+  - Valores Perdidos Iniciales (NAs) en Ingreso: 18 
+  - Errores de Dominio / Rango Detectados en Edad: 9 
+  - Outliers / Valores Anómalos Detectados en Ingreso: 3 
+  - Mediana de Imputación Aplicada (Edad): 35 años
+  - Mediana de Imputación Aplicada (Ingreso): 2510.474 USD
+Estado Post-Validación: 0 valores perdidos, integridad referencial 100% restaurada.

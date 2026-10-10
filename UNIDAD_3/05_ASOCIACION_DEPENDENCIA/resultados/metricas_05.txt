@@ -1,0 +1,19 @@
+Reglas de Asociación Minadas (Soporte Mínimo = 10%, Confianza Mínima = 40%):
+
+                                    Regla Soporte Confianza      Lift
+Cafe => Azucar             Cafe => Azucar   0.256 0.6464646 1.6242830
+Azucar => Cafe             Azucar => Cafe   0.256 0.6432161 1.6242830
+Pan => Leche                 Pan => Leche   0.340 0.7142857 1.4819206
+Leche => Pan                 Leche => Pan   0.340 0.7053942 1.4819206
+Manzanas => Leche       Manzanas => Leche   0.144 0.5581395 1.1579658
+Manzanas => Pan           Manzanas => Pan   0.138 0.5348837 1.1237053
+Pan => Azucar               Pan => Azucar   0.208 0.4369748 1.0979266
+Azucar => Pan               Azucar => Pan   0.208 0.5226131 1.0979266
+Leche => Azucar           Leche => Azucar   0.200 0.4149378 1.0425572
+Azucar => Leche           Azucar => Leche   0.200 0.5025126 1.0425572
+Cafe => Leche               Cafe => Leche   0.188 0.4747475 0.9849533
+Cafe => Pan                   Cafe => Pan   0.182 0.4595960 0.9655377
+Mantequilla => Pan     Mantequilla => Pan   0.118 0.4573643 0.9608495
+Huevos => Pan               Huevos => Pan   0.120 0.4511278 0.9477475
+Huevos => Leche           Huevos => Leche   0.116 0.4360902 0.9047515
+Mantequilla => Leche Mantequilla => Leche   0.106 0.4108527 0.8523915

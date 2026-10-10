@@ -1,0 +1,6 @@
+Exactitud (Accuracy): 83.96 %
+Matriz de Confusión:
+             Predicho
+Real          Riesgo_Alto Riesgo_Bajo
+  Riesgo_Alto           7          14
+  Riesgo_Bajo           3          82

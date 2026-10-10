@@ -1,0 +1,16 @@
+CASOS SECTORIALES DE MINERÍA DE DATOS:
+
+              Sector                            Tecnica_Dominante
+1       CRM & Retail                         Reglas de Asociación
+2   Banca & Finanzas       Detección de Anomalías / Random Forest
+3   Salud & Medicina                   Redes Neuronales / Árboles
+4 Telecomunicaciones                    Predicción de Churn / GLM
+5         E-commerce                        Filtrado Colaborativo
+6    Manufactura 4.0 Series Temporales / Mantenimiento Predictivo
+                          Impacto_Negocio
+1 Optimización de canasta y cross-selling
+2   Reducción de pérdidas por fraude >40%
+3      Diagnóstico temprano de patologías
+4           Reducción de fuga de clientes
+5        Incremento en tasa de conversión
+6         Prevención de paradas de planta

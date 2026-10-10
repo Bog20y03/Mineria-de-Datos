@@ -1,0 +1,4 @@
+"Modelo","Exactitud_Test","Sensibilidad","Baseline_Mayoritaria","Supera_Baseline","N_Total","Positivos_Total","N_Test","Positivos_Test"
+"Regresión Logística",98,0,98,FALSE,500,5,150,3
+"Árbol CART",98,0,98,FALSE,500,5,150,3
+"Red Neuronal (MLP)",98,0,98,FALSE,500,5,150,3

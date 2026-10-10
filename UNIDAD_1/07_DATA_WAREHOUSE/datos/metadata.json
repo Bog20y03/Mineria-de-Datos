@@ -1,0 +1,24 @@
+{
+    "nombre": "Retail Sales Transactional & Star Schema Dataset",
+    "fuente": "Simulación empresarial basada en el marco dimensional de Ralph Kimball",
+    "url": "https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/",
+    "descripcion": "Fuentes transaccionales integradas (Ventas, Clientes, Productos, Tiempo) para procesos de ETL analítico y consultas OLAP multidimensionales.",
+    "variables": [
+        "SK_Venta",
+        "SK_Tiempo",
+        "SK_Cliente",
+        "SK_Producto",
+        "Cantidad",
+        "Monto_Bruto",
+        "Descuento_Monetario",
+        "Monto_Neto"
+    ],
+    "numero_registros": 600,
+    "tipo_datos": "Esquema relacional en estrella (Star Schema)",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "MIT Open License",
+    "usado_por_script": false,
+    "nota": "El script R genera su propia población simulada en memoria para fines didácticos; este archivo no es leído por el script.",
+    "categoria_origen": "sintetico",
+    "nota_integridad": "Clasificación: sintetico. Dataset local dw_fact_ventas.csv con 600 filas y 8 columnas; modelo dimensional sintético de ventas minoristas para Data Warehouse didáctico."
+}

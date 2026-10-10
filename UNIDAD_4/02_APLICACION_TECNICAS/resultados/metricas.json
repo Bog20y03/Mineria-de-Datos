@@ -1,0 +1,42 @@
+{
+  "estado": "ok",
+  "tema_id": "U4-02",
+  "tipo_tarea": "clasificacion",
+  "dataset": "Muestra didáctica de 500 registros con estructura inspirada en UCI #697; no verificada como submuestra",
+  "dataset_origen": "tipo_UCI_no_verificado",
+  "origen_metricas": "calculadas_script",
+  "fecha_ejecucion": "2026-10-08 22:35:03.880589",
+  "archivos_graficos": "grafico_02_benchmark_proyecto.png",
+  "baseline_mayoritaria": 98,
+  "supera_baseline": false,
+  "metricas": {
+    "n_total": 500,
+    "positivos_total": 5,
+    "n_test": 150,
+    "positivos_test": 3
+  },
+  "modelos": [
+    {
+      "modelo": "Regresión Logística",
+      "exactitud": 98,
+      "sensibilidad": 0,
+      "supera_baseline": false,
+      "solo_mayoritaria": true
+    },
+    {
+      "modelo": "Árbol CART",
+      "exactitud": 98,
+      "sensibilidad": 0,
+      "supera_baseline": false,
+      "solo_mayoritaria": true
+    },
+    {
+      "modelo": "Red Neuronal (MLP)",
+      "exactitud": 98,
+      "sensibilidad": 0,
+      "supera_baseline": false,
+      "solo_mayoritaria": true
+    }
+  ],
+  "interpretacion": "- Distribución de prueba: 147 casos negativos (98.0%) y 3 casos positivos (2.0%).\n- Baseline de clase mayoritaria: 98.00%.\n- Ningún modelo supera el baseline trivial de la clase mayoritaria."
+}

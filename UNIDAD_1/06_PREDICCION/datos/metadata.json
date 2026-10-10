@@ -1,0 +1,17 @@
+{
+    "nombre": "Monthly Airline Passenger Numbers (1949-1960)",
+    "fuente": "Box, Jenkins & Reinsel (2015) / International Civil Aviation Organization",
+    "url": "https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/AirPassengers.html",
+    "descripcion": "Serie temporal mensual clásica de pasajeros de aerolíneas internacionales con fuerte tendencia creciente y estacionalidad multiplicativa anual.",
+    "variables": [
+        "Anio",
+        "Mes",
+        "Pasajeros_Miles"
+    ],
+    "numero_registros": 144,
+    "tipo_datos": "Serie de tiempo univariada mensual",
+    "fecha_consulta": "2026-10-06",
+    "licencia": "Dominio Público",
+    "categoria_origen": "real_completo",
+    "nota_integridad": "Clasificación: real_completo. Dataset local airpassengers_timeseries.csv con 144 filas y 3 columnas, coincidente con la serie temporal mensual Box-Jenkins 1949-1960."
+}

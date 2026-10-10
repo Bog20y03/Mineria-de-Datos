@@ -1,0 +1,10 @@
+Modelo: Árbol de Decisión CART (UCI Bank Marketing)
+Exactitud en Muestra de Prueba: 68.15 %
+Matriz de Confusión:
+    Predicho
+Real No Si
+  No 89  2
+  Si 41  3
+Importancia de Variables:
+Duracion_Llamada             Edad          Balance        Campanias 
+       9.5446712        0.8571429        0.5714286        0.2857143 

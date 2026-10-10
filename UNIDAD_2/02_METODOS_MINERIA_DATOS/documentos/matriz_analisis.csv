@@ -1,0 +1,4 @@
+"ID","Titulo","Autores","Anio","Objetivo_Estudio","Metodologia_Utilizada","Principales_Resultados","Nivel_Pertinencia"
+"DOC_U2_MET_001","The Elements of Statistical Learning","Trevor Hastie, Robert Tibshirani, Jerome Friedman",2009,"Desarrollar la teoría matemática de métodos supervisados.","Inferencia estadística y teoría de regularización.","Demostración del compromiso sesgo-varianza.","Alta"
+"DOC_U2_MET_002","Data Clustering: A Review","Anil K. Jain, M. Narasimha Murty, Patrick J. Flynn",1999,"Revisar la taxonomía completa de métodos de agrupamiento.","Revisión sistemática de clustering jerárquico y particional.","Definición del estándar de clustering en minería de datos.","Alta"
+"DOC_U2_MET_003","Anomaly Detection: A Survey","Varun Chandola, Arindam Banerjee, Vipin Kumar",2009,"Analizar métodos de detección de anomalías.","Taxonomía de anomalías contextuales y de punto.","Directrices para selección de métodos según la dimensionalidad.","Alta"

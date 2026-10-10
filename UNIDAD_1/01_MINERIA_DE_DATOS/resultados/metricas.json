@@ -1,0 +1,21 @@
+{
+  "estado": "ok",
+  "tema_id": "U1-01",
+  "tipo_tarea": "clustering",
+  "dataset": "iris (Fisher, 1936 / datasets::iris)",
+  "dataset_origen": "real_completo",
+  "origen_metricas": "calculadas_script",
+  "fecha_ejecucion": "2026-10-09 00:11:37.662904",
+  "archivos_graficos": "grafico_01_mineria_datos.png",
+  "metricas": {
+    "tecnica": "K-Means Particional",
+    "k_elegido": 3,
+    "varianza_explicada": 76.7,
+    "coeficiente_silueta": 0.4599,
+    "distribucion_cluster": [53, 50, 47]
+  },
+  "modelos": [],
+  "baseline_mayoritaria": null,
+  "supera_baseline": null,
+  "interpretacion": "- El clúster 1 agrupa individuos con pétalos y sépalos reducidos (típicamente Setosa), perfectamente separable.\n- Los clústeres 2 y 3 representan individuos con morfologías intermedias y grandes, reflejando patrones naturales de diferenciación biológica sin supervisión humana."
+}

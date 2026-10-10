@@ -1,0 +1,4 @@
+"ID","Titulo","Autores","Anio","Objetivo_Estudio","Metodologia_Utilizada","Principales_Resultados","Nivel_Pertinencia"
+"DOC_U2_MOD_001","Principles of Data Mining","David J. Hand, Heikki Mannila, Padhraic Smyth",2001,"Formalizar la teoría matemática y estadística de modelos de minería.","Tratado estadístico de modelos de riesgo.","Definición rigurosa de modelos globales y locales.","Alta"
+"DOC_U2_MOD_002","Introduction to Data Mining","Pang-Ning Tan, Michael Steinbach, Vipin Kumar",2006,"Estructurar conceptos, algoritmos y protocolos de evaluación.","Taxonomía algorítmica exhaustiva.","Marco estándar para clasificación y agrupamiento.","Alta"
+"DOC_U2_MOD_003","Data Mining: Practical Machine Learning Tools and Techniques","Ian H. Witten, Eibe Frank, Mark A. Hall",2011,"Proveer herramientas prácticas y marcos de evaluación experimental.","Marco experimental de validación cruzada y métricas.","Estandarización de protocolos empíricos de evaluación.","Alta"

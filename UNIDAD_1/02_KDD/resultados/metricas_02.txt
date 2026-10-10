@@ -1,0 +1,12 @@
+=== MÉTRICAS DE RESULTADO - TEMA 02: PROCESO KDD ===
+Total Observaciones Seleccionadas: 153
+Exactitud en Prueba (Accuracy): 80.65%
+Sensibilidad en Riesgo Alto: 28.57%
+Especificidad en Aceptable: 95.83%
+
+SÍNTESIS DE LA CORRESPONDENCIA CON LAS ETAPAS DE FAYYAD ET AL. (1996):
+- 1. Selección: Filtrado temporal estival y reducción de atributos irrelevantes.
+- 2. Preprocesamiento: Detección e imputación de medianas para Ozone y Solar.R.
+- 3. Transformación: Binarización regulatoria e ingeniería de ratio termo-eólico.
+- 4. Minería de datos: Partición 80/20 y ajuste de árbol rpart.
+- 5. Evaluación e interpretación: Matriz de confusión e inferencia de reglas operativas.
