@@ -12,8 +12,23 @@ import { TopicPage } from './pages/TopicPage';
 import { UiKitView } from './pages/UiKitView';
 import { AtlasView } from './pages/AtlasView';
 import { DossierView } from './components/Dossier';
+import { TribunalDefenseModal } from './components/Defense';
 import { Footer } from './components/Footer/Footer';
 import { AlertCircle, Loader2 } from 'lucide-react';
+
+const DefenseModalContainer: React.FC = () => {
+  const { defenseTarget, closeDefense } = useApp();
+  if (!defenseTarget) return null;
+  return (
+    <TribunalDefenseModal
+      isOpen={Boolean(defenseTarget)}
+      onClose={closeDefense}
+      unitId={defenseTarget.unitId}
+      topicId={defenseTarget.topicId}
+      topicName={defenseTarget.topicName}
+    />
+  );
+};
 
 const MainContent: React.FC = () => {
   const { mode, activeView, selectedTopic, loading, error, refreshCourse } = useApp();
@@ -139,6 +154,7 @@ export default function App() {
         <Navbar />
         <MainContent />
         <Footer />
+        <DefenseModalContainer />
       </div>
     </AppProvider>
   );

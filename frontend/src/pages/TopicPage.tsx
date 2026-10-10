@@ -28,12 +28,13 @@ import {
   Library,
   ArrowRight,
   ScrollText,
+  Award,
 } from 'lucide-react';
 import { TopicBibliography } from '../components/Topics/TopicBibliography';
 import { TopicRLaboratory } from '../components/Topics/TopicRLaboratory';
 
 export const TopicPage: React.FC = () => {
-  const { selectedTopic, closeTopic, setActiveView, openDossier } = useApp();
+  const { selectedTopic, closeTopic, setActiveView, openDossier, openDefense } = useApp();
   const [data, setData] = useState<TopicDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -190,6 +191,16 @@ export const TopicPage: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
               <Button
                 variant="primary"
+                size="sm"
+                onClick={() => openDefense(selectedTopic.unitId, selectedTopic.topicId, data?.topicName || selectedTopic.topicId)}
+                title="Presentar Examen Oral y Sustentación ante el Tribunal Examinador"
+                style={{ backgroundColor: '#ea580c', borderColor: '#c2410c' }}
+              >
+                <Award size={14} style={{ marginRight: '0.4rem' }} />
+                Defensa de Jurado
+              </Button>
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => openDossier(selectedTopic.unitId, selectedTopic.topicId)}
                 title="Generar Artículo y Dossier de Sustentación Formal"

@@ -40,6 +40,11 @@ interface AppContextType {
   // Dossier de Sustentación
   dossierTarget: { unitId: UnitId; topicId: string } | null;
   openDossier: (unitId?: UnitId, topicId?: string) => void;
+
+  // Simulador de Defensa de Jurado
+  defenseTarget: { unitId: UnitId; topicId: string; topicName: string } | null;
+  openDefense: (unitId: UnitId, topicId: string, topicName: string) => void;
+  closeDefense: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -146,6 +151,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setActiveView('dossier');
   };
 
+  // Simulador de Defensa de Jurado
+  const [defenseTarget, setDefenseTarget] = useState<{ unitId: UnitId; topicId: string; topicName: string } | null>(null);
+
+  const openDefense = (unitId: UnitId, topicId: string, topicName: string) => {
+    setDefenseTarget({ unitId, topicId, topicName });
+  };
+
+  const closeDefense = () => {
+    setDefenseTarget(null);
+  };
+
   // Gamificación calculada puramente sobre datos verificados
   const { xp, level, achievements } = useMemo(() => {
     if (!course) {
@@ -179,6 +195,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         closeTopic,
         dossierTarget,
         openDossier,
+        defenseTarget,
+        openDefense,
+        closeDefense,
       }}
     >
       {children}

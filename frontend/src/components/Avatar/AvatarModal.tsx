@@ -9,7 +9,9 @@ import {
   Camera,
   Layers,
   CheckCircle2,
+  Award,
 } from 'lucide-react';
+import { getDefenseCertificates, type DefenseCertificate } from '../../services/defenseService';
 import {
   getUserProfileConfig,
   saveUserProfileConfig,
@@ -31,6 +33,7 @@ export const AvatarModal: React.FC<AvatarModalProps> = ({ isOpen, onClose }) => 
   const [activeTab, setActiveTab] = useState<AvatarType>('preset');
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
+  const [certificates, setCertificates] = useState<DefenseCertificate[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -39,6 +42,7 @@ export const AvatarModal: React.FC<AvatarModalProps> = ({ isOpen, onClose }) => 
       setForm(current);
       setActiveTab(current.avatarType);
       setSaveSuccess(false);
+      setCertificates(getDefenseCertificates());
     }
   }, [isOpen]);
 
@@ -404,6 +408,77 @@ export const AvatarModal: React.FC<AvatarModalProps> = ({ isOpen, onClose }) => 
                   );
                 })}
               </div>
+            </div>
+
+            {/* Actas y Veredictos de Sustentación Oral */}
+            <div
+              style={{
+                marginTop: '1rem',
+                backgroundColor: 'rgba(15, 23, 42, 0.75)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '10px',
+                padding: '0.85rem',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  color: '#94a3b8',
+                  marginBottom: '0.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                }}
+              >
+                <Award size={13} style={{ color: '#ea580c' }} /> Veredictos del Jurado Calificador
+              </div>
+
+              {certificates.length === 0 ? (
+                <div style={{ fontSize: '0.72rem', color: '#64748b', fontStyle: 'italic', lineHeight: 1.4 }}>
+                  Sin sustentaciones orales registradas aún. Ingresa a cualquier tema y presiona &ldquo;Defensa de Jurado&rdquo; para sustentar.
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', maxHeight: '140px', overflowY: 'auto' }}>
+                  {certificates.map((c) => (
+                    <div
+                      key={c.id}
+                      style={{
+                        backgroundColor: 'rgba(30, 41, 59, 0.8)',
+                        border: '1px solid rgba(255, 255, 255, 0.06)',
+                        borderRadius: '6px',
+                        padding: '0.4rem 0.6rem',
+                        fontSize: '0.72rem',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <div style={{ overflow: 'hidden' }}>
+                        <div style={{ fontWeight: 700, color: '#f1f5f9', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                          {c.topicName}
+                        </div>
+                        <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>{c.actaNumero}</div>
+                      </div>
+                      <span
+                        style={{
+                          fontSize: '0.68rem',
+                          fontWeight: 800,
+                          padding: '0.15rem 0.45rem',
+                          borderRadius: '4px',
+                          backgroundColor: c.nota >= 4.5 ? 'rgba(5, 150, 105, 0.2)' : 'rgba(234, 88, 12, 0.2)',
+                          color: c.nota >= 4.5 ? '#34d399' : '#fb923c',
+                          flexShrink: 0,
+                        }}
+                      >
+                        {c.nota.toFixed(1)} / 5.0
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

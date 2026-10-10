@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 
 export const DossierView: React.FC = () => {
-  const { course, dossierTarget, setActiveView, openTopic } = useApp();
+  const { course, dossierTarget, setActiveView, openTopic, openDefense } = useApp();
 
   // Selección de tema inicial
   const [selectedUnitId, setSelectedUnitId] = useState<UnitId>(() => {
@@ -175,9 +175,32 @@ ${data.documents.map((d, i) => `[${i + 1}] ${d.autores} (${d.anio || 's.f.'}). "
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button
               type="button"
-              onClick={handlePrint}
+              onClick={() => {
+                if (data) {
+                  openDefense(selectedUnitId, selectedTopicId, data.topicName);
+                }
+              }}
               disabled={loading || !data}
               className="btn btn-primary"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                fontSize: '0.85rem',
+                backgroundColor: '#ea580c',
+                borderColor: '#c2410c',
+              }}
+              title="Presentar Sustentación Oral ante el Tribunal Examinador"
+            >
+              <Award size={16} />
+              Sustentar ante el Jurado
+            </button>
+
+            <button
+              type="button"
+              onClick={handlePrint}
+              disabled={loading || !data}
+              className="btn btn-secondary"
               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.85rem' }}
             >
               <Printer size={16} />
