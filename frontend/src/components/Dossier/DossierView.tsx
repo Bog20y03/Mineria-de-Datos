@@ -5,6 +5,7 @@ import { getUserProfileConfig } from '../../services/avatarService';
 import type { TopicDetail, UnitId } from '../../types/domain';
 import { DossierPaper } from './DossierPaper';
 import { generateDossierHtml, type DossierLayout } from './exportDossierHtml';
+import { Button, StatusBadge } from '../ui';
 import {
   Printer,
   Download,
@@ -147,92 +148,96 @@ ${data.documents.map((d, i) => `[${i + 1}] ${d.autores} (${d.anio || 's.f.'}). "
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '1rem',
+          gap: '1.25rem',
           marginBottom: '2rem',
-          backgroundColor: 'var(--bg-surface)',
-          padding: '1.25rem 1.5rem',
+          backgroundColor: 'var(--color-card)',
+          padding: '1.5rem 1.75rem',
           borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-subtle)',
-          boxShadow: 'var(--shadow-sm)',
+          border: '1px solid var(--color-border)',
+          boxShadow: 'var(--shadow-atlas-sm)',
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <span className="badge badge-purple" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                <Award size={13} /> Actividad 8: Sustentación
-              </span>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                Investigador: <strong style={{ color: 'var(--text-main)' }}>{profile.name}</strong> ({profile.code})
+              <StatusBadge status="completado" size="sm" label="Actividad 8: Sustentación" />
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-ink-secondary)' }}>
+                Investigador: <strong style={{ color: 'var(--color-ink)' }}>{profile.name}</strong> ({profile.code})
               </span>
             </div>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: 800, marginTop: '0.35rem' }}>
+            <h1
+              className="atlas-title"
+              style={{
+                fontSize: 'var(--text-2xl)',
+                fontWeight: 800,
+                color: 'var(--color-ink)',
+                margin: '0.35rem 0 0',
+                letterSpacing: '-0.02em',
+              }}
+            >
               Generador de Dossier Académico &amp; Informe de Sustentación
-            </h2>
+            </h1>
           </div>
 
-          {/* Botones de Acción */}
+          {/* Botones de Acción Estilizados con el Design System */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-            <button
-              type="button"
+            <Button
+              variant="primary"
+              size="sm"
+              icon={<Award size={15} />}
               onClick={() => {
                 if (data) {
                   openDefense(selectedUnitId, selectedTopicId, data.topicName);
                 }
               }}
               disabled={loading || !data}
-              className="btn btn-primary"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.45rem',
-                fontSize: '0.85rem',
                 backgroundColor: '#ea580c',
                 borderColor: '#c2410c',
+                fontWeight: 700,
+                boxShadow: '0 2px 5px rgba(234, 88, 12, 0.25)',
               }}
               title="Presentar Sustentación Oral ante el Tribunal Examinador"
             >
-              <Award size={16} />
               Sustentar ante el Jurado
-            </button>
+            </Button>
 
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="sm"
+              icon={<Printer size={15} />}
               onClick={handlePrint}
               disabled={loading || !data}
-              className="btn btn-secondary"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.85rem' }}
+              title="Imprimir documento o exportar como archivo PDF"
             >
-              <Printer size={16} />
               Imprimir / Guardar en PDF
-            </button>
+            </Button>
 
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="sm"
+              icon={<Download size={15} />}
               onClick={handleDownloadHtml}
               disabled={loading || !data}
-              className="btn btn-secondary"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.85rem' }}
-              title="Descargar documento HTML autónomo (abre sin servidor)"
+              title="Descargar documento HTML autónomo listo para abrir sin servidor"
             >
-              <Download size={16} />
               Descargar .html Autónomo
-            </button>
+            </Button>
 
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="sm"
+              icon={copiedMd ? <Check size={15} style={{ color: '#059669' }} /> : <Copy size={15} />}
               onClick={handleCopyMarkdown}
               disabled={loading || !data}
-              className="btn btn-secondary"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.85rem' }}
+              title="Copiar contenido estructurado en formato Markdown"
             >
-              {copiedMd ? <Check size={16} style={{ color: 'var(--c-completed)' }} /> : <Copy size={16} />}
               {copiedMd ? '¡Markdown Copiado!' : 'Copiar Markdown'}
-            </button>
+            </Button>
           </div>
         </div>
 
-        {/* SELECTORES DE TEMA Y ESTILO */}
+        {/* SELECTORES DE TEMA Y ESTILO CON MEJOR JERARQUÍA */}
         <div
           style={{
             display: 'flex',
@@ -240,15 +245,23 @@ ${data.documents.map((d, i) => `[${i + 1}] ${d.autores} (${d.anio || 's.f.'}). "
             alignItems: 'center',
             flexWrap: 'wrap',
             gap: '1rem',
-            paddingTop: '0.75rem',
-            borderTop: '1px solid var(--border-subtle)',
+            paddingTop: '0.85rem',
+            borderTop: '1px solid var(--color-border-light)',
           }}
         >
           {/* Selector de Tema agrupado */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+            <span
+              style={{
+                fontSize: 'var(--text-xs)',
+                fontWeight: 700,
+                color: 'var(--color-ink-muted)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
+              }}
+            >
               Seleccionar Tema:
-            </label>
+            </span>
             <select
               value={`${selectedUnitId}__${selectedTopicId}`}
               onChange={(e) => {
@@ -259,13 +272,14 @@ ${data.documents.map((d, i) => `[${i + 1}] ${d.autores} (${d.anio || 's.f.'}). "
               style={{
                 padding: '0.45rem 0.85rem',
                 borderRadius: 'var(--radius-sm)',
-                border: '1px solid var(--border-subtle)',
-                backgroundColor: 'var(--bg-elevated)',
-                color: 'var(--text-main)',
-                fontSize: '0.85rem',
-                fontWeight: 500,
+                border: '1px solid var(--color-border)',
+                backgroundColor: 'var(--color-card-muted)',
+                color: 'var(--color-ink)',
+                fontSize: 'var(--text-xs)',
+                fontWeight: 600,
                 cursor: 'pointer',
                 minWidth: '280px',
+                outline: 'none',
               }}
             >
               {course?.unidades.map((u) => (
@@ -280,79 +294,94 @@ ${data.documents.map((d, i) => `[${i + 1}] ${d.autores} (${d.anio || 's.f.'}). "
             </select>
 
             {data && (
-              <>
-                <button
-                  type="button"
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  icon={<BookOpen size={14} />}
                   onClick={() => openTopic(selectedUnitId, selectedTopicId)}
-                  className="btn btn-ghost"
-                  style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                  title="Abrir vista detallada y evidencias del tema"
                 >
-                  <BookOpen size={14} /> Ver Ficha del Tema
-                </button>
-                <button
-                  type="button"
+                  Ver Ficha del Tema
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  icon={<ArrowLeft size={14} />}
                   onClick={() => setActiveView('units')}
-                  className="btn btn-ghost"
-                  style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                  title="Regresar a la vista de unidades del curso"
                 >
-                  <ArrowLeft size={14} /> Explorar Unidades
-                </button>
-              </>
+                  Explorar Unidades
+                </Button>
+              </div>
             )}
           </div>
 
-          {/* Selector de Layout */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Formato:</span>
+          {/* Selector de Layout Segmentado */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <span
+              style={{
+                fontSize: 'var(--text-xs)',
+                fontWeight: 700,
+                color: 'var(--color-ink-muted)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
+              }}
+            >
+              Formato:
+            </span>
             <div
               style={{
                 display: 'inline-flex',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--bg-elevated)',
+                backgroundColor: 'var(--color-card-muted)',
                 padding: '0.2rem',
-                border: '1px solid var(--border-subtle)',
+                border: '1px solid var(--color-border-light)',
+                gap: '0.2rem',
               }}
             >
               <button
                 type="button"
                 onClick={() => setLayout('ieee')}
                 style={{
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.35rem',
-                  padding: '0.35rem 0.75rem',
-                  borderRadius: 'var(--radius-xs)',
+                  gap: '0.4rem',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: 'var(--radius-sm)',
                   border: 'none',
-                  fontSize: '0.8rem',
-                  fontWeight: layout === 'ieee' ? 600 : 500,
+                  fontSize: 'var(--text-xs)',
+                  fontWeight: layout === 'ieee' ? 700 : 500,
                   cursor: 'pointer',
-                  backgroundColor: layout === 'ieee' ? 'var(--c-interactive-bg)' : 'transparent',
-                  color: layout === 'ieee' ? 'var(--c-interactive-hover)' : 'var(--text-muted)',
+                  backgroundColor: layout === 'ieee' ? 'var(--color-blue-ink)' : 'transparent',
+                  color: layout === 'ieee' ? '#FFFFFF' : 'var(--color-ink-secondary)',
+                  transition: 'all 0.15s ease',
                 }}
               >
-                <Columns size={14} />
-                IEEE (2 Columnas)
+                <Columns size={13} />
+                <span>IEEE (2 Columnas)</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setLayout('monograph')}
                 style={{
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.35rem',
-                  padding: '0.35rem 0.75rem',
-                  borderRadius: 'var(--radius-xs)',
+                  gap: '0.4rem',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: 'var(--radius-sm)',
                   border: 'none',
-                  fontSize: '0.8rem',
-                  fontWeight: layout === 'monograph' ? 600 : 500,
+                  fontSize: 'var(--text-xs)',
+                  fontWeight: layout === 'monograph' ? 700 : 500,
                   cursor: 'pointer',
-                  backgroundColor: layout === 'monograph' ? 'var(--c-interactive-bg)' : 'transparent',
-                  color: layout === 'monograph' ? 'var(--c-interactive-hover)' : 'var(--text-muted)',
+                  backgroundColor: layout === 'monograph' ? 'var(--color-blue-ink)' : 'transparent',
+                  color: layout === 'monograph' ? '#FFFFFF' : 'var(--color-ink-secondary)',
+                  transition: 'all 0.15s ease',
                 }}
               >
-                <Layout size={14} />
-                Monografía (1 Columna)
+                <Layout size={13} />
+                <span>Monografía (1 Columna)</span>
               </button>
             </div>
           </div>
@@ -362,8 +391,8 @@ ${data.documents.map((d, i) => `[${i + 1}] ${d.autores} (${d.anio || 's.f.'}). "
       {/* ESTADO DE CARGA */}
       {loading && (
         <div style={{ textAlign: 'center', padding: '5rem 1rem' }}>
-          <Loader2 size={40} className="spin" style={{ color: 'var(--c-interactive-hover)', margin: '0 auto 1rem' }} />
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+          <Loader2 size={40} className="spin" style={{ color: 'var(--color-terracotta)', margin: '0 auto 1rem' }} />
+          <p style={{ color: 'var(--color-ink-secondary)', fontSize: 'var(--text-sm)' }}>
             Generando documento académico a partir de la telemetría del tema...
           </p>
         </div>
@@ -376,15 +405,15 @@ ${data.documents.map((d, i) => `[${i + 1}] ${d.autores} (${d.anio || 's.f.'}). "
             maxWidth: '650px',
             margin: '2rem auto',
             padding: '1.5rem',
-            backgroundColor: 'var(--c-danger-bg)',
-            border: '1px solid var(--c-danger)',
+            backgroundColor: 'var(--color-danger-bg)',
+            border: '1px solid var(--color-danger-border)',
             borderRadius: 'var(--radius-md)',
             textAlign: 'center',
           }}
         >
-          <AlertCircle size={32} style={{ color: 'var(--c-danger)', margin: '0 auto 0.75rem' }} />
-          <h4 style={{ fontWeight: 700, color: 'var(--c-danger)' }}>Error al generar dossier</h4>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-main)', marginTop: '0.35rem' }}>{error}</p>
+          <AlertCircle size={32} style={{ color: 'var(--color-danger-ink)', margin: '0 auto 0.75rem' }} />
+          <h4 style={{ fontWeight: 700, color: 'var(--color-danger-ink)' }}>Error al generar dossier</h4>
+          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-ink)', marginTop: '0.35rem' }}>{error}</p>
         </div>
       )}
 
