@@ -8,12 +8,11 @@ import {
   type InternalSearchResult,
 } from '../../services/searchService';
 import type { SearchEquation, UnitId } from '../../types/domain';
+import { SearchPortalHero } from './SearchPortalHero';
 import {
-  Banner,
   Card,
   DataTable,
   StatusBadge,
-  Button,
   Loading,
   ErrorMessage,
   type Column,
@@ -24,16 +23,12 @@ import {
   Filter,
   Copy,
   Check,
-  Search,
-  X,
   Globe,
   Database,
   BookOpen,
   Layers,
   Code2,
-  Sparkles,
   ArrowRight,
-  Loader2,
 } from 'lucide-react';
 
 export const ADDITIONAL_DW_IDS = ['DW-011', 'DW-012', 'DW-013', 'DW-014', 'DW-015'] as const;
@@ -195,6 +190,7 @@ export const SearchEngine: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'ALL' | 'ORIGINAL' | 'ADICIONAL'>('ALL');
 
   const abortControllerRef = useRef<AbortController | null>(null);
+  const catalogRef = useRef<HTMLDivElement | null>(null);
 
   // Carga inicial del catálogo canónico
   useEffect(() => {
@@ -472,155 +468,35 @@ export const SearchEngine: React.FC = () => {
         gap: '2rem',
       }}
     >
-      {/* 1. Banner Institucional del Motor de Búsqueda */}
-      <Banner
-        variant="atlas"
-        titulo="Motor de Búsqueda Académico e Inteligencia Científica"
-        subtitulo="Buscador híbrido en tiempo real: explora todos los recursos del curso (temas, ecuaciones, scripts en R, datasets) y consulta en vivo literatura científica abierta con DOIs oficiales."
-        icono={<Search size={24} />}
-        metricaPrincipal={{
-          valor: `${internalResults.length} / ${externalResults.length}`,
-          etiqueta: 'Resultados Internos / Externos',
+      {/* 1. Portal Hero Ejecutivo & Motor de Búsqueda Universal con 4 Tarjetas Flotantes */}
+      <SearchPortalHero
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onSubmit={handleFormSubmit}
+        onClear={() => {
+          setSearchQuery('');
+          setInternalResults([]);
+          setExternalResults([]);
         }}
-        metricaSecundaria={{
-          valor: `${allSearches.length || 105}`,
-          etiqueta: 'Ecuaciones en Catálogo',
+        loading={internalLoading || externalLoading}
+        suggestedQueries={SUGGESTED_QUERIES}
+        onSelectSuggestion={handleApplySuggestion}
+        metrics={{
+          internalCount: internalResults.length,
+          externalCount: externalResults.length,
+          equationsCount: allSearches.length || 105,
+          canonicalCount: originalCount,
+          additionalCount: additionalCount,
         }}
-      >
-        <div style={{ marginTop: '0.75rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <StatusBadge
-            status="completado"
-            label="Buscador Híbrido Activo (Local + CrossRef DOI)"
-          />
-          <StatusBadge
-            status="completado"
-            label={`${originalCount} Canónicas + ${additionalCount} Adicionales`}
-          />
-        </div>
-      </Banner>
+        onExploreCatalog={() => {
+          catalogRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
-      {/* 2. Gran Barra de Búsqueda Universal Interactiva */}
-      <Card padding="md" style={{ boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
-        <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <div
-              style={{
-                position: 'relative',
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <Search
-                size={18}
-                style={{
-                  position: 'absolute',
-                  left: '1rem',
-                  color: 'var(--color-ink-muted)',
-                  pointerEvents: 'none',
-                }}
-              />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Escribe una palabra clave, técnica o ecuación booleana (ej. K-Means, CRISP-DM, redes neuronales)..."
-                style={{
-                  width: '100%',
-                  padding: '0.85rem 2.75rem 0.85rem 2.85rem',
-                  fontSize: 'var(--text-sm)',
-                  backgroundColor: 'var(--color-card-muted)',
-                  border: '1.5px solid var(--color-border)',
-                  borderRadius: 'var(--radius-sm)',
-                  color: 'var(--color-ink)',
-                  outline: 'none',
-                  transition: 'border-color var(--motion-duration-fast)',
-                }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = 'var(--color-blue-ink)')}
-                onBlur={(e) => (e.currentTarget.style.borderColor = 'var(--color-border)')}
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery('');
-                    setInternalResults([]);
-                    setExternalResults([]);
-                  }}
-                  style={{
-                    position: 'absolute',
-                    right: '0.85rem',
-                    background: 'none',
-                    border: 'none',
-                    color: 'var(--color-ink-muted)',
-                    cursor: 'pointer',
-                    padding: '0.2rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  <X size={16} />
-                </button>
-              )}
-            </div>
+      {/* Punto de anclaje para desplazamiento suave */}
+      <div ref={catalogRef} style={{ scrollMarginTop: '2rem' }} />
 
-            <Button
-              type="submit"
-              variant="primary"
-              size="md"
-              disabled={internalLoading || externalLoading}
-            >
-              {internalLoading || externalLoading ? (
-                <>
-                  <Loader2 size={15} className="spin" />
-                  <span>Buscando...</span>
-                </>
-              ) : (
-                <>
-                  <Search size={15} />
-                  <span>Buscar</span>
-                </>
-              )}
-            </Button>
-          </div>
-
-          {/* Sugerencias Rápidas de Búsqueda */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--color-ink-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <Sparkles size={12} style={{ color: 'var(--color-terracotta)' }} /> Sugerencias:
-            </span>
-            {SUGGESTED_QUERIES.map((sq, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => handleApplySuggestion(sq)}
-                style={{
-                  padding: '0.25rem 0.6rem',
-                  fontSize: '11px',
-                  backgroundColor: 'var(--color-card)',
-                  border: '1px solid var(--color-border-light)',
-                  borderRadius: '999px',
-                  color: 'var(--color-ink-secondary)',
-                  cursor: 'pointer',
-                  transition: 'all var(--motion-duration-fast)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--color-blue-ink)';
-                  e.currentTarget.style.color = 'var(--color-blue-ink)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--color-border-light)';
-                  e.currentTarget.style.color = 'var(--color-ink-secondary)';
-                }}
-              >
-                {sq}
-              </button>
-            ))}
-          </div>
-        </form>
-      </Card>
-
-      {/* 3. Selector de Pestañas del Motor de Búsqueda */}
+      {/* 2. Selector de Pestañas del Motor de Búsqueda */}
       <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem', flexWrap: 'wrap' }}>
         <button
           type="button"
