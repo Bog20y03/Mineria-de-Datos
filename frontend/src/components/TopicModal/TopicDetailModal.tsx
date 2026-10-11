@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useApp } from '../../context/AppContext';
 import { getTopicDetail } from '../../services/topicService';
 import { Modal } from '../common/Modal';
@@ -21,20 +21,39 @@ import {
   Library,
   ScrollText,
   Award,
+  Scale,
+  ChevronDown,
 } from 'lucide-react';
 import { TopicBibliography } from '../Topics/TopicBibliography';
 import { TopicRLaboratory } from '../Topics/TopicRLaboratory';
 
-type TabKey = 'resumen' | 'fuentes' | 'busquedas' | 'documentos' | 'dataset' | 'r' | 'resultados' | 'latex';
+type TabKey = 'resumen' | 'investigacion' | 'dataset' | 'r' | 'evidencias';
+type SubTabInvestigacion = 'fuentes' | 'busquedas' | 'documentos';
+type SubTabEvidencias = 'resultados' | 'latex';
 
 export const TopicDetailModal: React.FC = () => {
-  const { selectedTopic, closeTopic, openDossier, openDefense } = useApp();
+  const { selectedTopic, closeTopic, openDossier, openDefense, setActiveView } = useApp();
   const [data, setData] = useState<TopicDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<TabKey>('resumen');
 
+  const [activeTab, setActiveTab] = useState<TabKey>('resumen');
+  const [subTabInvestigacion, setSubTabInvestigacion] = useState<SubTabInvestigacion>('fuentes');
+  const [subTabEvidencias, setSubTabEvidencias] = useState<SubTabEvidencias>('resultados');
+
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const [copiedLatex, setCopiedLatex] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (!selectedTopic) {
@@ -46,6 +65,8 @@ export const TopicDetailModal: React.FC = () => {
     setLoading(true);
     setError(null);
     setActiveTab('resumen');
+    setSubTabInvestigacion('fuentes');
+    setSubTabEvidencias('resultados');
 
     getTopicDetail(selectedTopic.unitId, selectedTopic.topicId)
       .then((detail) => {
@@ -86,20 +107,28 @@ export const TopicDetailModal: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
+  // 5 Pestañas Esenciales
   const tabs: { key: TabKey; label: string; icon: React.ReactNode; count?: number }[] = [
     { key: 'resumen', label: 'Fundamentación', icon: <BookOpen size={16} /> },
-    { key: 'fuentes', label: 'Fuentes y Libros', icon: <Library size={16} /> },
-    { key: 'busquedas', label: 'Búsquedas', icon: <Search size={16} />, count: data?.searches.length },
-    { key: 'documentos', label: 'Documentos', icon: <FileText size={16} />, count: data?.documents.length },
+    {
+      key: 'investigacion',
+      label: 'Investigación',
+      icon: <Search size={16} />,
+      count: (data?.documents?.length || 0) + (data?.searches?.length || 0),
+    },
     { key: 'dataset', label: 'Dataset', icon: <Database size={16} /> },
     {
       key: 'r',
       label: 'Laboratorio R',
       icon: <Code2 size={16} />,
-      count: data?.rScripts && data.rScripts.length > 0 ? data.rScripts.length : (data?.rExample ? 1 : undefined),
+      count: data?.rScripts && data.rScripts.length > 0 ? data.rScripts.length : data?.rExample ? 1 : undefined,
     },
-    { key: 'resultados', label: 'Resultados', icon: <BarChart2 size={16} />, count: data?.results.imagenes.length },
-    { key: 'latex', label: 'LaTeX', icon: <FileCode size={16} /> },
+    {
+      key: 'evidencias',
+      label: 'Evidencias & LaTeX',
+      icon: <BarChart2 size={16} />,
+      count: data?.results?.imagenes?.length,
+    },
   ];
 
   return (
@@ -140,108 +169,221 @@ export const TopicDetailModal: React.FC = () => {
 
       {data && !loading && (
         <div>
-          {/* Navegación por Pestañas */}
+          {/* Navegación por Pestañas Simplificadas + Menú Consolidado de Sustentación */}
           <div
             style={{
               display: 'flex',
-              gap: '0.35rem',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               borderBottom: '1px solid var(--border-subtle)',
               marginBottom: '1.5rem',
-              overflowX: 'auto',
               paddingBottom: '0.25rem',
+              gap: '0.5rem',
+              flexWrap: 'wrap',
             }}
           >
-            {tabs.map((tab) => {
-              const active = activeTab === tab.key;
-              return (
-                <button
-                  key={tab.key}
-                  type="button"
-                  onClick={() => setActiveTab(tab.key)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.4rem',
-                    padding: '0.5rem 0.85rem',
-                    borderRadius: 'var(--radius-sm)',
-                    border: 'none',
-                    fontSize: '0.85rem',
-                    fontWeight: active ? 600 : 500,
-                    cursor: 'pointer',
-                    backgroundColor: active ? 'var(--c-interactive-bg)' : 'transparent',
-                    color: active ? 'var(--c-interactive-hover)' : 'var(--text-muted)',
-                    whiteSpace: 'nowrap',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  {tab.icon}
-                  <span>{tab.label}</span>
-                  {tab.count !== undefined && (
-                    <span
-                      style={{
-                        fontSize: '0.7rem',
-                        padding: '0.1rem 0.4rem',
-                        borderRadius: 'var(--radius-full)',
-                        backgroundColor: active ? 'var(--c-interactive)' : 'var(--bg-elevated)',
-                        color: '#fff',
-                      }}
-                    >
-                      {tab.count}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+            {/* 5 Pestañas */}
+            <div style={{ display: 'flex', gap: '0.35rem', overflowX: 'auto', paddingBottom: '0.1rem' }}>
+              {tabs.map((tab) => {
+                const active = activeTab === tab.key;
+                return (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    onClick={() => setActiveTab(tab.key)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      padding: '0.5rem 0.85rem',
+                      borderRadius: 'var(--radius-sm)',
+                      border: 'none',
+                      fontSize: '0.85rem',
+                      fontWeight: active ? 600 : 500,
+                      cursor: 'pointer',
+                      backgroundColor: active ? 'var(--c-interactive-bg)' : 'transparent',
+                      color: active ? 'var(--c-interactive-hover)' : 'var(--text-muted)',
+                      whiteSpace: 'nowrap',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    {tab.icon}
+                    <span>{tab.label}</span>
+                    {tab.count !== undefined && (
+                      <span
+                        style={{
+                          fontSize: '0.7rem',
+                          padding: '0.1rem 0.4rem',
+                          borderRadius: 'var(--radius-full)',
+                          backgroundColor: active ? 'var(--c-interactive)' : 'var(--bg-elevated)',
+                          color: '#fff',
+                        }}
+                      >
+                        {tab.count}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
 
-            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.4rem', paddingLeft: '0.5rem' }}>
+            {/* Menú Consolidado de Acciones de Sustentación */}
+            <div style={{ position: 'relative' }} ref={menuRef}>
               <button
                 type="button"
-                onClick={() => {
-                  if (data) {
-                    openDefense(selectedTopic.unitId, selectedTopic.topicId, data.topicName);
-                  }
-                }}
+                onClick={() => setMenuOpen(!menuOpen)}
                 className="btn btn-primary"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.35rem',
-                  fontSize: '0.78rem',
-                  padding: '0.35rem 0.75rem',
+                  gap: '0.4rem',
+                  fontSize: '0.8rem',
+                  padding: '0.4rem 0.85rem',
                   backgroundColor: '#ea580c',
                   borderColor: '#c2410c',
                   whiteSpace: 'nowrap',
+                  fontWeight: 600,
                 }}
-                title="Presentar Sustentación Oral ante el Tribunal Examinador"
+                title="Sustentación, Dossier y Benchmark"
               >
-                <Award size={13} />
-                Defensa de Jurado
+                <Award size={14} />
+                <span>Sustentación & Entregables</span>
+                <ChevronDown
+                  size={13}
+                  style={{
+                    transform: menuOpen ? 'rotate(180deg)' : 'none',
+                    transition: 'transform 0.15s ease',
+                  }}
+                />
               </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  closeTopic();
-                  openDossier(selectedTopic.unitId, selectedTopic.topicId);
-                }}
-                className="btn btn-secondary"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.35rem',
-                  fontSize: '0.78rem',
-                  padding: '0.35rem 0.75rem',
-                  whiteSpace: 'nowrap',
-                }}
-                title="Generar Artículo y Dossier Académico Formal"
-              >
-                <ScrollText size={13} />
-                Dossier
-              </button>
+              {menuOpen && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 'calc(100% + 4px)',
+                    right: 0,
+                    zIndex: 60,
+                    minWidth: '270px',
+                    backgroundColor: 'var(--bg-surface, #1e293b)',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--radius-md, 8px)',
+                    boxShadow: '0 12px 28px -4px rgba(0,0,0,0.35)',
+                    padding: '0.4rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.2rem',
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      openDefense(selectedTopic.unitId, selectedTopic.topicId, data.topicName);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.6rem',
+                      padding: '0.55rem 0.7rem',
+                      borderRadius: 'var(--radius-sm, 6px)',
+                      border: 'none',
+                      backgroundColor: 'transparent',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      color: 'var(--text-main)',
+                      transition: 'background-color 0.15s',
+                      width: '100%',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-elevated)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                  >
+                    <div style={{ padding: '0.3rem', borderRadius: '4px', backgroundColor: 'rgba(234, 88, 12, 0.15)', color: '#ea580c', flexShrink: 0 }}>
+                      <Award size={15} />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-main)' }}>Defensa ante Jurados</div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '1px' }}>
+                        Examen oral con 3 jurados y acta oficial
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      closeTopic();
+                      openDossier(selectedTopic.unitId, selectedTopic.topicId);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.6rem',
+                      padding: '0.55rem 0.7rem',
+                      borderRadius: 'var(--radius-sm, 6px)',
+                      border: 'none',
+                      backgroundColor: 'transparent',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      color: 'var(--text-main)',
+                      transition: 'background-color 0.15s',
+                      width: '100%',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-elevated)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                  >
+                    <div style={{ padding: '0.3rem', borderRadius: '4px', backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#3b82f6', flexShrink: 0 }}>
+                      <ScrollText size={15} />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-main)' }}>Dossier Académico IEEE</div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '1px' }}>
+                        Artículo científico en dos columnas y PDF
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      closeTopic();
+                      setActiveView('benchmark');
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.6rem',
+                      padding: '0.55rem 0.7rem',
+                      borderRadius: 'var(--radius-sm, 6px)',
+                      border: 'none',
+                      backgroundColor: 'transparent',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      color: 'var(--text-main)',
+                      transition: 'background-color 0.15s',
+                      width: '100%',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-elevated)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                  >
+                    <div style={{ padding: '0.3rem', borderRadius: '4px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981', flexShrink: 0 }}>
+                      <Scale size={15} />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-main)' }}>Arena de Benchmark</div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '1px' }}>
+                        Comparar complejidad y radar algorítmico
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* TAB 1: RESUMEN / README */}
+          {/* TAB 1: FUNDAMENTACIÓN (README + MATRIZ DE 8 ACTIVIDADES) */}
           {activeTab === 'resumen' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <AcademicMarkdownViewer
@@ -263,8 +405,8 @@ export const TopicDetailModal: React.FC = () => {
                     { label: '2. Documentos seleccionados', done: data.documents.length > 0 },
                     { label: '3. Análisis bibliográfico', done: data.documents.some((d) => d.pertinencia !== null) },
                     { label: '4. Dataset seleccionado', done: Boolean(data.dataset.archivo) },
-                    { label: '5. Ejemplo R', done: Boolean(data.rExample) },
-                    { label: '6. Resultados', done: data.results.imagenes.length > 0 },
+                    { label: '5. Laboratorio R (3 scripts)', done: Boolean(data.rScripts && data.rScripts.length > 0) || Boolean(data.rExample) },
+                    { label: '6. Resultados y métricas', done: data.results.imagenes.length > 0 },
                     { label: '7. Documentación LaTeX', done: Boolean(data.latex) },
                     { label: '8. Sustentación', done: data.results.imagenes.length > 0 && Boolean(data.latex) },
                   ].map((act, i) => (
@@ -294,151 +436,196 @@ export const TopicDetailModal: React.FC = () => {
             </div>
           )}
 
-          {/* TAB: FUENTES Y LIBROS */}
-          {activeTab === 'fuentes' && (
-            <TopicBibliography
-              topicName={data.topicName}
-              topicId={selectedTopic.topicId}
-              unitName={data.unitName}
-              unitId={selectedTopic.unitId}
-            />
-          )}
-
-          {/* TAB 2: BÚSQUEDAS */}
-          {activeTab === 'busquedas' && (
-            <div>
-              <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                  Ecuaciones booleanas canónicas registradas para este tema ({data.searches.length}).
-                </p>
+          {/* TAB 2: INVESTIGACIÓN (FUENTES + BÚSQUEDAS + DOCUMENTOS) */}
+          {activeTab === 'investigacion' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {/* Selector segmentado interno */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  borderBottom: '1px solid var(--border-subtle)',
+                  paddingBottom: '0.5rem',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setSubTabInvestigacion('fuentes')}
+                  className={`btn ${subTabInvestigacion === 'fuentes' ? 'btn-primary' : 'btn-secondary'}`}
+                  style={{ fontSize: '0.75rem', padding: '0.35rem 0.75rem' }}
+                >
+                  <Library size={13} />
+                  <span>Fuentes y Libros Canónicos</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSubTabInvestigacion('busquedas')}
+                  className={`btn ${subTabInvestigacion === 'busquedas' ? 'btn-primary' : 'btn-secondary'}`}
+                  style={{ fontSize: '0.75rem', padding: '0.35rem 0.75rem' }}
+                >
+                  <Search size={13} />
+                  <span>Ecuaciones de Búsqueda ({data.searches.length})</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSubTabInvestigacion('documentos')}
+                  className={`btn ${subTabInvestigacion === 'documentos' ? 'btn-primary' : 'btn-secondary'}`}
+                  style={{ fontSize: '0.75rem', padding: '0.35rem 0.75rem' }}
+                >
+                  <FileText size={13} />
+                  <span>Documentos Seleccionados ({data.documents.length})</span>
+                </button>
               </div>
-              {data.searches.length === 0 ? (
-                <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                  Sin datos registrados.
-                </div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  {data.searches.map((s) => (
-                    <div key={s.id} className="card" style={{ padding: '1rem', backgroundColor: 'var(--bg-surface)' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <span className="badge badge-blue">{s.id}</span>
-                          {s.nivel && <span className="badge badge-gray">{s.nivel}</span>}
-                          {s.idioma && <span className="badge badge-gray">{s.idioma}</span>}
-                        </div>
-                        {s.urlScholar && (
-                          <a
-                            href={s.urlScholar}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-secondary"
-                            style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
-                          >
-                            <ExternalLink size={12} />
-                            Google Scholar
-                          </a>
-                        )}
-                      </div>
-                      <div className="code-block" style={{ marginBottom: '0.5rem' }}>
-                        {s.consulta}
-                      </div>
-                      {s.objetivo && (
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-                          <strong>Objetivo:</strong> {s.objetivo}
-                        </p>
-                      )}
-                      {s.palabrasClave && (
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                          <strong>Keywords:</strong> {s.palabrasClave}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
 
-          {/* TAB 3: DOCUMENTOS */}
-          {activeTab === 'documentos' && (
-            <div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
-                Artículos científicos reales y canónicos vinculados a las ecuaciones ({data.documents.length}).
-              </p>
-              {data.documents.length === 0 ? (
-                <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                  Sin datos registrados.
-                </div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  {data.documents.map((doc) => (
-                    <div key={doc.id} className="card" style={{ padding: '1.25rem', backgroundColor: 'var(--bg-surface)' }}>
-                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                            <span className="badge badge-purple">{doc.id}</span>
-                            {doc.anio && <span className="badge badge-gray">{doc.anio}</span>}
-                            {doc.pertinencia && (
-                              <span className={`badge ${doc.pertinencia === 'Alta' ? 'badge-green' : 'badge-gold'}`}>
-                                Pertinencia: {doc.pertinencia}
-                              </span>
-                            )}
-                            {doc.idEcuacionOrigen && (
-                              <span className="badge badge-blue">Origen: {doc.idEcuacionOrigen}</span>
+              {/* Sub-vista Fuentes */}
+              {subTabInvestigacion === 'fuentes' && (
+                <TopicBibliography
+                  topicName={data.topicName}
+                  topicId={selectedTopic.topicId}
+                  unitName={data.unitName}
+                  unitId={selectedTopic.unitId}
+                />
+              )}
+
+              {/* Sub-vista Búsquedas */}
+              {subTabInvestigacion === 'busquedas' && (
+                <div>
+                  <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                      Ecuaciones booleanas canónicas registradas para este tema ({data.searches.length}).
+                    </p>
+                  </div>
+                  {data.searches.length === 0 ? (
+                    <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                      Sin datos registrados.
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                      {data.searches.map((s) => (
+                        <div key={s.id} className="card" style={{ padding: '1rem', backgroundColor: 'var(--bg-surface)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              <span className="badge badge-blue">{s.id}</span>
+                              {s.nivel && <span className="badge badge-gray">{s.nivel}</span>}
+                              {s.idioma && <span className="badge badge-gray">{s.idioma}</span>}
+                            </div>
+                            {s.urlScholar && (
+                              <a
+                                href={s.urlScholar}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-secondary"
+                                style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
+                              >
+                                <ExternalLink size={12} />
+                                Google Scholar
+                              </a>
                             )}
                           </div>
-                          <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                            {doc.titulo}
-                          </h4>
-                          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-                            {doc.autores || 'Autores no registrados'} {doc.fuente ? `· ${doc.fuente}` : ''}
-                          </p>
-                        </div>
-                        <div style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
-                          {doc.doi && (
-                            <a
-                              href={`https://doi.org/${doc.doi}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="btn btn-secondary"
-                              style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
-                            >
-                              DOI
-                            </a>
+                          <div className="code-block" style={{ marginBottom: '0.5rem' }}>
+                            {s.consulta}
+                          </div>
+                          {s.objetivo && (
+                            <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
+                              <strong>Objetivo:</strong> {s.objetivo}
+                            </p>
                           )}
-                          {doc.urlScholar && (
-                            <a
-                              href={doc.urlScholar}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="btn btn-secondary"
-                              style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
-                            >
-                              <ExternalLink size={12} />
-                              Scholar
-                            </a>
+                          {s.palabrasClave && (
+                            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                              <strong>Keywords:</strong> {s.palabrasClave}
+                            </p>
                           )}
                         </div>
-                      </div>
-
-                      {doc.objetivo && (
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.5rem' }}>
-                          <strong>Objetivo del estudio:</strong> {doc.objetivo}
-                        </p>
-                      )}
-                      {doc.resultados && (
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                          <strong>Principales hallazgos:</strong> {doc.resultados}
-                        </p>
-                      )}
+                      ))}
                     </div>
-                  ))}
+                  )}
+                </div>
+              )}
+
+              {/* Sub-vista Documentos */}
+              {subTabInvestigacion === 'documentos' && (
+                <div>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                    Artículos científicos reales vinculados a las ecuaciones ({data.documents.length}).
+                  </p>
+                  {data.documents.length === 0 ? (
+                    <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                      Sin datos registrados.
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                      {data.documents.map((doc) => (
+                        <div key={doc.id} className="card" style={{ padding: '1.25rem', backgroundColor: 'var(--bg-surface)' }}>
+                          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+                            <div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
+                                <span className="badge badge-purple">{doc.id}</span>
+                                {doc.anio && <span className="badge badge-gray">{doc.anio}</span>}
+                                {doc.pertinencia && (
+                                  <span className={`badge ${doc.pertinencia === 'Alta' ? 'badge-green' : 'badge-gold'}`}>
+                                    Pertinencia: {doc.pertinencia}
+                                  </span>
+                                )}
+                                {doc.idEcuacionOrigen && (
+                                  <span className="badge badge-blue">Origen: {doc.idEcuacionOrigen}</span>
+                                )}
+                              </div>
+                              <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-main)' }}>
+                                {doc.titulo}
+                              </h4>
+                              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+                                {doc.autores || 'Autores no registrados'} {doc.fuente ? `· ${doc.fuente}` : ''}
+                              </p>
+                            </div>
+                            <div style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
+                              {doc.doi && (
+                                <a
+                                  href={`https://doi.org/${doc.doi}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="btn btn-secondary"
+                                  style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
+                                >
+                                  DOI
+                                </a>
+                              )}
+                              {doc.urlScholar && (
+                                <a
+                                  href={doc.urlScholar}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="btn btn-secondary"
+                                  style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
+                                >
+                                  <ExternalLink size={12} />
+                                  Scholar
+                                </a>
+                              )}
+                            </div>
+                          </div>
+
+                          {doc.objetivo && (
+                            <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.5rem' }}>
+                              <strong>Objetivo del estudio:</strong> {doc.objetivo}
+                            </p>
+                          )}
+                          {doc.resultados && (
+                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                              <strong>Principales hallazgos:</strong> {doc.resultados}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           )}
 
-          {/* TAB 4: DATASET */}
+          {/* TAB 3: DATASET */}
           {activeTab === 'dataset' && (
             <div>
               {data.dataset.archivo ? (
@@ -513,7 +700,7 @@ export const TopicDetailModal: React.FC = () => {
             </div>
           )}
 
-          {/* TAB 5: EJEMPLOS EN R & LABORATORIO INTERACTIVO */}
+          {/* TAB 4: LABORATORIO DE R */}
           {activeTab === 'r' && (
             <TopicRLaboratory
               unitId={selectedTopic.unitId}
@@ -531,97 +718,133 @@ export const TopicDetailModal: React.FC = () => {
             />
           )}
 
-          {/* TAB 6: RESULTADOS */}
-          {activeTab === 'resultados' && (
+          {/* TAB 5: EVIDENCIAS & LATEX (RESULTADOS + LATEX) */}
+          {activeTab === 'evidencias' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {data.results.imagenes.length === 0 && !data.results.metricas ? (
-                <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                  Sin datos registrados.
+              {/* Selector segmentado interno */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  borderBottom: '1px solid var(--border-subtle)',
+                  paddingBottom: '0.5rem',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setSubTabEvidencias('resultados')}
+                  className={`btn ${subTabEvidencias === 'resultados' ? 'btn-primary' : 'btn-secondary'}`}
+                  style={{ fontSize: '0.75rem', padding: '0.35rem 0.75rem' }}
+                >
+                  <BarChart2 size={13} />
+                  <span>Gráficas y Diagnósticos ({data.results.imagenes.length})</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSubTabEvidencias('latex')}
+                  className={`btn ${subTabEvidencias === 'latex' ? 'btn-primary' : 'btn-secondary'}`}
+                  style={{ fontSize: '0.75rem', padding: '0.35rem 0.75rem' }}
+                >
+                  <FileCode size={13} />
+                  <span>Documento LaTeX ({data.latex?.archivo || '.tex'})</span>
+                </button>
+              </div>
+
+              {/* Sub-vista Resultados */}
+              {subTabEvidencias === 'resultados' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {data.results.imagenes.length === 0 && !data.results.metricas ? (
+                    <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                      Sin datos registrados.
+                    </div>
+                  ) : (
+                    <>
+                      {/* Métricas numéricas TXT */}
+                      {data.results.metricas && (
+                        <div className="card" style={{ padding: '1.25rem' }}>
+                          <h4 style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+                            Métricas de Diagnóstico Numérico (.txt)
+                          </h4>
+                          <pre className="code-block" style={{ maxHeight: '200px', color: '#a7f3d0' }}>
+                            {data.results.metricas}
+                          </pre>
+                        </div>
+                      )}
+
+                      {/* Gráficas PNG */}
+                      {data.results.imagenes.map((img, i) => (
+                        <div key={i} className="card" style={{ padding: '1rem', textAlign: 'center' }}>
+                          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+                            {img.nombre}
+                          </div>
+                          <img
+                            src={img.src}
+                            alt={img.nombre}
+                            style={{
+                              maxWidth: '100%',
+                              maxHeight: '500px',
+                              borderRadius: 'var(--radius-sm)',
+                              backgroundColor: '#fff',
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </>
+                  )}
                 </div>
-              ) : (
-                <>
-                  {/* Métricas numéricas TXT */}
-                  {data.results.metricas && (
-                    <div className="card" style={{ padding: '1.25rem' }}>
-                      <h4 style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-                        Métricas de Diagnóstico Numérico (.txt)
-                      </h4>
-                      <pre className="code-block" style={{ maxHeight: '200px', color: '#a7f3d0' }}>
-                        {data.results.metricas}
-                      </pre>
+              )}
+
+              {/* Sub-vista LaTeX */}
+              {subTabEvidencias === 'latex' && (
+                <div>
+                  {data.latex ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span className="badge badge-purple">{data.latex.archivo}</span>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button
+                            type="button"
+                            onClick={handleCopyLatex}
+                            className="btn btn-secondary"
+                            style={{ fontSize: '0.8rem' }}
+                          >
+                            <Copy size={14} />
+                            {copiedLatex ? '¡Copiado!' : 'Copiar .tex'}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleDownloadLatex}
+                            className="btn btn-primary"
+                            style={{ fontSize: '0.8rem' }}
+                          >
+                            <Download size={14} />
+                            Descargar .tex
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="card" style={{ padding: '1rem', backgroundColor: '#020617' }}>
+                        <pre
+                          style={{
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.8rem',
+                            color: '#fde047',
+                            lineHeight: 1.45,
+                            overflowX: 'auto',
+                            maxHeight: '400px',
+                          }}
+                        >
+                          {data.latex.codigo}
+                        </pre>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                      Sin datos registrados en LaTeX.
                     </div>
                   )}
-
-                  {/* Gráficas PNG */}
-                  {data.results.imagenes.map((img, i) => (
-                    <div key={i} className="card" style={{ padding: '1rem', textAlign: 'center' }}>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-                        {img.nombre}
-                      </div>
-                      <img
-                        src={img.src}
-                        alt={img.nombre}
-                        style={{
-                          maxWidth: '100%',
-                          maxHeight: '500px',
-                          borderRadius: 'var(--radius-sm)',
-                          backgroundColor: '#fff',
-                        }}
-                      />
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          )}
-
-          {/* TAB 7: LATEX */}
-          {activeTab === 'latex' && (
-            <div>
-              {data.latex ? (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span className="badge badge-purple">{data.latex.archivo}</span>
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
-                      <button
-                        type="button"
-                        onClick={handleCopyLatex}
-                        className="btn btn-secondary"
-                        style={{ fontSize: '0.8rem' }}
-                      >
-                        <Copy size={14} />
-                        {copiedLatex ? '¡Copiado!' : 'Copiar .tex'}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={handleDownloadLatex}
-                        className="btn btn-primary"
-                        style={{ fontSize: '0.8rem' }}
-                      >
-                        <Download size={14} />
-                        Descargar .tex
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="card" style={{ padding: '1rem', backgroundColor: '#020617' }}>
-                    <pre
-                      style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: '0.8rem',
-                        color: '#fde047',
-                        lineHeight: 1.45,
-                        overflowX: 'auto',
-                        maxHeight: '400px',
-                      }}
-                    >
-                      {data.latex.codigo}
-                    </pre>
-                  </div>
-                </div>
-              ) : (
-                <div className="card" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                  Sin datos registrados en LaTeX.
                 </div>
               )}
             </div>
