@@ -11,6 +11,7 @@ import {
   Database,
   CheckCircle2,
   ShieldCheck,
+  FileCode2,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -22,14 +23,14 @@ interface SearchPortalHeroProps {
   loading: boolean;
   suggestedQueries: string[];
   onSelectSuggestion: (query: string) => void;
-  metrics: {
+  metrics?: {
     internalCount: number;
     externalCount: number;
     equationsCount: number;
     canonicalCount: number;
     additionalCount: number;
   };
-  onExploreCatalog: () => void;
+  onExploreCatalog?: () => void;
 }
 
 export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
@@ -40,8 +41,6 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
   loading,
   suggestedQueries,
   onSelectSuggestion,
-  metrics,
-  onExploreCatalog,
 }) => {
   const { setActiveView, setMode, closeTopic } = useApp();
 
@@ -142,9 +141,9 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
                 maxWidth: '620px',
               }}
             >
-              Plataforma de descubrimiento de conocimiento en bases de datos (KDD),
-              con 360 ecuaciones booleanas PRISMA, 127 artículos indexados con DOI,
-              4 unidades curriculares completas y modelos reproducibles en R v4.4.1.
+              Plataforma de descubrimiento de conocimiento en bases de datos (KDD):
+              explora algoritmos de agrupamiento, clasificación supervisada y series de tiempo
+              con formulación matemática rigurosa, experimentos reproducibles y sustentación oral.
             </p>
 
             {/* Gran Barra de Búsqueda Universal Integrada */}
@@ -322,7 +321,7 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
               ))}
             </div>
 
-            {/* Métricas Resumen en Vivo */}
+            {/* Capacidades Clave del Motor de Búsqueda */}
             <div
               style={{
                 display: 'flex',
@@ -335,21 +334,15 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: '#94A3B8' }}>
                 <CheckCircle2 size={15} style={{ color: '#10B981' }} />
-                <span>
-                  <strong style={{ color: '#F1F5F9' }}>{metrics.equationsCount}</strong> Ecuaciones Booleanas
-                </span>
+                <span>Búsqueda Híbrida (Local + CrossRef DOI)</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: '#94A3B8' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: '#38BDF8' }}>
                 <ShieldCheck size={15} style={{ color: '#38BDF8' }} />
-                <span>
-                  <strong style={{ color: '#F1F5F9' }}>127</strong> Artículos con DOI Real
-                </span>
+                <span>Protocolo PRISMA Auditado</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: '#94A3B8' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: '#F59E0B' }}>
                 <Database size={15} style={{ color: '#F59E0B' }} />
-                <span>
-                  <strong style={{ color: '#F1F5F9' }}>26</strong> Datasets Tabulares en R
-                </span>
+                <span>Modelos 100% Reproducibles en R</span>
               </div>
             </div>
           </div>
@@ -446,70 +439,7 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
           padding: '0 1rem',
         }}
       >
-        {/* TARJETA 1: Motor de Búsqueda Académico */}
-        <div
-          style={{
-            backgroundColor: 'var(--color-card)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            border: '1.5px solid var(--color-border)',
-            borderTop: '4px solid #059669',
-            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.08)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            gap: '1rem',
-            transition: 'all 0.2s ease',
-          }}
-        >
-          <div>
-            <div
-              style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '10px',
-                backgroundColor: 'rgba(5, 150, 105, 0.12)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#059669',
-                marginBottom: '0.85rem',
-              }}
-            >
-              <Search size={20} />
-            </div>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--color-ink)', margin: '0 0 0.4rem' }}>
-              Buscador & PRISMA
-            </h3>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--color-ink-secondary)', margin: 0, lineHeight: 1.55 }}>
-              360 ecuaciones booleanas formales con operadores AND, OR y NOT, depuración sistemática PRISMA y consulta en vivo con DOIs de CrossRef.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onExploreCatalog}
-            style={{
-              padding: '0.55rem 1rem',
-              borderRadius: '8px',
-              backgroundColor: '#059669',
-              color: '#FFFFFF',
-              fontSize: '0.8125rem',
-              fontWeight: 700,
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.45rem',
-              transition: 'all 0.15s ease',
-            }}
-          >
-            <span>Explorar Catálogo</span>
-            <ArrowRight size={14} />
-          </button>
-        </div>
-
-        {/* TARJETA 2: 4 Unidades Curriculares */}
+        {/* TARJETA 1: 4 Unidades Curriculares */}
         <div
           style={{
             backgroundColor: 'var(--color-card)',
@@ -545,7 +475,7 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
               4 Unidades & 24 Temas
             </h3>
             <p style={{ fontSize: '0.8125rem', color: 'var(--color-ink-secondary)', margin: 0, lineHeight: 1.55 }}>
-              Estructura curricular completa: fundamentos KDD y CRISP-DM, modelos predictivos, aplicaciones de negocio y minería en educación.
+              Desarrollo temático integral: KDD, CRISP-DM, árboles de decisión, redes neuronales, modelos predictivos y educación.
             </p>
           </div>
           <button
@@ -576,7 +506,7 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
           </button>
         </div>
 
-        {/* TARJETA 3: Atlas Matemático & Lab R */}
+        {/* TARJETA 2: Atlas Matemático & Remotion */}
         <div
           style={{
             backgroundColor: 'var(--color-card)',
@@ -609,10 +539,10 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
               <Film size={20} />
             </div>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--color-ink)', margin: '0 0 0.4rem' }}>
-              Atlas, Remotion & R
+              Atlas Visual & Remotion
             </h3>
             <p style={{ fontSize: '0.8125rem', color: 'var(--color-ink-secondary)', margin: 0, lineHeight: 1.55 }}>
-              Visualizaciones dinámicas en Remotion y Manim a 720p, narrador por voz real española (Helena) y 26 scripts reproducibles en R v4.4.1.
+              Animaciones dinámicas en Remotion y Manim a 720p 30fps con locución por voz española (Helena) sincronizada con subtítulos.
             </p>
           </div>
           <button
@@ -626,6 +556,73 @@ export const SearchPortalHero: React.FC<SearchPortalHeroProps> = ({
               padding: '0.55rem 1rem',
               borderRadius: '8px',
               backgroundColor: '#EA580C',
+              color: '#FFFFFF',
+              fontSize: '0.8125rem',
+              fontWeight: 700,
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.45rem',
+              transition: 'all 0.15s ease',
+            }}
+          >
+            <span>Ver Animaciones y Voz</span>
+            <ArrowRight size={14} />
+          </button>
+        </div>
+
+        {/* TARJETA 3: Laboratorio R & LaTeX */}
+        <div
+          style={{
+            backgroundColor: 'var(--color-card)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            border: '1.5px solid var(--color-border)',
+            borderTop: '4px solid #059669',
+            boxShadow: '0 12px 30px rgba(0, 0, 0, 0.08)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            transition: 'all 0.2s ease',
+          }}
+        >
+          <div>
+            <div
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '10px',
+                backgroundColor: 'rgba(5, 150, 105, 0.12)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#059669',
+                marginBottom: '0.85rem',
+              }}
+            >
+              <FileCode2 size={20} />
+            </div>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--color-ink)', margin: '0 0 0.4rem' }}>
+              Laboratorio R & LaTeX
+            </h3>
+            <p style={{ fontSize: '0.8125rem', color: 'var(--color-ink-secondary)', margin: 0, lineHeight: 1.55 }}>
+              26 scripts ejecutables en R v4.4.1 con semillas fijas, fórmulas matemáticas KaTeX interactivas y exportación de archivos .tex.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              closeTopic();
+              setMode('direct');
+              setActiveView('latex');
+            }}
+            style={{
+              padding: '0.55rem 1rem',
+              borderRadius: '8px',
+              backgroundColor: '#059669',
               color: '#FFFFFF',
               fontSize: '0.8125rem',
               fontWeight: 700,
