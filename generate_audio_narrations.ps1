@@ -32,5 +32,12 @@ $synth.SetOutputToWaveFile("$outDir\neural_net_narration.wav")
 $synth.Speak($textNeural)
 Write-Output "Generado: neural_net_narration.wav"
 
+# 4. Manual Metodológico Interactivo
+$textManual = "Bienvenido al Manual Metodológico Interactivo de la plataforma Minería de Datos. Esta arquitectura integra seis estaciones secuenciales de rigor científico. Primera: formulación de ecuaciones booleanas en Scopus e IEEE Xplore, depuradas bajo el protocolo PRISMA. Segunda: biblioteca indexada con ciento veintisiete artículos con identificador DOI verificable. Tercera: laboratorio analítico con veintiséis conjuntos de datos reales y scripts reproducibles en R cuatro punto cuatro punto uno. Cuarta: generación automática de gráficos y métricas de desempeño. Quinta: compilación de manuscritos en LaTeX y presentaciones Beamer panorámicas. Y sexta: sustentación oral estratégica con la Arena de Benchmark y el Dossier Académico. Principio rector: cero datos inventados y reproducibilidad científica al cien por ciento."
+
+$synth.SetOutputToWaveFile("$outDir\manual_narration.wav")
+$synth.Speak($textManual)
+Write-Output "Generado: manual_narration.wav"
+
 $synth.Dispose()
 Write-Output "Todas las narraciones de voz han sido generadas exitosamente."

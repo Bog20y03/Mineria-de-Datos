@@ -57,6 +57,25 @@ export const NARRATION_SCRIPTS: Record<string, NarrationScript> = {
     fullText:
       'Demostración de Red Neuronal Perceptrón Multicapa con propagación hacia adelante y retropropagación. Cuatro variables de entrada alimentan la red y transmiten pulsos de activación a través de la matriz sináptica ponderada W. Cada neurona oculta integra las señales ponderadas con su sesgo y evalúa la función de activación no lineal ReLU. En la capa de salida, la función Softmax calcula la probabilidad de pertenencia a cada clase. Finalmente, la onda de retropropagación evalúa el gradiente de la función de pérdida y actualiza los pesos sinápticos mediante descenso de gradiente estocástico.',
   },
+  manual: {
+    id: 'manual',
+    title: 'Manual Metodológico de Minería',
+    algorithm: 'Flujo Curricular de 6 Estaciones',
+    audioFile: '/audio/manual_narration.wav',
+    sentences: [
+      { text: 'Bienvenido al Manual Metodológico Interactivo de la plataforma Minería de Datos.', startSec: 0, endSec: 5.5 },
+      { text: 'Esta arquitectura integra seis estaciones secuenciales de rigor científico.', startSec: 5.5, endSec: 10.5 },
+      { text: 'Primera: formulación de ecuaciones booleanas en Scopus e IEEE Xplore, depuradas bajo el protocolo PRISMA.', startSec: 10.5, endSec: 18.5 },
+      { text: 'Segunda: biblioteca indexada con ciento veintisiete artículos con identificador DOI verificable.', startSec: 18.5, endSec: 25.5 },
+      { text: 'Tercera: laboratorio analítico con veintiséis conjuntos de datos reales y scripts reproducibles en R cuatro punto cuatro punto uno.', startSec: 25.5, endSec: 35.0 },
+      { text: 'Cuarta: generación automática de gráficos y métricas de desempeño.', startSec: 35.0, endSec: 40.5 },
+      { text: 'Quinta: compilación de manuscritos en LaTeX y presentaciones Beamer panorámicas.', startSec: 40.5, endSec: 47.0 },
+      { text: 'Y sexta: sustentación oral estratégica con la Arena de Benchmark y el Dossier Académico.', startSec: 47.0, endSec: 54.0 },
+      { text: 'Principio rector: cero datos inventados y reproducibilidad científica al cien por ciento.', startSec: 54.0, endSec: 62.0 },
+    ],
+    fullText:
+      'Bienvenido al Manual Metodológico Interactivo de la plataforma Minería de Datos. Esta arquitectura integra seis estaciones secuenciales de rigor científico. Primera: formulación de ecuaciones booleanas en Scopus e IEEE Xplore, depuradas bajo el protocolo PRISMA. Segunda: biblioteca indexada con ciento veintisiete artículos con identificador DOI verificable. Tercera: laboratorio analítico con veintiséis conjuntos de datos reales y scripts reproducibles en R cuatro punto cuatro punto uno. Cuarta: generación automática de gráficos y métricas de desempeño. Quinta: compilación de manuscritos en LaTeX y presentaciones Beamer panorámicas. Y sexta: sustentación oral estratégica con la Arena de Benchmark y el Dossier Académico. Principio rector: cero datos inventados y reproducibilidad científica al cien por ciento.',
+  },
 };
 
 interface ReadAloudNarratorProps {

@@ -17,8 +17,10 @@ import {
   FileText,
   Check,
   RefreshCw,
+  Scale,
 } from 'lucide-react';
 import { Card, Button, StatusBadge } from '../ui';
+import { ReadAloudNarrator } from '../Atlas/ReadAloudNarrator';
 
 interface ManualSection {
   id: string;
@@ -332,6 +334,11 @@ export const InteractiveManual: React.FC = () => {
                 Descargar Video MP4
               </Button>
             </a>
+          </div>
+
+          {/* Narrador de Voz Académica en Español con Subtítulos y Ecualizador Dinámico */}
+          <div>
+            <ReadAloudNarrator clipId="manual" />
           </div>
 
           <div
@@ -1248,6 +1255,112 @@ export const InteractiveManual: React.FC = () => {
         </div>
       ),
     },
+    {
+      id: 'sec_benchmark_arena',
+      titulo: '8. Arena de Benchmark & Dossier Oral',
+      categoria: 'Sustentación',
+      icono: <Scale size={16} />,
+      render: () => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <p style={{ color: 'var(--color-ink-secondary)', lineHeight: 1.6, margin: 0 }}>
+            La <strong>Arena de Benchmark</strong> permite la confrontación cuantitativa y cualitativa de dos modelos de minería de datos
+            para justificar la elección algorítmica ante comités evaluadores mediante criterios formales:
+          </p>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: '1rem',
+            }}
+          >
+            <div
+              style={{
+                padding: '1.15rem',
+                backgroundColor: 'var(--color-card-muted)',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--color-border)',
+                borderTop: '3px solid var(--color-terracotta)',
+              }}
+            >
+              <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--color-terracotta)', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                Complejidad Asintótica
+              </div>
+              <h5 style={{ fontSize: 'var(--text-sm)', fontWeight: 800, color: 'var(--color-ink)', margin: '0 0 0.35rem' }}>
+                Costos Computacionales O(n)
+              </h5>
+              <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-ink-secondary)', margin: 0, lineHeight: 1.5 }}>
+                Evaluación analítica del costo de entrenamiento y predicción, consumo de memoria en RAM y comportamiento ante grandes volúmenes de datos.
+              </p>
+            </div>
+
+            <div
+              style={{
+                padding: '1.15rem',
+                backgroundColor: 'var(--color-card-muted)',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--color-border)',
+                borderTop: '3px solid var(--color-blue-ink)',
+              }}
+            >
+              <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--color-blue-ink)', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                Explicabilidad vs Precisión
+              </div>
+              <h5 style={{ fontSize: 'var(--text-sm)', fontWeight: 800, color: 'var(--color-ink)', margin: '0 0 0.35rem' }}>
+                Caja Blanca vs Caja Negra
+              </h5>
+              <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-ink-secondary)', margin: 0, lineHeight: 1.5 }}>
+                Balance entre interpretabilidad jurídica/médica (árboles CART, regresiones) y potencia predictiva con alta no-linealidad (redes neuronales).
+              </p>
+            </div>
+
+            <div
+              style={{
+                padding: '1.15rem',
+                backgroundColor: 'var(--color-card-muted)',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--color-border)',
+                borderTop: '3px solid #059669',
+              }}
+            >
+              <div style={{ fontSize: '11px', fontWeight: 800, color: '#059669', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                Duelos Clásicos 1-Clic
+              </div>
+              <h5 style={{ fontSize: 'var(--text-sm)', fontWeight: 800, color: 'var(--color-ink)', margin: '0 0 0.35rem' }}>
+                Confrontaciones de Examen
+              </h5>
+              <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-ink-secondary)', margin: 0, lineHeight: 1.5 }}>
+                Configuraciones directas para sustentación oral: K-Means vs Clustering Jerárquico, Árbol CART vs MLP, y Regresión Lineal vs Árbol.
+              </p>
+            </div>
+          </div>
+
+          <div
+            style={{
+              padding: '1.25rem',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'var(--color-card)',
+              border: '1px solid var(--color-border)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '1rem',
+              flexWrap: 'wrap',
+            }}
+          >
+            <div>
+              <strong style={{ color: 'var(--color-ink)', display: 'block', fontSize: 'var(--text-sm)', marginBottom: '0.2rem' }}>
+                Dossier de Sustentación Imprimible
+              </strong>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-ink-secondary)' }}>
+                Exportación e impresión en PDF del informe académico con fórmulas KaTeX y radar multidimensional de capacidades (1 a 10).
+              </span>
+            </div>
+            <StatusBadge status="actual" label="Listo para Sustentación" />
+          </div>
+        </div>
+      ),
+    },
   ];
 
   const filteredSections = manualSections.filter(
@@ -1269,7 +1382,7 @@ export const InteractiveManual: React.FC = () => {
           </h2>
         </div>
         <p style={{ fontSize: '0.85rem', color: 'var(--color-ink-secondary)', margin: 0 }}>
-          Guía interactiva con animaciones dinámicas, simuladores de K-Means y CART, video explicativo y laboratorio R.
+          Guía interactiva con animaciones dinámicas, video explicativo a 720p, narración por voz real en español, simuladores interactivos y laboratorio R.
         </p>
       </div>
 
